@@ -8,6 +8,23 @@ var debugBuild = 12;
 var LOG = [];
 
 /**
+ *  Output text on page by id element
+ * 
+ *      "id"   - HTML element id (need to create one)
+ *      "data" - text (HTML, what else)
+ * 
+ */
+ function output(id, data) { try { document.getElementById(id).innerHTML = data } catch (e) { logs('critical', `Error: output function (${e})`) } }
+
+/**
+ *  Await function
+ * 
+ *      "ms" - count of miliseconds to await
+ * 
+ */
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
+
+/**
  *  Logging and erros!
  * 
  *      "type" - (info, warn, error, critical)
@@ -24,24 +41,17 @@ function logs(type, data) {
 /**
  *  Work with localStorage
  * 
- *      "type" (get, write or remove) - returned or writing localstorage
- *      "key" and "value"             - key and value of localstorage
+ *      "type"            - returned, writing or checking localStorage
+ *      "key" and "value" - key and value of localStorage
  * 
  */
 function deviceStorage(type, key, value) {
          if (type == 'get')    { return localStorage.getItem(key) }
     else if (type == 'write')  { localStorage.setItem(key, value) }
     else if (type == 'remove') { localStorage.removeItem(key) }
+    else if (type == 'check')  { return (settings('get', key) == null || settings('get', key) == '') }
     else                       { logs('error', 'Error: localStorage function (type is undefined)') }
 }
-
-/**
- *  Await function
- * 
- *      "ms" - count of miliseconds to await
- * 
- */
-function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 
 /**
  *  Returned logs in HTML format
@@ -75,4 +85,4 @@ function modalLog() { modal('max',
     </div>`
 ) }
 
-deviceStorage('write', 'DebugJSBuild', debugBuild);
+deviceStorage('write', 'debugJSBuild', debugBuild);
