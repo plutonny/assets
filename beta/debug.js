@@ -49,7 +49,7 @@ function deviceStorage(type, key, value) {
          if (type == 'get')    { return localStorage.getItem(key) }
     else if (type == 'write')  { localStorage.setItem(key, value) }
     else if (type == 'remove') { localStorage.removeItem(key) }
-    else if (type == 'check')  { return (settings('get', key) == null || settings('get', key) == '') }
+    else if (type == 'check')  { return (deviceStorage('get', key) == null || deviceStorage('get', key) == '') }
     else                       { logs('error', 'Error: localStorage function (type is undefined)') }
 }
 

@@ -134,10 +134,10 @@ function enableLogger() {
             inj += `<button id="theme_button" class="settings_header_button mobile" style="border: none !important;" onclick="activities('settings')"><img style="width: 32px; height: 32px;" id="mobile_settings_button" src=""></button>`
         }
         output(`header`, `
-            <div class="mobile_gorisontal_void"></div>
+            <div class="mobile" style="margin-right: auto;"></div>
             <p style="font-size: 20px; margin-bottom: 8px; z-index: 10;">${headerText}</p>
-            <div class="pc_gorisontal_void"></div>
-            <div class="mobile_gorisontal_void"></div>
+            <div class="pc" style="margin-right: auto;"></div>
+            <div class="mobile" style="margin-right: auto;"></div>
             ${inj}
         `)
         return true
