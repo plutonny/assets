@@ -14,7 +14,7 @@ var LOG = [];
  *      "data" - text (HTML, what else)
  * 
  */
- function output(id, data) { try { document.getElementById(id).innerHTML = data } catch (e) { logs('critical', `Error: output function (${e})`) } }
+ function output(id, data) { try { document.getElementById(id).innerHTML = data; return true } catch (e) { logs('critical', `Error: output function (${e})`); return false } }
 
 /**
  *  Await function
@@ -35,7 +35,7 @@ function logs(type, data) {
          if (type == 'info')     { LOG.push([type, data]); console.info(data) }
     else if (type == 'warn')     { LOG.push([type, data]); console.warn(data) }
     else if (type == 'error')    { LOG.push([type, data]); console.error(data) }
-    else if (type == 'critical') { LOG.push([type, data]); console.error(data); sessionStorage.setItem('errorPageLog', outlog(LOG)); sessionStorage.setItem('errorPageError', data); location.assign(`/assets/${betafolder}error.html`) }
+    else if (type == 'critical') { LOG.push([type, data]); sessionStorage.setItem('errorPageError', data); sessionStorage.setItem('errorPageLog', logInHTML(LOG)); location.assign(`/assets/${betaFolder}error.html`) }
 }
 
 /**
@@ -74,15 +74,15 @@ function logInHTML(data) {
 /**
  *  Output modal of logs
  */
-function modalLog() { modal('max', 
-    `<style>div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; }</style>
-    <div class="update_modal">
-        <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">LOG</h1>
-        <p style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">${logInHTML(LOG)}</p>
-        <div style="display:flex;justify-content:center;">
-            <button style="font-family: 'Montserrat' !important; cursor: pointer; border: 2px solid var(--main-text-color); border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme(1)">Close</button>
+function modalLog() { return modal('max', `
+        <div class="update_modal">
+            <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">LOG</h1>
+            <p style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">${logInHTML(LOG)}</p>
+            <div style="display:flex;justify-content:center;">
+                <button style="font-family: 'Montserrat' !important; cursor: pointer; border: 2px solid var(--main-text-color); border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme(1)">Close</button>
+            </div>
         </div>
-    </div>`
-) }
+    `)
+}
 
 deviceStorage('write', 'debugJSBuild', debugBuild);
