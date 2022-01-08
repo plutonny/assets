@@ -7,7 +7,7 @@
 var storageVersion = '3.0.0', storageBuild = '50';
 var BETA = true;
 
-var CURRDATE = new Date(), onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4);
+var CURRDATE = new Date();
 var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = ''; 
 if (weekNum % 2 == 1) { weekNameRU = 'желтая'; weekNameEN = 'yellow' } 
 else                  { weekNameRU = 'зеленая'; weekNameEN = 'green' }
@@ -37,6 +37,13 @@ var darkThemeColors  = `:root {
 }`;
 
 /*  ---  Prepare to work  ---  */
+var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
+
+if (deviceStorage('check', 'enablethemebutton'))                                      { deviceStorage('write', 'enablethemebutton', 'true') }
+if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'typetheme') == 3) { deviceStorage('write', 'typetheme', 1) }
+if (deviceStorage('check', 'typetheme'))                                              { deviceStorage('write', 'typetheme', 1) }
+if (deviceStorage('get', 'typetheme') == 2 || deviceStorage('get', 'typetheme') == 3) { deviceStorage('write', 'enablethemebutton', `false`) }
+
 var betaFolder = '';
 if (BETA) {
     betaFolder += 'beta/'; 
