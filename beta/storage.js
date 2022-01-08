@@ -58,22 +58,29 @@ logs('info', `Current builds (version ${storageVersion}):
 
 /*  ---  Functions to work  ---  */
 
+
+/**
+ *  Work with theme in site
+ *      
+ *      "type" - load or change, I think all clear
+ * 
+ */
 async function theme(type) {
-    var tf = deviceStorage('get', 'theme'); var ut = '';
-    if (deviceStorage('get', 'typetheme') == 2) { if (onDateSunriseSunset.sunrise < dt && dt < onDateSunriseSunset.sunset) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
-    if (deviceStorage('get', 'typetheme') == 3) { 
-        var from = '', to = '', now = parseInt(String(dt.getHours()) + String(dt.getMinutes()))
-        from = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
-        to = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
-        if (from < to) { if (from < now && now < to) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
-        else if (from > to) { if ((from < now && now < 23) || (0 < now && now < to)) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
-    }
     try {
-        if (type === 0) {
-            await sleep(50)
+        var tf = deviceStorage('get', 'theme'); var ut = '';
+        if (deviceStorage('get', 'typetheme') == 2) { if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
+        if (deviceStorage('get', 'typetheme') == 3) { 
+            var from = '', to = '', now = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
+            from = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
+            to = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
+            if (from < to) { if (from < now && now < to) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
+            else if (from > to) { if ((from < now && now < 23) || (0 < now && now < to)) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
+        }
+        if (type == 'change') {
             if (tf == 'light') { output('root-colors-theme', darkThemeColors); document.getElementById('theme-color').content = '#111111'; deviceStorage('write', 'theme', 'dark'); } 
             else if (tf == 'dark') { output('root-colors-theme', lightThemeColors); document.getElementById('theme-color').content = '#e9e9e9'; deviceStorage('write', 'theme', 'light'); };
-        } if (type == 1) {
+        } 
+        if (type == 'load') {
             try { if (tf == 'light') { ut = 'dark' } else if (tf == 'dark') { ut = 'light' } else { logs('warn', 'WARN: theme are undefined! Setting theme to light...'); deviceStorage('write', 'theme', 'light') } } catch { logs('warn', 'Warning: theme are undefined! Setting theme to light...'); deviceStorage('write', 'theme', 'light') }
             if (tf == 'light') { ut = 'dark' } else if (tf == 'dark') { ut = 'light' }
             if (tf == 'light') { output('root-colors-theme', lightThemeColors); document.getElementById('theme-color').content = '#e9e9e9'; } 
@@ -156,7 +163,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
             inj += `<button 
                         class="theme_button" 
                         style="border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
-                        onclick="theme(0)">
+                        onclick="theme('change')">
                             ${headerSVG.theme_button}
                     </button>`
         }
@@ -190,4 +197,4 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
     }
 }
 
-deviceStorage('write', 'storageJSBuild', storageBuild);
+deviceStorage('write', 'storageJSBuild', storageBuild); theme('load')
