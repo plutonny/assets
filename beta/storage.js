@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = '51';
+var storageVersion = '3.0.0', storageBuild = '52';
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -39,11 +39,28 @@ var darkThemeColors  = `:root {
 /*  ---  Prepare to work  ---  */
 var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
 
-if (deviceStorage('check', 'enablethemebutton'))                                      { deviceStorage('write', 'enablethemebutton', 'true') }
-if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'typetheme') == 3) { deviceStorage('write', 'typetheme', 1) }
-if (deviceStorage('check', 'typetheme'))                                              { deviceStorage('write', 'typetheme', 1) }
-if (deviceStorage('get', 'typetheme') == 2 || deviceStorage('get', 'typetheme') == 3) { deviceStorage('write', 'enablethemebutton', `false`) }
-if (deviceStorage('get', 'typetheme') == 2) { if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
+if (deviceStorage('check', 'theme'))                                                       { logs('warn', 'Warning: theme is undefined, set theme to light');                  deviceStorage('write', 'theme', 'light') }
+if (deviceStorage('check', 'enablethemebutton'))                                           { logs('warn', 'Warning: theme button is undefined, turned it on');                 deviceStorage('write', 'enablethemebutton', 'true') }
+if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'typetheme') == 3)      { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'typetheme', 1) }
+if (deviceStorage('check', 'typetheme'))                                                   { logs('warn', 'Warning: theme type is undefined, set to default');                 deviceStorage('write', 'typetheme', 1) }
+if (deviceStorage('get', 'typetheme') == 2 || deviceStorage('get', 'typetheme') == 3)      { deviceStorage('write', 'enablethemebutton', `false`) }
+if (deviceStorage('get', 'typetheme') == 2) { 
+      if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { deviceStorage('write', 'theme', 'light') } 
+    else                                                                                   { deviceStorage('write', 'theme', 'dark') } 
+}
+if (deviceStorage('get', 'typetheme') == 3) {
+    var themeTimeFrom = '', themeTimeTo = '', themeTimeNow = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
+    themeTimeFrom = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
+    themeTimeTo = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
+    if (themeTimeFrom < themeTimeTo) {
+          if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
+        else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
+    }
+    else if (themeTimeFrom > themeTimeTo) {
+          if ((themeTimeFrom < themeTimeNow && themeTimeNow < 23) || (0 < themeTimeNow && themeTimeNow < themeTimeTo)) { deviceStorage('write', 'theme', 'light') } 
+        else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
+    }
+}
 
 var betaFolder = '';
 if (BETA) {
@@ -75,23 +92,14 @@ logs('info', `Current builds (version ${storageVersion}):
  */
 async function theme(type) {
     try {
-        var tf = deviceStorage('get', 'theme'); var ut = '';
-        if (deviceStorage('get', 'typetheme') == 3) { 
-            var from = '', to = '', now = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
-            from = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
-            to = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
-            if (from < to) { if (from < now && now < to) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
-            else if (from > to) { if ((from < now && now < 23) || (0 < now && now < to)) { tf = 'light'; deviceStorage('write', 'theme', 'light') } else { tf = 'dark'; deviceStorage('write', 'theme', 'dark') } }
-        }
+        var themeCurrent = deviceStorage('get', 'theme');
         if (type == 'change') {
-            if (tf == 'light') { output('root-colors-theme', darkThemeColors); document.getElementById('theme-color').content = '#111111'; deviceStorage('write', 'theme', 'dark'); } 
-            else if (tf == 'dark') { output('root-colors-theme', lightThemeColors); document.getElementById('theme-color').content = '#e9e9e9'; deviceStorage('write', 'theme', 'light'); };
+                 if (themeCurrent == 'light') { deviceStorage('write', 'theme', 'dark'); theme('load') } 
+            else if (themeCurrent == 'dark')  { deviceStorage('write', 'theme', 'light'); theme('load') };
         } 
         if (type == 'load') {
-            try { if (tf == 'light') { ut = 'dark' } else if (tf == 'dark') { ut = 'light' } else { logs('warn', 'WARN: theme are undefined! Setting theme to light...'); deviceStorage('write', 'theme', 'light') } } catch { logs('warn', 'Warning: theme are undefined! Setting theme to light...'); deviceStorage('write', 'theme', 'light') }
-            if (tf == 'light') { ut = 'dark' } else if (tf == 'dark') { ut = 'light' }
-            if (tf == 'light') { output('root-colors-theme', lightThemeColors); document.getElementById('theme-color').content = '#e9e9e9'; } 
-            else if (tf == 'dark') { output('root-colors-theme', darkThemeColors); document.getElementById('theme-color').content = '#111111'; }
+                 if (themeCurrent == 'light') { lightThemeColors += '#thMoon { display: none; }'; output('root-colors-theme', lightThemeColors); document.getElementById('theme-color').content = '#e9e9e9' } 
+            else if (themeCurrent == 'dark')  { darkThemeColors += '#thSun { display: none; }';   output('root-colors-theme', darkThemeColors); document.getElementById('theme-color').content = '#111111' }
         }
     } catch (e) { logs('critical', `Error: theme function (${e})`) }
 }
