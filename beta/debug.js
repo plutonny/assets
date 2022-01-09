@@ -14,7 +14,7 @@ var LOG = [];
  *      "data" - text (HTML, what else)
  * 
  */
- function output(id, data) { try { document.getElementById(id).innerHTML = data; return true } catch (e) { logs('critical', `Error: output function (${e})`); return false } }
+function output(id, data) { try { document.getElementById(id).innerHTML = data; return true } catch (e) { logs('critical', `Error: output function (${e})`); return false } }
 
 /**
  *  Await function
@@ -25,7 +25,7 @@ var LOG = [];
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 
 /**
- *  Logging and erros!
+ *  Work with console log and logging on page
  * 
  *      "type" - (info, warn, error, critical)
  *      "data" - text of log data
