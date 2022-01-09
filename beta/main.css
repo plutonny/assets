@@ -33,16 +33,17 @@
 
 html, body { background-color: var(--primary-bg-color); }
 h1, h2, h3, h4, h5, h6, p, a, b, td, div, li, button, br, input, label { color: var(--root-text-color); }
-h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection, p::selection, a::selection, b::selection, td::selection, div::selection, svg::selection, li::selection, img::selection, button::selection, br::selection, input::selection, label::selection { background-color: var(--week-color); }
-h1::-moz-selection, h2::-moz-selection, h3::-moz-selection, h4::-moz-selection, h5::-moz-selection, h6::-moz-selection, p::-moz-selection, a::-moz-selection, b::-moz-selection, td::-moz-selection, div::-moz-selection, svg::-moz-selection, li::-moz-selection, img::-moz-selection, button::-moz-selection, br::-moz-selection, input::-moz-selection, label::-moz-selection { background-color: var(--week-color); }
+h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection, p::selection, a::selection, b::selection, td::selection, div::selection, svg::selection, li::selection, img::selection, button::selection, br::selection, input::selection, label::selection { background-color: var(--week-color); color: var(--active-text-color); }
+h1::-moz-selection, h2::-moz-selection, h3::-moz-selection, h4::-moz-selection, h5::-moz-selection, h6::-moz-selection, p::-moz-selection, a::-moz-selection, b::-moz-selection, td::-moz-selection, div::-moz-selection, svg::-moz-selection, li::-moz-selection, img::-moz-selection, button::-moz-selection, br::-moz-selection, input::-moz-selection, label::-moz-selection { background-color: var(--week-color); color: var(--active-text-color); }
 button { background-color: var(--root-button-color); }
 button:hover { background-color: var(--hover-button-color); }
 button:active { background-color: var(--active-button-color); }
+a:active { color: var(--active-text-color); }
 
 
 /* Styles for all sizes */
-html, body { margin: 0; overflow-x: hidden; transition: 200ms; transition: 350ms; }
-h1, h2, h3, h4, h5, h6, p, a, b, td, div, li, button, br, input, label { z-index: 2; transition: 200ms; font-family: 'Nunito'; word-wrap: break-word; transition: 150ms; }
+html, body { margin: 0; overflow-x: hidden; transition: 350ms; }
+h1, h2, h3, h4, h5, h6, p, a, b, td, div, li, button, br, input, label { z-index: 2; transition: 200ms; font-family: 'Nunito'; word-wrap: break-word; }
 
 
 @media (min-width: 1401px) { /* Styles for PC */

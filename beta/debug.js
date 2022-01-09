@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 16;
+var debugBuild = 17;
 
 var LOG = [];
 
@@ -113,7 +113,7 @@ function modalLog() { return modal('max', `
             <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Данные консоли</h1>
             <p style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">${logInHTML(LOG)}</p>
             <div style="display:flex;justify-content:center;">
-                <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">Close</button>
+                <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">Закрыть</button>
             </div>
         </div>
     `)
@@ -121,11 +121,11 @@ function modalLog() { return modal('max', `
 
 function deleteLocalStorage() { modal('max', `
     <div style="background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
-        <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">DELETE</h1>
-        <p style="font-family: 'Montserrat' !important; text-align: center;" class="update_modal">Are you sure?</p>
+        <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Очистить</h1>
+        <p style="font-family: 'Montserrat' !important; text-align: center;" class="update_modal">Ты уверен?</p>
         <div style="display: flex; justify-content: center;">
-            <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #00ff0020;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">NO</button>
-            <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #ff000020;" onclick="localStorage.clear(); document.getElementById('modal').innerHTML = ''; theme('load')">YES</button>
+            <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #00ff0020;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">НЕТ</button>
+            <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #ff000020;" onclick="localStorage.clear(); document.getElementById('modal').innerHTML = ''; theme('load')">ДА</button>
         </div>
     </div>
 `) 
