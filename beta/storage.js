@@ -152,8 +152,8 @@ async function theme(type) {
             else if (themeCurrent == 'dark')  { deviceStorage('write', 'theme', 'light'); theme('load') };
         } 
         if (type == 'load') {
-                 if (themeCurrent == 'light') { output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`); document.getElementById('theme-color').content = '#e9e9e9' } 
-            else if (themeCurrent == 'dark')  { output('root-colors-theme', `${darkThemeColors} #thMoon { display: none; }`); document.getElementById('theme-color').content = '#181818' }
+                 if (themeCurrent == 'light') { output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#e9e9e9' } 
+            else if (themeCurrent == 'dark')  { output('root-colors-theme', `${darkThemeColors} #thMoon { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#181818' }
         }
     } catch (e) { logs('critical', `Error: theme function (${e})`) }
 }
