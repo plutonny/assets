@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta                                       charset="UTF-8">
+        <meta   http-equiv="Permissions-Policy"     content="interest-cohort=()">
+        <meta   name="viewport"                     content="width=device-width, initial-scale=1.0">
+        <meta   name="author"                       content="Plutonny">
+        <meta   name="description"                  content="Настройки">
+        <meta   name="theme-color" id="theme-color" content="#202020">
+
+        <title  id="csc11-title-of-page"            >Настройки</title>
+        <link   rel="manifest"                      href="/assets/beta/manifest.json">
+        <script type="text/javascript"              src="/assets/solar.js"></script>
+        <script type="text/javascript"              src="/assets/luxon.js"></script>
+
+        <link   rel="icon"                          href="settings.png">
+        <link   rel="stylesheet" media="all"        href="/assets/beta/main.css">
+        
+        <style  id="root-colors-theme"></style>
+        
+        <script type="text/javascript"              src="/assets/beta/debug.js"></script>
+        <script type="text/javascript"              src="/assets/beta/storage.js"></script>
+
+        <noscript>
+            <style>
+                html, body { background-color: #202020; }
+                p, a       { color: #f4f4f4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 28px; text-align: center; }
+                div        { margin-top: 64px; }
+            </style>
+            <div>
+                <p>Если ты читаешь этот текст, то у тебя отключен или не поддерживается браузером JavaScript</p>
+                <p>Функционал данного сайта недоступен, можете перейти на <a href="simpleoutjs.html">упрощенную страницу</a></p>
+            </div>
+        </noscript>
+    </head>
+    <body>
+        <div class="modal" id="modal"></div>
+        <div class="header" id="header"></div>
+        <div class="settings" id="settings"></div>
+        <script>
+            header(`Настройки`, true, true, false);
+
+            try { var ti1 = '', ti2 = ''; 
+                ti1 = deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(2) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4); 
+                ti2 = deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(7) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9);
+            } catch {}
+            function tytheme3(setting) { 
+                if (setting == 'gettime') { 
+                      if (deviceStorage('get', 'tytheme3time') == null || deviceStorage('get', 'tytheme3time') == '') { return 'не назначено' } 
+                    else { return `${ti1} - ${ti2}` } 
+                }
+                else if (setting == 'settime') {
+                    modal('max', 
+                    `<style>div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; }</style>
+                    <div class="update_modal">
+                        <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">ВРЕМЯ</h1>
+                        <b style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">Светлая тема:<b>
+                        <div style="margin-left: 12px;"><label for="settingstimefrom" style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">С:</label><input ${tyti1} type="time" id="settingstimefrom" name="settingstimefrom" min="00:01" max="23:59" style="padding-left: 16px; padding-right: 16px; color: var(--main-text-color); border: var(--main-text-color) 2px solid; border-radius: 18px; background-color: var(--timetable-bg); height: 22px; margin-top: 8px; margin-left: 4px;"></div>
+                        <div style="margin-left: 12px;"><label for="settingstimeto" style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">По:</label><input ${tyti2} type="time" id="settingstimeto" name="settingstimeto" min="00:01" max="23:59" style="padding-left: 16px; padding-right: 16px; color: var(--main-text-color); border: var(--main-text-color) 2px solid; border-radius: 18px; background-color: var(--timetable-bg); height: 22px; margin-top: 8px; margin-left: 4px;"></div>
+                        <div style="display:flex;justify-content:center;">
+                            <button style="cursor: pointer; border: 2px solid var(--main-text-color); border-radius: 24px; height: 36px; font-size: 17px; width: 50%; margin: 24px 16px 0px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme(1)">ОТМЕНА</button>
+                            <button style="cursor: pointer; border: 2px solid var(--main-text-color); border-radius: 24px; height: 36px; font-size: 17px; width: 50%; margin: 24px 16px 0px 16px; background-color: #00ff0020;" onclick="settings('write', 'tytheme3time', settingstimefrom.value + settingstimeto.value); document.getElementById('modal').innerHTML = ''; theme(1)">СОХРАНИТЬ</button>
+                        </div>
+                    </div>`
+                    )
+                }
+            }
+
+            var enthemechk = '', nythemechk = '', tyth1 = '', tyth2 = '', tyth3 = '', tyti1 = '', tyti2 = '';
+            if (deviceStorage('get', 'enablethemebutton') == null || deviceStorage('get', 'enablethemebutton') == '') { deviceStorage('write', 'enablethemebutton', 'true') }
+            if (deviceStorage('get', 'enablethemebutton') == 'true') { enthemechk += 'checked'; }
+            if (deviceStorage('get', '21NewYearThemeEnable') == 'true') { nythemechk += 'checked'; }
+            if (!(deviceStorage('get', 'tytheme3time') == null || deviceStorage('get', 'tytheme3time') == '')) { tyti1 += `value="${ti1}"`; tyti2 += `value="${ti2}"` }
+            if (deviceStorage('get', 'typetheme') == null || deviceStorage('get', 'typetheme') == '') { deviceStorage('write', 'typetheme', 1) }
+            if (deviceStorage('get', 'typetheme') == 1) { tyth1 = 'checked' } else if (deviceStorage('get', 'typetheme') == 2) { tyth2 = 'checked' } else if (deviceStorage('get', 'typetheme') == 3) { tyth3 = 'checked' }
+
+            output(`settings`, `
+            <div class="setting_username"><p style="margin-right:8px;">Ник: </p><input autocomplete="off" type="text" id="username" class="setting_username"><p id="usernamesave" class="usernamesave"></p></div>
+            <div class="setting_entheme"><input ${enthemechk} onchange="entheme(${deviceStorage('get', 'enablethemebutton')})" class="setting_entheme" type="checkbox" id="entheme" name="entheme" value="theme"><label for="entheme">включить кнопку смены темы</label></div>
+            <div class="setting_tytheme"><p style="margin-right:8px;">Изменять тему: </p><div class="setting_tytheme_in"><div><input ${tyth1} onchange="tytheme(1)" class="setting_tytheme" type="radio" id="tytheme1" name="tytheme" value="theme"><label for="tytheme1">по нажатию кнопки</label></div><div><input ${tyth2} onchange="tytheme(2)" class="setting_tytheme" type="radio" id="tytheme2" name="tytheme" value="theme"><label for="tytheme2">по времени рассвета/заката</label></div><div><input ${tyth3} onclick="tytheme3('settime')" onchange="tytheme(3)" class="setting_tytheme" type="radio" id="tytheme3" name="tytheme" value="theme"><label for="tytheme3">по времени: ${tytheme3('gettime')}</label></div></div></div>
+            `)
+
+            var etcb = document.getElementById('entheme');
+            if (deviceStorage('get', 'typetheme') == 2) { etcb.setAttribute('disabled', 'disabled') } else if (deviceStorage('get', 'typetheme') == 3) { etcb.setAttribute('disabled', 'disabled') }
+
+            function entheme(tof) { etcb.setAttribute('disabled', 'disabled'); deviceStorage('write', 'enablethemebutton', `${!tof}`)}
+            
+            /* 1 - theme button (or none); 2 - sunrise/sunset; 3 - custom time */
+            function tytheme(type) { deviceStorage('write', 'typetheme', `${type}`); if (type == 1) { entheme(false); deviceStorage('write', 'enablethemebutton', `true`); etcb.setAttribute('checked', 'checked')} if (type == 2 || type == 3) {deviceStorage('write', 'enablethemebutton', `false`); etcb.setAttribute('disabled', 'disabled'); etcb.removeAttribute('checked')} }
+
+            username.oninput = async function() { deviceStorage('write', 'username', username.value); usernamesave.innerHTML = 'сохранено'; await sleep(2500); usernamesave.innerHTML = '' }
+        </script>
+
+        <div class="warning" style="margin-top: 36px;">
+            <p class="warning"><b class="warning">примечание: </b>изменения вступят в силу только после перезагрузки страницы</p>
+        </div>
+        <div id="beta"><script>outBetaNotes()</script></div>
+    </body>
+</html>

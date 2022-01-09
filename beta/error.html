@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title id="title_page">Ошибка :(</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Plutonny">
+        <meta name="description" content="Ошибка">
+        <meta name="theme-color" id="theme-color" content="#f0f0f0">
+        <meta http-equiv="Permissions-Policy" content="terest-cohort=()">
+        <link rel="stylesheet" href="main.css">
+        <script type="text/javascript" src="debug.js"></script>
+
+        <style>
+            div.error { margin: 36px; } div.add_error { margin-top: 64px; }
+            h1.error { margin-bottom: 64px; margin-top: 64px; }
+            h1.error, h2.error { text-align: center; }
+            h3.error { margin-left: 22px; }
+            .button { margin-top: 48px; display: flex; align-items: center; justify-content: center; }
+            p.error { margin: 0; }
+            button { border-radius: 10px; border: 2px solid var(--main-text-color); height: 32px; width: 168px; cursor: pointer; }
+        </style>
+
+        <noscript>
+            <div style="font-size: 32px; text-align: center;">
+                <p>Если ты читаешь этот текст, то у тебя отключен или не поддерживается браузером JavaScript</p>
+            </div>
+        </noscript>
+    </head>
+    <body>
+        <div class="error">
+            <h1 class="error">Произошла критическая ошибка!</h1>
+            <h2 class="error">Пожалуйста, отправьте скрин этой страницы <a href="https://vk.me/pltny">разработчику</a></h2>
+            <div class="button"><button onclick="history.back(); sessionStorage.removeItem('errorPageLog'); sessionStorage.removeItem('errorPageError')">Вернуться назад</button></div>
+            <div class="add_error">
+                <script>
+                    var crerr = sessionStorage.getItem('errorPageError'), l = sessionStorage.getItem('errorPageLog')
+                    document.write(`<h3 class="error">Критческая ошибка: ${crerr}</h3><h3 class="error">Логи:</h3><p class="error">${l}</p>`)
+                    document.write(`<h3 class="error">Ключи: </h3>`); for (i = 0; i < localStorage.length; i++) { k = localStorage.key(i); v = localStorage.getItem(k); document.write(`<p class="error">${k}: ${v}</p>`) } 
+                </script>
+            </div>
+        </div>
+    </body>
+</html>

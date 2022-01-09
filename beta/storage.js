@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = '58';
+var storageVersion = '3.0.0', storageBuild = '59';
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -79,8 +79,8 @@ function outBetaNotes() {
             <div style="margin-left: 28px; margin-top:48px; margin-right: 28px;">
                 <p><b style="font-family: 'Montserrat' !important;">Перед выходом в релиз:</b></p>
                 <p style="font-family: 'Montserrat' !important;"><b style="font-family: 'Montserrat' !important;">Все файлы .html:</b> поменять директории файлов на релиз</p>
-                <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important;" href="/storage/${betaFolder}debug.html"><b style="font-family: 'Montserrat' !important;">storage.js и service-worker.js:</b></a> переменная BETA</p>
-                <p><button style="font-family: 'Montserrat' !important; border: 2px solid var(--root-text-color); background-color: var(--root-button-color); width: 100%; height: 64px; font-size: 24px; border-radius: 16px; cursor: pointer;" onclick="modalLog()">Консоль</button></p>
+                <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important; text-decoration: none;" href="/assets/${betaFolder}debug.html"><b style="font-family: 'Montserrat' !important;">storage.js и service-worker.js:</b></a> переменная BETA</p>
+                <p><button style="font-family: 'Montserrat' !important; border: none; width: 100%; height: 64px; font-size: 24px; border-radius: 16px; cursor: pointer;" onclick="modalLog()">Консоль</button></p>
             </div>
         `);
     }
@@ -129,9 +129,7 @@ logs('info', `Current builds (version ${storageVersion}):
     Timetableweek:  build ${deviceStorage('get', 'timetableweekBuildPage')}
     Other:          build ${deviceStorage('get', 'otherBuildPage')}
     Gtable:         build ${deviceStorage('get', 'gtableBuildPage')}
-    Attendance:     build ${deviceStorage('get', 'attendanceBuildPage')}
     Simple:         build ${deviceStorage('get', 'simpleBuildPage')}
-    Grades:         build ${deviceStorage('get', 'gradesBuildPage')}
     Support:        build ${deviceStorage('get', 'supportBuildPage')}
 `);
 
@@ -165,6 +163,8 @@ async function gTableTheme() {
     output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`)
     await sleep(70)
     document.getElementById('theme-color').content = '#ffffff'
+    await sleep(5000)
+    output('loadText', '')
 }
 
 /**
@@ -176,39 +176,8 @@ async function gTableTheme() {
  */
 async function activePage(type) {
      if (type == 'siteBack')     { history.back() }
-else if (type == 'settingsPage') { location.assign(`storage/${betaFolder}settings.html`) }
+else if (type == 'settingsPage') { location.assign(`/assets/${betaFolder}settings.html`) }
 else                             { con('error', `Error: activities function not found instruction to "${type}"`) }
-}
-
-/**
- *  Outputted modal (div id "modal" need)
- * 
- *      "type" - mini (small text on top of the page) or max (modal on fullscreen)
- * 
- */
-async function modal(type, content) {
-    try {
-        await sleep(200)
-        if (type == 'info') { 
-            output('modal', `<div class="mini_modal">${content}</div>`); 
-            await sleep(2000); 
-            output('modal', '') 
-        }
-        else if (type == 'max')  { 
-            if (deviceStorage('get','theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
-            if (deviceStorage('get','theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
-            output('modal', `
-                <div class="max-modal">
-                    <style>div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; }</style>
-                    ${content}
-                </div>
-            `) 
-        }
-        return true
-    } catch (e) {
-        logs('error', `Error: modal function (${e})`)
-        return false
-    }
 }
 
 /**
@@ -217,7 +186,7 @@ async function modal(type, content) {
 function enableLogger() {
     if ('serviceWorker' in navigator) { 
         window.addEventListener('load', function() {
-            navigator.serviceWorker.register('service-worker.js').then(
+            navigator.serviceWorker.register(`/assets/${betaFolder}service-worker.js`).then(
                 function(registration) {
                     if (BETA) { logs('info', `ServiceWorker: registration successful with scope ${registration.scope}`)}
                 },
