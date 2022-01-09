@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = '56';
+var storageVersion = '3.0.0', storageBuild = '57';
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -236,7 +236,7 @@ function navbar(navbarActive) {
                 position: fixed;
                 border-radius: 100px;
                 background-color: var(--root-navbar-bg-color);
-                top: calc(100% - 79px);
+                top: calc(100% - 73px);
                 width: calc(100% - 28px);
                 box-shadow: 0px 0px 8px var(--navbar-box-color);
             }
@@ -249,7 +249,7 @@ function navbar(navbarActive) {
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/home.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p class="homeNavbar" style="color: #707070; fill: currentColor; margin: 0;">${SVG.home_icon}</p>
+                        <p class="homeNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.home_icon}</p>
                         <p class="homeNavbar" style="color: #707070; margin: 0; font-size: 14px;">главная</p>
                     </div>
                 </a>
@@ -257,7 +257,7 @@ function navbar(navbarActive) {
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/grades.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0;">${SVG.done_icon}</p>
+                        <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done_icon}</p>
                         <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
                     </div>
                 </a>
@@ -265,7 +265,7 @@ function navbar(navbarActive) {
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/attendance.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0;">${SVG.calendar_icon}</p>
+                        <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar_icon}</p>
                         <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
                     </div>
                 </a>
@@ -273,7 +273,7 @@ function navbar(navbarActive) {
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/other.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p class="otherNavbar" style="color: #707070; fill: currentColor; margin: 0;">${SVG.other_icon}</p>
+                        <p class="otherNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.other_icon}</p>
                         <p class="otherNavbar" style="color: #707070; margin: 0; font-size: 14px;">другое</p>
                     </div>
                 </a>
