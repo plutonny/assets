@@ -97,7 +97,7 @@ logs('info', `Current builds (version ${storageVersion}):
 
 
 /**
- *  Work with theme in site
+ *  Work with theme in site (style id "root-colors-theme" need)
  *      
  *      "type" - load or change, I think all clear
  * 
@@ -141,7 +141,7 @@ async function modal(type, content) {
         if (type == 'info') { 
             output('modal', `<div class="mini_modal">${content}</div>`); 
             await sleep(2000); 
-            doutput('modal', '') 
+            output('modal', '') 
         }
         else if (type == 'max')  { 
             if (deviceStorage('get','theme') == 'dark') { document.getElementById('theme-color').content = '#262626' } 
@@ -180,7 +180,7 @@ function enableLogger() {
 }
 
 /**
- *  Outputted header
+ *  Outputted header (div id "header" need)
  * 
  *      headerText     - text in header
  *      buttonTheme    - (bool) enable or disable theme button
