@@ -98,8 +98,8 @@ async function theme(type) {
             else if (themeCurrent == 'dark')  { deviceStorage('write', 'theme', 'light'); theme('load') };
         } 
         if (type == 'load') {
-                 if (themeCurrent == 'light') { lightThemeColors += '#thSun { display: none; }'; output('root-colors-theme', lightThemeColors); document.getElementById('theme-color').content = '#e9e9e9' } 
-            else if (themeCurrent == 'dark')  { darkThemeColors += '#thMoon { display: none; }'; output('root-colors-theme', darkThemeColors); document.getElementById('theme-color').content = '#111111' }
+                 if (themeCurrent == 'light') { output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`); document.getElementById('theme-color').content = '#e9e9e9' } 
+            else if (themeCurrent == 'dark')  { output('root-colors-theme', `${darkThemeColors} #thMoon { display: none; }`); document.getElementById('theme-color').content = '#111111' }
         }
     } catch (e) { logs('critical', `Error: theme function (${e})`) }
 }
