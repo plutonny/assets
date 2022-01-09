@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 12;
+var debugBuild = 13;
 
 var LOG = [];
 
@@ -63,10 +63,10 @@ function logInHTML(data) {
     var result = '', oneOfLog;
     for (var i = 0; i < data.length; i++) { 
         oneOfLog = data[i]
-             if (oneOfLog[0] == 'info')     { result += `<p style="color: white; background-color: blue;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'warn')     { result += `<p style="color: black; background-color: yellow;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'error')    { result += `<p style="color: white; background-color: red;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'critical') { result += `<p style="color: white; background-color: black;">${oneOfLog[1]}</p>` } 
+             if (oneOfLog[0] == 'info')     { result += `<p style="color: white; background-color: blue; border-radius: 12px;">${oneOfLog[1]}</p>` } 
+        else if (oneOfLog[0] == 'warn')     { result += `<p style="color: black; background-color: yellow; border-radius: 12px;">${oneOfLog[1]}</p>` } 
+        else if (oneOfLog[0] == 'error')    { result += `<p style="color: white; background-color: red; border-radius: 12px;">${oneOfLog[1]}</p>` } 
+        else if (oneOfLog[0] == 'critical') { result += `<p style="color: white; background-color: black; border-radius: 12px;">${oneOfLog[1]}</p>` } 
     }
     return result
 }
@@ -75,11 +75,11 @@ function logInHTML(data) {
  *  Output modal of logs
  */
 function modalLog() { return modal('max', `
-        <div class="update_modal">
+        <div class="update_modal" style="padding-right: 12px; padding-left: 12px;">
             <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">LOG</h1>
             <p style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">${logInHTML(LOG)}</p>
             <div style="display:flex;justify-content:center;">
-                <button style="font-family: 'Montserrat' !important; cursor: pointer; border: 2px solid var(--main-text-color); border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme(1)">Close</button>
+                <button style="font-family: 'Montserrat' !important; cursor: pointer; border: 2px solid var(--root-text-color); background-color: var(--root-button-color); border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">Close</button>
             </div>
         </div>
     `)

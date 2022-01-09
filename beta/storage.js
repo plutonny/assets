@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = '52';
+var storageVersion = '3.0.0', storageBuild = '53';
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -66,8 +66,20 @@ var betaFolder = '';
 if (BETA) {
     betaFolder += 'beta/'; 
     storageVersion += ' beta'; 
-    output('csc11-title-of-page', 'Beta version'); 
+    output('csc11-title-of-page', 'Beta version');
 };
+function outBetaNotes() {
+    if (BETA) {
+        output(`beta`, `
+            <div style="margin-left: 28px; margin-top:48px; margin-right: 28px;">
+                <p><b style="font-family: 'Montserrat' !important;">Перед выходом в релиз:</b></p>
+                <p style="font-family: 'Montserrat' !important;"><b style="font-family: 'Montserrat' !important;">Все файлы .html:</b> поменять директории файлов на релиз</p>
+                <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important;" href="/storage/${betaFolder}debug.html"><b style="font-family: 'Montserrat' !important;">storage.js и service-worker.js:</b></a> переменная BETA</p>
+                <p><button style="font-family: 'Montserrat' !important; border: 2px solid var(--root-text-color); background-color: var(--root-button-color); width: 100%; height: 64px; font-size: 24px; border-radius: 16px;" onclick="modalLog()">Консоль</button></p>
+            </div>
+        `);
+    }
+}
 logs('info', `Current builds (version ${storageVersion}):
     Storage:        build ${deviceStorage('get', 'storageJSBuild')}
     Debug:          build ${deviceStorage('get', 'debugJSBuild')}
@@ -102,6 +114,19 @@ async function theme(type) {
             else if (themeCurrent == 'dark')  { output('root-colors-theme', `${darkThemeColors} #thMoon { display: none; }`); document.getElementById('theme-color').content = '#111111' }
         }
     } catch (e) { logs('critical', `Error: theme function (${e})`) }
+}
+
+/**
+ *  Universal function to navigation on site
+ * 
+ *      siteBack     - backed page (for back button)
+ *      settingsPage - returned to settings page
+ * 
+ */
+async function activePage(type) {
+     if (type == 'siteBack')     { history.back() }
+else if (type == 'settingsPage') { location.assign(`storage/${betaFolder}settings.html`) }
+else                             { con('error', `Error: activities function not found instruction to "${type}"`) }
 }
 
 /**
@@ -198,7 +223,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
             inj += `<button 
                         class="back_button" 
                         style="border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
-                        onclick="activities('backhome')">
+                        onclick="activePage('siteBack')">
                             ${headerSVG.back_button}
                     </button>`
         }
@@ -206,13 +231,13 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
             inj += `<button 
                         class="settings_button" 
                         style="border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
-                        onclick="activities('settings')">
+                        onclick="activePage('settingsPage')">
                             ${headerSVG.settings_button}
                     </button>`
         }
         output(`header`, `
             <div style="margin-right: auto;"></div>
-            <p style="font-size: 20px; margin-bottom: 8px; z-index: 10;">${headerText}</p>
+            <p style="text-align: center; font-size: 20px; margin-bottom: 8px; z-index: 10;">${headerText}</p>
             <div style="margin-right: auto;"></div>
             ${inj}
         `)
