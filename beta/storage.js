@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = '59';
+var storageVersion = '3.0.0', storageBuild = 59;
 var BETA = true;
 
 var CURRDATE = new Date();

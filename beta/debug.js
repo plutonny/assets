@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 15;
+var debugBuild = 16;
 
 var LOG = [];
 
@@ -26,7 +26,7 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
     try {
         await sleep(200)
         if (type == 'info') { 
-            output('modal', `<div class="mini_modal">${content}</div>`); 
+            output('modal', `<div class="mini-modal">${content}</div>`); 
             await sleep(2000); 
             output('modal', '') 
         }
@@ -34,8 +34,11 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
             if (deviceStorage('get','theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
             if (deviceStorage('get','theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
             output('modal', `
-                <div class="max-modal" style="display: flex; justify-content: center; z-index: 100; background-color: var(--primary-bg-color); width: 386px; border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
-                    <style>div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; z-index: 99; }</style>
+                <div class="max-modal">
+                    <style>
+                        div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; z-index: 99; }
+                        div.max-modal { height: 100%; display: flex; justify-content: center; align-items: center; z-index: 100; }
+                    </style>
                     ${content}
                 </div>
             `) 
@@ -106,7 +109,7 @@ function logInHTML(data) {
  *  Output modal of logs
  */
 function modalLog() { return modal('max', `
-        <div style="padding-right: 12px; padding-left: 12px;">
+        <div style="margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
             <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Данные консоли</h1>
             <p style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">${logInHTML(LOG)}</p>
             <div style="display:flex;justify-content:center;">
@@ -117,7 +120,7 @@ function modalLog() { return modal('max', `
 }
 
 function deleteLocalStorage() { modal('max', `
-    <div>
+    <div style="background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
         <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">DELETE</h1>
         <p style="font-family: 'Montserrat' !important; text-align: center;" class="update_modal">Are you sure?</p>
         <div style="display: flex; justify-content: center;">
