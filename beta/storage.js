@@ -17,8 +17,8 @@ var lightThemeColors = `:root {
     --primary-bg-color     :#e9e9e9;
     --secondary-bg-color   :#f5f5f5;
     --root-button-color    :#dddddd;
-    --hover-button-color   :#;
-    --active-button-color  :#;
+    --hover-button-color   :#d2d2d2;
+    --active-button-color  :#c0c0c0;
     --root-navbar-bg-color :#e0e0e0;
     --navbar-box-color     :#aaaaaa;
     --week-green           :#8eff8b;
@@ -31,8 +31,8 @@ var darkThemeColors  = `:root {
     --primary-bg-color     :#181818;
     --secondary-bg-color   :#000000;
     --root-button-color    :#303030;
-    --hover-button-color   :#;
-    --active-button-color  :#;
+    --hover-button-color   :#3a3a3a;
+    --active-button-color  :#454545;
     --root-navbar-bg-color :#111111;
     --navbar-box-color     :#080808;
     --week-green           :#114110;
@@ -280,7 +280,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonTheme && deviceStorage('get', 'enablethemebutton') == 'true' && deviceStorage('get', 'typetheme') == 1) {
             inj += `<button 
                         class="theme_button" 
-                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="theme('change')">
                             ${SVG.theme_button}
                     </button>`
@@ -288,7 +288,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonBack) {
             inj += `<button 
                         class="back_button" 
-                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="activePage('siteBack')">
                             ${SVG.back_button}
                     </button>`
@@ -296,7 +296,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonSettings) {
             inj += `<button 
                         class="settings_button" 
-                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="activePage('settingsPage')">
                             ${SVG.settings_button}
                     </button>`

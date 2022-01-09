@@ -16,13 +16,28 @@
 
 
 /* General colors */
-:root { --root-text-color:#f4f4f4; --primary-bg-color:#202020; }
+:root { 
+    --root-text-color      :#f4f4f4;
+    --active-text-color    :#606060;
+    --primary-bg-color     :#202020;
+    --secondary-bg-color   :#202020;
+    --root-button-color    :#303030;
+    --hover-button-color   :#353535;
+    --active-button-color  :#404040;
+    --root-navbar-bg-color :#202020;
+    --navbar-box-color     :#202020;
+    --week-green           :#00ff00;
+    --week-yellow          :#ffff00;
+    --week-color           :#55555555 !important;
+}
 
 html, body { background-color: var(--primary-bg-color); }
 h1, h2, h3, h4, h5, h6, p, a, b, td, div, li, button, br, input, label { color: var(--root-text-color); }
 h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection, p::selection, a::selection, b::selection, td::selection, div::selection, svg::selection, li::selection, img::selection, button::selection, br::selection, input::selection, label::selection { background-color: var(--week-color); }
 h1::-moz-selection, h2::-moz-selection, h3::-moz-selection, h4::-moz-selection, h5::-moz-selection, h6::-moz-selection, p::-moz-selection, a::-moz-selection, b::-moz-selection, td::-moz-selection, div::-moz-selection, svg::-moz-selection, li::-moz-selection, img::-moz-selection, button::-moz-selection, br::-moz-selection, input::-moz-selection, label::-moz-selection { background-color: var(--week-color); }
 button { background-color: var(--root-button-color); }
+button:hover { background-color: var(--hover-button-color); }
+button:active { background-color: var(--active-button-color); }
 
 
 /* Styles for all sizes */
