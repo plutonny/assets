@@ -75,7 +75,7 @@ function outBetaNotes() {
                 <p><b style="font-family: 'Montserrat' !important;">Перед выходом в релиз:</b></p>
                 <p style="font-family: 'Montserrat' !important;"><b style="font-family: 'Montserrat' !important;">Все файлы .html:</b> поменять директории файлов на релиз</p>
                 <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important;" href="/storage/${betaFolder}debug.html"><b style="font-family: 'Montserrat' !important;">storage.js и service-worker.js:</b></a> переменная BETA</p>
-                <p><button style="font-family: 'Montserrat' !important; border: 2px solid var(--root-text-color); background-color: var(--root-button-color); width: 100%; height: 64px; font-size: 24px; border-radius: 16px;" onclick="modalLog()">Консоль</button></p>
+                <p><button style="font-family: 'Montserrat' !important; border: 2px solid var(--root-text-color); background-color: var(--root-button-color); width: 100%; height: 64px; font-size: 24px; border-radius: 16px; cursor: pointer;" onclick="modalLog()">Консоль</button></p>
             </div>
         `);
     }
@@ -137,10 +137,10 @@ else                             { con('error', `Error: activities function not 
  */
 async function modal(type, content) {
     try {
-        await sleep(300)
+        await sleep(200)
         if (type == 'info') { 
             output('modal', `<div class="mini_modal">${content}</div>`); 
-            await sleep(2500); 
+            await sleep(2000); 
             doutput('modal', '') 
         }
         else if (type == 'max')  { 
