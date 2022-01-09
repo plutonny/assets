@@ -75,7 +75,7 @@ function logInHTML(data) {
  *  Output modal of logs
  */
 function modalLog() { return modal('max', `
-        <div class="update_modal" style="padding-right: 12px; padding-left: 12px;">
+        <div style="padding-right: 12px; padding-left: 12px;">
             <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">LOG</h1>
             <p style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">${logInHTML(LOG)}</p>
             <div style="display:flex;justify-content:center;">

@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = '57';
+var storageVersion = '3.0.0', storageBuild = '58';
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -159,6 +159,15 @@ async function theme(type) {
 }
 
 /**
+ *  For gtable page script
+ */
+async function gTableTheme() {
+    output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`)
+    await sleep(70)
+    document.getElementById('theme-color').content = '#ffffff'
+}
+
+/**
  *  Universal function to navigation on site
  * 
  *      siteBack     - backed page (for back button)
@@ -230,7 +239,10 @@ function enableLogger() {
 function navbar(navbarActive) {
     output('navbar', `
         <style>
+            body { margin-bottom: 73px; }
+
             .navbar {
+                z-index: 10;
                 margin: 8px;
                 padding: 6px;
                 position: fixed;
@@ -255,7 +267,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college-beta/grades.html">
+                <a style="text-decoration: none;" href="/college-beta/gtable.html?table=grades">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done_icon}</p>
                         <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
@@ -263,7 +275,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college-beta/attendance.html">
+                <a style="text-decoration: none;" href="/college-beta/gtable.html?table=attendance">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar_icon}</p>
                         <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
@@ -299,7 +311,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonTheme && deviceStorage('get', 'enablethemebutton') == 'true' && deviceStorage('get', 'typetheme') == 1) {
             inj += `<button 
                         class="theme_button" 
-                        style="z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="theme('change')">
                             ${SVG.theme_button}
                     </button>`
@@ -307,7 +319,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonBack) {
             inj += `<button 
                         class="back_button" 
-                        style="z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="activePage('siteBack')">
                             ${SVG.back_button}
                     </button>`
@@ -315,7 +327,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonSettings) {
             inj += `<button 
                         class="settings_button" 
-                        style="z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="activePage('settingsPage')">
                             ${SVG.settings_button}
                     </button>`
