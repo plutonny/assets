@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = '55';
+var storageVersion = '3.0.0', storageBuild = '56';
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -12,28 +12,32 @@ var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = '';
 if (weekNum % 2 == 1) { weekNameRU = 'желтая'; weekNameEN = 'yellow' } 
 else                  { weekNameRU = 'зеленая'; weekNameEN = 'green' }
 var lightThemeColors = `:root {
-    --root-text-color    :#101520;
-    --active-text-color  :#505050;
-    --primary-bg-color   :#e9e9e9;
-    --secondary-bg-color :#;
-    --root-button-color  :#cccccc;
-    --active-buton-color :#b5b5b5;
-    --root-table-bg      :#f5f5f5;
-    --week-green         :#00e600;
-    --week-yellow        :#e6e600;
-    --week-color         :var(--week-${weekNameEN}) !important;
+    --root-text-color      :#101520;
+    --active-text-color    :#606060;
+    --primary-bg-color     :#e9e9e9;
+    --secondary-bg-color   :#f5f5f5;
+    --root-button-color    :#dddddd;
+    --hover-button-color   :#;
+    --active-button-color  :#;
+    --root-navbar-bg-color :#e0e0e0;
+    --navbar-box-color     :#aaaaaa;
+    --week-green           :#8eff8b;
+    --week-yellow          :#fffa7b;
+    --week-color           :var(--week-${weekNameEN}) !important;
 }`;
 var darkThemeColors  = `:root {
-    --root-text-color    :#f4f4f4;
-    --active-text-color  :#aaaaaa;
-    --primary-bg-color   :#111111;
-    --secondary-bg-color :#;
-    --root-button-color  :#252525;
-    --active-buton-color :#333333;
-    --root-table-bg      :#0a0a0a;
-    --week-green         :#006600;
-    --week-yellow        :#808000;
-    --week-color         :var(--week-${weekNameEN}) !important;
+    --root-text-color      :#f4f4f4;
+    --active-text-color    :#9a9a9a;
+    --primary-bg-color     :#181818;
+    --secondary-bg-color   :#000000;
+    --root-button-color    :#303030;
+    --hover-button-color   :#;
+    --active-button-color  :#;
+    --root-navbar-bg-color :#111111;
+    --navbar-box-color     :#080808;
+    --week-green           :#114110;
+    --week-yellow          :#454306;
+    --week-color           :var(--week-${weekNameEN}) !important;
 }`;
 
 /*  ---  Prepare to work  ---  */
@@ -149,7 +153,7 @@ async function theme(type) {
         } 
         if (type == 'load') {
                  if (themeCurrent == 'light') { output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`); document.getElementById('theme-color').content = '#e9e9e9' } 
-            else if (themeCurrent == 'dark')  { output('root-colors-theme', `${darkThemeColors} #thMoon { display: none; }`); document.getElementById('theme-color').content = '#111111' }
+            else if (themeCurrent == 'dark')  { output('root-colors-theme', `${darkThemeColors} #thMoon { display: none; }`); document.getElementById('theme-color').content = '#181818' }
         }
     } catch (e) { logs('critical', `Error: theme function (${e})`) }
 }
@@ -182,7 +186,7 @@ async function modal(type, content) {
             output('modal', '') 
         }
         else if (type == 'max')  { 
-            if (deviceStorage('get','theme') == 'dark') { document.getElementById('theme-color').content = '#262626' } 
+            if (deviceStorage('get','theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
             if (deviceStorage('get','theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
             output('modal', `
                 <div class="max-modal">
@@ -224,7 +228,6 @@ function enableLogger() {
  * 
  */
 function navbar(navbarActive) {
-    var inj = '';
     output('navbar', `
         <style>
             .navbar {
@@ -232,42 +235,46 @@ function navbar(navbarActive) {
                 padding: 6px;
                 position: fixed;
                 border-radius: 100px;
-                background-color: var(--root-table-bg);
+                background-color: var(--root-navbar-bg-color);
                 top: calc(100% - 79px);
                 width: calc(100% - 28px);
+                box-shadow: 0px 0px 8px var(--navbar-box-color);
             }
+
+            .${navbarActive}Navbar { color: var(--root-text-color) !important; }
+
         </style>
         
-        <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between;">
+        <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-around;">
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/home.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p style="fill: currentColor; margin: 0;">${SVG.home_icon}</p>
-                        <p style="margin: 0; font-size: 14px;">главная</p>
+                        <p class="homeNavbar" style="color: #707070; fill: currentColor; margin: 0;">${SVG.home_icon}</p>
+                        <p class="homeNavbar" style="color: #707070; margin: 0; font-size: 14px;">главная</p>
                     </div>
                 </a>
             </div>
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/grades.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p style="fill: currentColor; margin: 0;">${SVG.done_icon}</p>
-                        <p style="margin: 0; font-size: 14px;">оценки</p>
+                        <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0;">${SVG.done_icon}</p>
+                        <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
                     </div>
                 </a>
             </div>
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/attendance.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p style="fill: currentColor; margin: 0;">${SVG.calendar_icon}</p>
-                        <p style="margin: 0; font-size: 14px;">явка</p>
+                        <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0;">${SVG.calendar_icon}</p>
+                        <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
                     </div>
                 </a>
             </div>
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/other.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p style="fill: currentColor; margin: 0;">${SVG.other_icon}</p>
-                        <p style="margin: 0; font-size: 14px;">другое</p>
+                        <p class="otherNavbar" style="color: #707070; fill: currentColor; margin: 0;">${SVG.other_icon}</p>
+                        <p class="otherNavbar" style="color: #707070; margin: 0; font-size: 14px;">другое</p>
                     </div>
                 </a>
             </div>
@@ -292,7 +299,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonTheme && deviceStorage('get', 'enablethemebutton') == 'true' && deviceStorage('get', 'typetheme') == 1) {
             inj += `<button 
                         class="theme_button" 
-                        style="border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="theme('change')">
                             ${SVG.theme_button}
                     </button>`
@@ -300,7 +307,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonBack) {
             inj += `<button 
                         class="back_button" 
-                        style="border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="activePage('siteBack')">
                             ${SVG.back_button}
                     </button>`
@@ -308,7 +315,7 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
         if (buttonSettings) {
             inj += `<button 
                         class="settings_button" 
-                        style="border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; border: none; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="activePage('settingsPage')">
                             ${SVG.settings_button}
                     </button>`
