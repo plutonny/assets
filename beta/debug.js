@@ -26,7 +26,7 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
     try {
         await sleep(200)
         if (type == 'mini') { 
-            output('modal', `
+            document.getElementById('modal').innerHTML += `
                 <div class="mini-modal">
                     <style>
                         div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; }
@@ -34,7 +34,7 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
                     </style>
                     ${content}
                 </div>
-            `); 
+            `; 
             await sleep(2000);
             output('modal', '') 
         }
