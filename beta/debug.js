@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 19;
+var debugBuild = 20;
 
 var LOG = [];
 
@@ -25,9 +25,17 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
  async function modal(type, content) {
     try {
         await sleep(200)
-        if (type == 'info') { 
-            output('modal', `<div class="mini-modal">${content}</div>`); 
-            await sleep(2000); 
+        if (type == 'mini') { 
+            output('modal', `
+                <div class="mini-modal">
+                    <style>
+                        div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; }
+                        div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }
+                    </style>
+                    ${content}
+                </div>
+            `); 
+            await sleep(2000);
             output('modal', '') 
         }
         else if (type == 'max')  { 
@@ -68,7 +76,7 @@ function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 function logs(type, data) {
          if (type == 'info')     { LOG.push([type, data]); console.info(data) }
     else if (type == 'warn')     { LOG.push([type, data]); console.warn(data) }
-    else if (type == 'error')    { LOG.push([type, data]); console.error(data) }
+    else if (type == 'error')    { LOG.push([type, data]); console.error(data); modal('mini', `<p style="margin: 0;">${data}</p>`) }
     else if (type == 'critical') { LOG.push([type, data]); sessionStorage.setItem('errorPageError', data); sessionStorage.setItem('errorPageLog', logInHTML(LOG)); location.assign(`/assets/${betaFolder}error.html`) }
 }
 
