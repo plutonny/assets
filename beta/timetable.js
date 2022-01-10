@@ -3,19 +3,21 @@
 
 "use strict";
 
-var timetableBuild = 1;
+var timetableBuild = 2;
 
 /**
  *  Example of timetble:
  * 
  *      day: [
- *          [num of pair, name of pair, teacher of pair, cabinet of pair, type (yellow, green or default) of pair],
- *          ...
- *          []
+ *          [num, name, teacher, cabinet, type (yellow, green or default)],
+ *          *count of pairs in day*
  *      ]
  * 
  */
 var TIMETABLE = {
+    0: [
+        ['0', 'Error', 'Error', '0', 'default']
+    ],
     1: [ /* monday */
         ['1', 'Математика', 'Панфилова', '406', 'default'],
         ['2', 'Русский', 'Гобова', '404', 'yellow'],
@@ -61,7 +63,14 @@ var TIMETABLE = {
     }
 }
 
-function pairGet(type) {
+/**
+ *  Work with timetable
+ *
+ *      "type" - timeCurrent (return current pair) or pairOfDay (return list of pairs on this day)
+ *      "data" - secondary varable (in pairOfDay is day of week)
+ * 
+ */
+function pairGet(type, data) {
     var timeNow = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
 
     if (type == 'timeCurrent') {
@@ -97,6 +106,18 @@ function pairGet(type) {
             else if (TIMETABLE.alerts[5][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][1]) { return 'Сейчас 5-я пара' }
         }
         return 'Пары закончились'
+    }
+
+    if (type == 'pairOfDay') {
+        var result = []
+
+        if (data != 0) {
+            for (let i = 0; i < TIMETABLE[data].length; i++) {
+                if (TIMETABLE[data][i][4] == weekNameEN || TIMETABLE[data][i][4] == 'default') { result.push(TIMETABLE[data][i]) }
+            }
+        } else { return false }
+
+        return result
     }
 }
 
