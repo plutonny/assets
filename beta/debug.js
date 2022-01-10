@@ -109,7 +109,7 @@ function logInHTML(data) {
  *  Output modal of logs
  */
 function modalLog() { modal('max', `
-        <div style="margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+        <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
             <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Данные консоли</h1>
             <p style="font-family: 'Montserrat' !important; margin:16px;">${logInHTML(LOG)}</p>
             <div style="display:flex;justify-content:center;">
@@ -122,7 +122,7 @@ function modalLog() { modal('max', `
  *  Output modal to accept clear localStorage
  */
 function deleteLocalStorage() { modal('max', `
-    <div style="background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+    <div style="max-height: 95%; overflow-y: auto; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
         <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Очистить</h1>
         <p style="font-family: 'Montserrat' !important; text-align: center;">Ты уверен?</p>
         <div style="display: flex; justify-content: center;">
@@ -140,7 +140,7 @@ function allInfoErrorModal(selfError, selfLog) {
     var listLocalStrage =  '';
     for (var i = 0; i < localStorage.length; i++) { listLocalStrage += `<p style="font-family: 'Montserrat' !important; background-color: #00000020; border-radius: 12px; padding: 6px; margin: 4px">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>`  }
     modal('max', `
-    <div style="margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+        <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
 
         <h2 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px 6px; background-color: #ff000070; border-radius: 12px; padding: 6px;">${selfError}</h2>
 
