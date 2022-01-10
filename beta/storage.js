@@ -13,7 +13,7 @@ if (weekNum % 2 == 1) { weekNameRU = 'желтая'; weekNameEN = 'yellow' }
 else                  { weekNameRU = 'зеленая'; weekNameEN = 'green' }
 var lightThemeColors = `:root {
     --root-text-color      :#101520;
-    --active-text-color    :#606060;
+    --active-text-color    :#353535;
     --primary-bg-color     :#e9e9e9;
     --secondary-bg-color   :#f5f5f5;
     --root-button-color    :#dddddd;
@@ -27,7 +27,7 @@ var lightThemeColors = `:root {
 }`;
 var darkThemeColors  = `:root {
     --root-text-color      :#f4f4f4;
-    --active-text-color    :#9a9a9a;
+    --active-text-color    :#a9a9a9;
     --primary-bg-color     :#181818;
     --secondary-bg-color   :#000000;
     --root-button-color    :#303030;

@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 17;
+var debugBuild = 18;
 
 var LOG = [];
 
@@ -108,27 +108,53 @@ function logInHTML(data) {
 /**
  *  Output modal of logs
  */
-function modalLog() { return modal('max', `
+function modalLog() { modal('max', `
         <div style="margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
-            <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Данные консоли</h1>
-            <p style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">${logInHTML(LOG)}</p>
+            <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Данные консоли</h1>
+            <p style="font-family: 'Montserrat' !important; margin:16px;">${logInHTML(LOG)}</p>
             <div style="display:flex;justify-content:center;">
                 <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">Закрыть</button>
             </div>
         </div>
     `)
 }
-
+/**
+ *  Output modal to accept clear localStorage
+ */
 function deleteLocalStorage() { modal('max', `
     <div style="background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
-        <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Очистить</h1>
-        <p style="font-family: 'Montserrat' !important; text-align: center;" class="update_modal">Ты уверен?</p>
+        <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Очистить</h1>
+        <p style="font-family: 'Montserrat' !important; text-align: center;">Ты уверен?</p>
         <div style="display: flex; justify-content: center;">
             <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #00ff0020;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">НЕТ</button>
             <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #ff000020;" onclick="localStorage.clear(); document.getElementById('modal').innerHTML = ''; theme('load')">ДА</button>
         </div>
     </div>
 `) 
+}
+
+/**
+ *  Output modal with additional info in error page
+ */
+function allInfoErrorModal(selfError, selfLog) {
+    var listLocalStrage =  '';
+    for (var i = 0; i < localStorage.length; i++) { listLocalStrage += `<p style="font-family: 'Montserrat' !important; background-color: #00000020; border-radius: 12px; padding: 6px; margin: 4px">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>`  }
+    modal('max', `
+    <div style="margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+
+        <h2 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px 6px; background-color: #ff000070; border-radius: 12px; padding: 6px;">${selfError}</h2>
+
+        <p style="font-family: 'Montserrat' !important; margin:16px; text-align: center;">Последние логи:</p>
+        <p style="font-family: 'Montserrat' !important; margin:16px;">${selfLog}</p>
+
+        <p style="font-family: 'Montserrat' !important; margin:16px; text-align: center;">Ключи localStorage:</p>
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">${listLocalStrage}</div>
+
+        <div style="display:flex;justify-content:center;">
+            <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''">Закрыть</button>
+        </div>
+    </div>
+`)
 }
 
 function debugPage() {
