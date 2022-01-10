@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 60;
+var storageVersion = '3.0.0', storageBuild = 61;
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -88,7 +88,7 @@ if (BETA) {
 function outBetaNotes() {
     if (BETA) {
         output(`beta`, `
-            <div style="margin-left: 28px; margin-top:48px; margin-right: 28px;">
+            <div>
                 <p><b style="font-family: 'Montserrat' !important;">Перед выходом в релиз:</b></p>
                 <p style="font-family: 'Montserrat' !important;"><b style="font-family: 'Montserrat' !important;">Все файлы .html:</b> поменять директории файлов на релиз</p>
                 <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important; text-decoration: none;" href="/assets/${betaFolder}debug.html"><b style="font-family: 'Montserrat' !important;">storage.js и service-worker.js:</b></a> переменная BETA</p>
@@ -221,8 +221,6 @@ function enableLogger() {
 function navbar(navbarActive) {
     output('navbar', `
         <style>
-            body { margin-bottom: 73px; }
-
             .navbar {
                 z-index: 10;
                 margin: 8px;
