@@ -16,37 +16,37 @@ var timetableBuild = 1;
  * 
  */
 var TIMETABLE = {
-    monday: [
+    1: [ /* monday */
         ['1', 'Математика', 'Панфилова', '406', 'default'],
         ['2', 'Русский', 'Гобова', '404', 'yellow'],
         ['2', 'Литеатура', 'Гобова', '404', 'green'],
         ['3', 'Физика', 'Момотов', '300', 'default'],
     ],
-    tuesday: [
+    2: [ /* tuesday */
         ['1', 'Математика', 'Панфилова', '406', 'default'],
         ['2', 'Русский', 'Гобова', '404', 'yellow'],
         ['2', 'Литеатура', 'Гобова', '404', 'green'],
         ['3', 'Физика', 'Момотов', '300', 'default'],
     ],
-    wednesday: [
+    3: [ /* wednesday */
         ['1', 'Математика', 'Панфилова', '406', 'default'],
         ['2', 'Русский', 'Гобова', '404', 'yellow'],
         ['2', 'Литеатура', 'Гобова', '404', 'green'],
         ['3', 'Физика', 'Момотов', '300', 'default'],
     ],
-    thursday: [
+    4: [ /* thursday */
         ['1', 'Математика', 'Панфилова', '406', 'default'],
         ['2', 'Русский', 'Гобова', '404', 'yellow'],
         ['2', 'Литеатура', 'Гобова', '404', 'green'],
         ['3', 'Физика', 'Момотов', '300', 'default'],
     ],
-    friday: [
+    5: [ /* friday */
         ['1', 'Математика', 'Панфилова', '406', 'default'],
         ['2', 'Русский', 'Гобова', '404', 'yellow'],
         ['2', 'Литеатура', 'Гобова', '404', 'green'],
         ['3', 'Физика', 'Момотов', '300', 'default'],
     ],
-    saturday: [
+    6: [ /* saturday */
         ['1', 'Математика', 'Панфилова', '406', 'default'],
         ['2', 'Русский', 'Гобова', '404', 'yellow'],
         ['2', 'Литеатура', 'Гобова', '404', 'green'],
@@ -66,26 +66,37 @@ function pairGet(type) {
 
     if (type == 'timeCurrent') {
         /* 1 pair */
-             if (TIMETABLE.alerts[1][0][0] < timeNow && timeNow < TIMETABLE.alerts[1][0][1]) { return 'Сейчас 1-я пара' }
-        else if (TIMETABLE.alerts[1][0][1] < timeNow && timeNow < TIMETABLE.alerts[1][1][0]) { return 'Сейчас пятиминутка' }
-        else if (TIMETABLE.alerts[1][1][0] < timeNow && timeNow < TIMETABLE.alerts[1][1][1]) { return 'Сейчас 1-я пара' }
+        if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 1) {
+                 if (TIMETABLE.alerts[1][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[1][0][1]) { return 'Сейчас 1-я пара' }
+            else if (TIMETABLE.alerts[1][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[1][1][0]) { return 'Сейчас пятиминутка' }
+            else if (TIMETABLE.alerts[1][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[1][1][1]) { return 'Сейчас 1-я пара' }
+        }
         /* 2 pair */
-        else if (TIMETABLE.alerts[2][0][0] < timeNow && timeNow < TIMETABLE.alerts[2][0][1]) { return 'Сейчас 2-я пара' }
-        else if (TIMETABLE.alerts[2][0][1] < timeNow && timeNow < TIMETABLE.alerts[2][1][0]) { return 'Сейчас пятиминутка' }
-        else if (TIMETABLE.alerts[2][1][0] < timeNow && timeNow < TIMETABLE.alerts[2][1][1]) { return 'Сейчас 2-я пара' }
+        if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 2) {
+                 if (TIMETABLE.alerts[2][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][0][1]) { return 'Сейчас 2-я пара' }
+            else if (TIMETABLE.alerts[2][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[2][1][0]) { return 'Сейчас пятиминутка' }
+            else if (TIMETABLE.alerts[2][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][1][1]) { return 'Сейчас 2-я пара' }
+        }
         /* 3 pair */
-        else if (TIMETABLE.alerts[3][0][0] < timeNow && timeNow < TIMETABLE.alerts[3][0][1]) { return 'Сейчас 3-я пара' }
-        else if (TIMETABLE.alerts[3][0][1] < timeNow && timeNow < TIMETABLE.alerts[3][1][0]) { return 'Сейчас пятиминутка' }
-        else if (TIMETABLE.alerts[3][1][0] < timeNow && timeNow < TIMETABLE.alerts[3][1][1]) { return 'Сейчас 3-я пара' }
+        if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 3) {
+                 if (TIMETABLE.alerts[2][1][1] <= timeNow && timeNow <= TIMETABLE.alerts[3][0][0]) { return 'Сейчас перерыв' }
+            else if (TIMETABLE.alerts[3][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[3][0][1]) { return 'Сейчас 3-я пара' }
+            else if (TIMETABLE.alerts[3][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[3][1][0]) { return 'Сейчас пятиминутка' }
+            else if (TIMETABLE.alerts[3][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[3][1][1]) { return 'Сейчас 3-я пара' }
+        }
         /* 4 pair */
-        else if (TIMETABLE.alerts[4][0][0] < timeNow && timeNow < TIMETABLE.alerts[4][0][1]) { return 'Сейчас 4-я пара' }
-        else if (TIMETABLE.alerts[4][0][1] < timeNow && timeNow < TIMETABLE.alerts[4][1][0]) { return 'Сейчас пятиминутка' }
-        else if (TIMETABLE.alerts[4][1][0] < timeNow && timeNow < TIMETABLE.alerts[4][1][1]) { return 'Сейчас 4-я пара' }
+        if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 4) {
+                 if (TIMETABLE.alerts[4][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][0][1]) { return 'Сейчас 4-я пара' }
+            else if (TIMETABLE.alerts[4][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[4][1][0]) { return 'Сейчас пятиминутка' }
+            else if (TIMETABLE.alerts[4][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][1][1]) { return 'Сейчас 4-я пара' }
+        }
         /* 5 pair */
-        else if (TIMETABLE.alerts[5][0][0] < timeNow && timeNow < TIMETABLE.alerts[5][0][1]) { return 'Сейчас 5-я пара' }
-        else if (TIMETABLE.alerts[5][0][1] < timeNow && timeNow < TIMETABLE.alerts[5][1][0]) { return 'Сейчас пятиминутка' }
-        else if (TIMETABLE.alerts[5][1][0] < timeNow && timeNow < TIMETABLE.alerts[5][1][1]) { return 'Сейчас 5-я пара' }
-        else { return 'Пары закончились' }
+        if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 5) {
+                 if (TIMETABLE.alerts[5][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][0][1]) { return 'Сейчас 5-я пара' }
+            else if (TIMETABLE.alerts[5][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][0]) { return 'Сейчас пятиминутка' }
+            else if (TIMETABLE.alerts[5][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][1]) { return 'Сейчас 5-я пара' }
+        }
+        return 'Пары закончились'
     }
 }
 
