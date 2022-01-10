@@ -41,8 +41,11 @@ var darkThemeColors  = `:root {
 }`;
 
 /*  ---  Prepare to work  ---  */
-if (deviceStorage('check', 'theme') || (deviceStorage('get', 'theme') != 'light' || deviceStorage('get', 'theme') != 'dark'))
+if (deviceStorage('check', 'theme'))
     { logs('warn', 'Warning: theme is undefined, set theme to light'); deviceStorage('write', 'theme', 'light') }
+
+if (deviceStorage('get', 'theme') != 'light' && deviceStorage('get', 'theme') != 'dark')
+    { logs('warn', 'Warning: theme is incorrect, set theme to light'); deviceStorage('write', 'theme', 'light') }
 
 if (deviceStorage('check', 'enablethemebutton'))
     { logs('warn', 'Warning: theme button is undefined, turned it on'); deviceStorage('write', 'enablethemebutton', 'true') }
