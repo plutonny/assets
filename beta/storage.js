@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 59;
+var storageVersion = '3.0.0', storageBuild = 60;
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -41,11 +41,20 @@ var darkThemeColors  = `:root {
 }`;
 
 /*  ---  Prepare to work  ---  */
-if (deviceStorage('check', 'theme'))                                                       { logs('warn', 'Warning: theme is undefined, set theme to light');                  deviceStorage('write', 'theme', 'light') }
-if (deviceStorage('check', 'enablethemebutton'))                                           { logs('warn', 'Warning: theme button is undefined, turned it on');                 deviceStorage('write', 'enablethemebutton', 'true') }
-if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'typetheme') == 3)      { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'typetheme', 1) }
-if (deviceStorage('check', 'typetheme'))                                                   { logs('warn', 'Warning: theme type is undefined, set to default');                 deviceStorage('write', 'typetheme', 1) }
-if (deviceStorage('get', 'typetheme') == 2 || deviceStorage('get', 'typetheme') == 3)      { deviceStorage('write', 'enablethemebutton', `false`) }
+if (deviceStorage('check', 'theme') || (deviceStorage('get', 'theme') != 'light' || deviceStorage('get', 'theme') != 'dark'))
+    { logs('warn', 'Warning: theme is undefined, set theme to light'); deviceStorage('write', 'theme', 'light') }
+
+if (deviceStorage('check', 'enablethemebutton'))
+    { logs('warn', 'Warning: theme button is undefined, turned it on'); deviceStorage('write', 'enablethemebutton', 'true') }
+
+if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'typetheme') == 3)
+    { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'typetheme', 1) }
+
+if (deviceStorage('check', 'typetheme'))
+    { logs('warn', 'Warning: theme type is undefined, set to default'); deviceStorage('write', 'typetheme', 1) }
+
+if (deviceStorage('get', 'typetheme') == 2 || deviceStorage('get', 'typetheme') == 3)
+    { deviceStorage('write', 'enablethemebutton', `false`) }
 
 var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
 if (deviceStorage('get', 'typetheme') == 2) { 
