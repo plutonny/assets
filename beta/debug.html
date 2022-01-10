@@ -21,11 +21,6 @@
         <script type="text/javascript"              src="/assets/beta/debug.js"></script>
         <script type="text/javascript"              src="/assets/beta/storage.js"></script>
 
-        <style>
-            button:not(.back_button) { margin-right: 8px; margin-bottom: 8px; border-radius: 10px; border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); height: 32px; width: 128px; cursor: pointer; } 
-            div.flex { display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; }
-        </style>
-
         <noscript>
             <style>
                 html, body { background-color: #202020; }
@@ -41,12 +36,12 @@
         <div class="modal" id="modal"></div>
         <div class="header" id="header"></div>
         <div class="navbar" id="navbar"></div>
+        <div id="beta"></div>
         <div class="debug" id="debug"></div>
 
         <script>
             header(`Debug`, false, true, false);
             debugPage()
         </script>
-        <div id="beta"></div>
     </body>
 </html>

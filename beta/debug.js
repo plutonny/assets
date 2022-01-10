@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 18;
+var debugBuild = 19;
 
 var LOG = [];
 
@@ -158,26 +158,40 @@ function allInfoErrorModal(selfError, selfLog) {
 }
 
 function debugPage() {
-    document.write('<div style="margin: 24px;">')
-
-    document.write('<h1 style="text-align: center;">localStorage:</h1>')
+    var inj = '', localStorageKeys = ''
     for (var i = 0; i < localStorage.length; i++) { 
-        document.write(`
-        <div class="flex" style="margin: 8px 0px; padding: 8px 8px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 16px;">
-            <p style="margin-right: 16px; margin-top:0; margin-bottom:0;">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>
-            <div>
-                <input style="padding-left: 6px; color: var(--root-text-color); border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 10px; background-color: #00000055; height: 26px; width: 98px; margin-left: 4px;" autocomplete="off" type="text" id="lssedit${i}" class="debug_lssedit${i}">
-                <script>lssedit${i}.oninput = async function() { settings("write", "${localStorage.key(i)}", lssedit${i}.value);}</script>
-                <button style="width: 64px; margin: 0px !important; background-color: #ff000055;" onclick="deviceStorage('remove', '${localStorage.key(i)}')">delete</button>
+        localStorageKeys += `
+        <div style="width: fit-content; margin: 8px; padding: 8px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 16px;">
+            <p style="margin: 0; text-align: center;">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>
+            <div style="display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: center;">
+                <input style="padding-left: 6px; color: var(--root-text-color); border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 10px; background-color: #00000055; height: 30px; width: 128px; margin: 4px;" autocomplete="off" type="text" id="lssedit${i}" class="debug_lssedit${i}">
+                <script>lssedit${i}.oninput = async function() { deviceStorage("write", "${localStorage.key(i)}", lssedit${i}.value);}</script>
+                <button style="width: 64px; margin: 4px; background-color: #ff000055;" onclick="deviceStorage('remove', '${localStorage.key(i)}')">delete</button>
             </div>
-        </div>`)
+        </div>`
     }
-    document.write(`<button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; background-color: #ff000055;" onclick="deleteLocalStorage()">DELETE ALL</button>`)
-    document.write(`<button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 32px;" onclick="modalLog()">GET CONSOLE LOG</button>`)
-
-    document.write('<h1 style="text-align: center;">TEST FUNCTIONS:</h1>')
-    
-    document.write('</div>')
+    inj += `<div style="margin: 24px;">
+                <style>
+                    button:not(.back_button) { border-radius: 10px; border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); height: 32px; width: 128px; cursor: pointer; }
+                </style>
+                <h1 style="text-align: center;">Testing functions:</h1>
+                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 16px;" onclick="modalLog()">Получить данные консоли</button>
+                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 16px;" onclick="outBetaNotes()">Вывести бета текст</button>
+                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 16px;" onclick="theme('change')">Сменить тему</button>
+                <h2 style="text-align: center;">Logs</h2>
+                <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
+                    <button style="margin: 4px; background-color: #0000ff55;" onclick="logs('info', 'info test debug')">info</button>
+                    <button style="margin: 4px; background-color: #ffff0055;" onclick="logs('warn', 'warn test debug')">warn</button>
+                    <button style="margin: 4px; background-color: #ff000055;" onclick="logs('error', 'error test debug')">error</button>
+                    <button style="margin: 4px; background-color: #00000055;" onclick="logs('critical', 'critical test debug')">critical</button>
+                </div>
+                <h1 style="text-align: center;">localStorage:</h1>
+                <div style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly; align-items: center;">
+                    ${localStorageKeys}
+                </div>
+                <button style="margin-top: 32px; width: 100%; height: 64px; font-size: 24px; border-radius: 16px; background-color: #ff000055;" onclick="deleteLocalStorage()">DELETE ALL</button>
+            </div>`
+    output('debug', inj)
 }
 
 deviceStorage('write', 'debugJSBuild', debugBuild);
