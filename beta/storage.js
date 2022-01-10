@@ -66,9 +66,9 @@ if (deviceStorage('get', 'typetheme') == 2) {
 }
 
 if (deviceStorage('get', 'typetheme') == 3) {
-    var themeTimeFrom = '', themeTimeTo = '', themeTimeNow = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
-    themeTimeFrom = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
-    themeTimeTo = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
+    var themeTimeNow = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
+    var themeTimeFrom = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
+    var themeTimeTo = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
     if (themeTimeFrom < themeTimeTo) {
           if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
         else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
@@ -135,14 +135,15 @@ var SVG = {
 }
 
 logs('info', `Current builds (version ${storageVersion}):
-    Storage:        build ${deviceStorage('get', 'storageJSBuild')}
-    Debug:          build ${deviceStorage('get', 'debugJSBuild')}
-    Home:           build ${deviceStorage('get', 'homeBuildPage')}
-    Timetableweek:  build ${deviceStorage('get', 'timetableweekBuildPage')}
-    Other:          build ${deviceStorage('get', 'otherBuildPage')}
-    Gtable:         build ${deviceStorage('get', 'gtableBuildPage')}
-    Simple:         build ${deviceStorage('get', 'simpleBuildPage')}
-    Support:        build ${deviceStorage('get', 'supportBuildPage')}
+    { Storage JS:     build ${deviceStorage('get', 'storageJSBuild')} },
+    { Timeable JS:    build ${deviceStorage('get', 'timetableJSBuild')} },
+    { Debug JS:       build ${deviceStorage('get', 'debugJSBuild')} },
+    { Home:           build ${deviceStorage('get', 'homeBuildPage')} },
+    { Timetableweek:  build ${deviceStorage('get', 'timetableweekBuildPage')} },
+    { Other:          build ${deviceStorage('get', 'otherBuildPage')} },
+    { Gtable:         build ${deviceStorage('get', 'gtableBuildPage')} },
+    { Simple:         build ${deviceStorage('get', 'simpleBuildPage')} },
+    { Support:        build ${deviceStorage('get', 'supportBuildPage')} }.
 `);
 
 /*  ---  Functions to work  ---  */
