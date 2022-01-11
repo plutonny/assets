@@ -9,8 +9,8 @@ var BETA = true;
 
 var CURRDATE = new Date();
 var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = ''; 
-if (weekNum % 2 == 1) { weekNameRU = 'желтая'; weekNameEN = 'yellow' } 
-else                  { weekNameRU = 'зеленая'; weekNameEN = 'green' }
+if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green' } 
+else                  { weekNameRU = 'желтая'; weekNameEN = 'yellow' }
 var lightThemeColors = `:root {
     --root-text-color      :#101520;
     --active-text-color    :#353535;
