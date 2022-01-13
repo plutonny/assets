@@ -121,4 +121,22 @@ function pairGet(type, data) {
     }
 }
 
+function pairHTML(pairList) {
+    var result = '', inj = ''
+    for (var i = 0; i < pairList.length; i++) {
+        if (pairList[i][4] == 'default') { inj = '--root-button-color' }
+        else { inj = `--week-${weekNameEN}` }
+        result += `
+            <div style="background-color: var(${inj});">
+                <div style="display: flex;">
+                    <p>${pairList[i][0]}. ${pairList[i][1]}</p>
+                    <div style="margin-right: auto;"></div>
+                    <p>${pairList[i][3]}</p>
+                </div>
+            </div>
+        `
+    }
+    return result
+}
+
 deviceStorage('write', 'timetableJSBuild', timetableBuild)
