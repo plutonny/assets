@@ -20,8 +20,8 @@ var lightThemeColors = `:root {
     --active-button-color  :#c0c0c0;
     --root-navbar-bg-color :#e0e0e0;
     --navbar-box-color     :#aaaaaa;
-    --week-green           :#8eff8b;
-    --week-yellow          :#fffa7b;
+    --week-green           :#7cf779;
+    --week-yellow          :#f3ee67;
     --week-color           :var(--week-${weekNameEN}) !important;
 }`;
 var darkThemeColors  = `:root {
