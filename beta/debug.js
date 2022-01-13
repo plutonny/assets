@@ -9,52 +9,9 @@ var BETA = true;
 var CURRDATE = new Date();
 var LOG = [];
 
-var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = ''; 
-if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green' } 
-else                  { weekNameRU = 'желтая'; weekNameEN = 'yellow' }
-
-if (deviceStorage('check', 'theme'))
-    { logs('warn', 'Warning: theme is undefined, set theme to light'); deviceStorage('write', 'theme', 'light') }
-
-if (deviceStorage('get', 'theme') != 'light' && deviceStorage('get', 'theme') != 'dark')
-    { logs('warn', 'Warning: theme is incorrect, set theme to light'); deviceStorage('write', 'theme', 'light') }
-
-if (deviceStorage('check', 'enablethemebutton'))
-    { logs('warn', 'Warning: theme button is undefined, turned it on'); deviceStorage('write', 'enablethemebutton', 'true') }
-
-if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'typetheme') == 3)
-    { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'typetheme', 1) }
-
-if (deviceStorage('check', 'typetheme'))
-    { logs('warn', 'Warning: theme type is undefined, set to default'); deviceStorage('write', 'typetheme', 1) }
-
-if (deviceStorage('get', 'typetheme') == 2 || deviceStorage('get', 'typetheme') == 3)
-    { deviceStorage('write', 'enablethemebutton', `false`) }
-
-var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
-if (deviceStorage('get', 'typetheme') == 2) { 
-      if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { deviceStorage('write', 'theme', 'light') } 
-    else                                                                                   { deviceStorage('write', 'theme', 'dark') } 
-}
-
-if (deviceStorage('get', 'typetheme') == 3) {
-    var themeTimeNow = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
-    var themeTimeFrom = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
-    var themeTimeTo = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
-    if (themeTimeFrom < themeTimeTo) {
-          if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
-        else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
-    }
-    else if (themeTimeFrom > themeTimeTo) {
-          if ((themeTimeFrom < themeTimeNow && themeTimeNow < 23) || (0 < themeTimeNow && themeTimeNow < themeTimeTo)) { deviceStorage('write', 'theme', 'light') } 
-        else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
-    }
-}
-
 var betaFolder = '';
 if (BETA) {
     betaFolder += 'beta/'; 
-    storageVersion += ' beta'; 
     output('csc11-title-of-page', 'Beta version');
 };
 
@@ -291,4 +248,4 @@ function debugPage() {
     output('debug', inj)
 }
 
-deviceStorage('write', 'debugJSBuild', debugBuild);
+deviceStorage('write', 'preloadJSBuild', preloadBuild);

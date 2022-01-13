@@ -6,6 +6,10 @@
 /*  ---  Global variables  ---  */
 var storageVersion = '3.0.0', storageBuild = 62;
 
+var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = ''; 
+if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green' } 
+else                  { weekNameRU = 'желтая'; weekNameEN = 'yellow' }
+
 var lightThemeColors = `:root {
     --root-text-color      :#101520;
     --active-text-color    :#353535;
@@ -36,6 +40,48 @@ var darkThemeColors  = `:root {
 }`;
 
 /*  ---  Prepare to work  ---  */
+if (deviceStorage('check', 'theme'))
+    { logs('warn', 'Warning: theme is undefined, set theme to light'); deviceStorage('write', 'theme', 'light') }
+
+if (deviceStorage('get', 'theme') != 'light' && deviceStorage('get', 'theme') != 'dark')
+    { logs('warn', 'Warning: theme is incorrect, set theme to light'); deviceStorage('write', 'theme', 'light') }
+
+if (deviceStorage('check', 'enablethemebutton'))
+    { logs('warn', 'Warning: theme button is undefined, turned it on'); deviceStorage('write', 'enablethemebutton', 'true') }
+
+if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'typetheme') == 3)
+    { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'typetheme', 1) }
+
+if (deviceStorage('check', 'typetheme'))
+    { logs('warn', 'Warning: theme type is undefined, set to default'); deviceStorage('write', 'typetheme', 1) }
+
+if (deviceStorage('get', 'typetheme') == 2 || deviceStorage('get', 'typetheme') == 3)
+    { deviceStorage('write', 'enablethemebutton', `false`) }
+
+var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
+if (deviceStorage('get', 'typetheme') == 2) { 
+      if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { deviceStorage('write', 'theme', 'light') } 
+    else                                                                                   { deviceStorage('write', 'theme', 'dark') } 
+}
+
+if (deviceStorage('get', 'typetheme') == 3) {
+    var themeTimeNow = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
+    var themeTimeFrom = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
+    var themeTimeTo = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
+    if (themeTimeFrom < themeTimeTo) {
+          if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
+        else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
+    }
+    else if (themeTimeFrom > themeTimeTo) {
+          if ((themeTimeFrom < themeTimeNow && themeTimeNow < 23) || (0 < themeTimeNow && themeTimeNow < themeTimeTo)) { deviceStorage('write', 'theme', 'light') } 
+        else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
+    }
+}
+
+if (BETA) {
+    storageVersion += ' beta';
+}
+
 function outBetaNotes() {
     if (BETA) {
         output(`beta`, `
@@ -52,7 +98,7 @@ function outBetaNotes() {
 logs('info', `Current builds (version ${storageVersion}):
     { Storage JS:     build ${deviceStorage('get', 'storageJSBuild')} },
     { Timeable JS:    build ${deviceStorage('get', 'timetableJSBuild')} },
-    { Debug JS:       build ${deviceStorage('get', 'debugJSBuild')} },
+    { Preload JS:     build ${deviceStorage('get', 'preloadJSBuild')} },
     { Home:           build ${deviceStorage('get', 'homeBuildPage')} },
     { Timetableweek:  build ${deviceStorage('get', 'timetableweekBuildPage')} },
     { Other:          build ${deviceStorage('get', 'otherBuildPage')} },
