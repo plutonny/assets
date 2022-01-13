@@ -98,7 +98,7 @@ function outBetaNotes() {
 logs('info', `Current builds (version ${storageVersion}):
     { Storage JS:     build ${deviceStorage('get', 'storageJSBuild')} },
     { Timeable JS:    build ${deviceStorage('get', 'timetableJSBuild')} },
-    { Preload JS:     build ${deviceStorage('get', 'preloadJSBuild')} },
+    { Debug JS:       build ${deviceStorage('get', 'debugJSBuild')} },
     { Home:           build ${deviceStorage('get', 'homeBuildPage')} },
     { Timetableweek:  build ${deviceStorage('get', 'timetableweekBuildPage')} },
     { Other:          build ${deviceStorage('get', 'otherBuildPage')} },

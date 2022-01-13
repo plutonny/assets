@@ -1,9 +1,9 @@
-/*       -------       Preload file       -------       */
+/*       -------        Debug file        -------       */
 /*     -------       Made by plutonny       -------     */
 
 "use strict";
 
-var preloadBuild = 21;
+var debugBuild = 21;
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -234,10 +234,10 @@ function debugPage() {
                 <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 16px;" onclick="theme('change')">Сменить тему</button>
                 <h2 style="text-align: center;">Logs</h2>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
-                    <button style="margin: 4px; background-color: #0000ff55;" onclick="logs('info', 'info test debug')">info</button>
-                    <button style="margin: 4px; background-color: #ffff0055;" onclick="logs('warn', 'warn test debug')">warn</button>
-                    <button style="margin: 4px; background-color: #ff000055;" onclick="logs('error', 'error test debug')">error</button>
-                    <button style="margin: 4px; background-color: #00000055;" onclick="logs('critical', 'critical test debug')">critical</button>
+                    <button style="margin: 4px; background-color: #0000ff55;" onclick="logs('info', 'Info: debug.js is calling')">info</button>
+                    <button style="margin: 4px; background-color: #ffff0055;" onclick="logs('warn', 'Warning: debug.js is calling')">warn</button>
+                    <button style="margin: 4px; background-color: #ff000055;" onclick="logs('error', 'Error: debug.js is calling')">error</button>
+                    <button style="margin: 4px; background-color: #00000055;" onclick="logs('critical', 'Critical: debug.js is calling')">critical</button>
                 </div>
                 <h1 style="text-align: center;">localStorage:</h1>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly; align-items: center;">
@@ -248,4 +248,4 @@ function debugPage() {
     output('debug', inj)
 }
 
-deviceStorage('write', 'preloadJSBuild', preloadBuild);
+deviceStorage('write', 'debugJSBuild', debugBuild);
