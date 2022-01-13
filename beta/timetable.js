@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 3;
+var timetableBuild = 4;
 
 /**
  *  Example of timetble:
@@ -45,8 +45,8 @@ var TIMETABLE = {
         ['1', 'Физика', 'Момотов, Якуня', 'л. 300', 'yellow'],
         ['1', 'Физика', 'Момотов', 'л. 300', 'green'],
         ['2', 'Математика', 'Панфилова', 'к. 406', 'default'],
-        ['3', 'Индивидуальный проект', 'Солодкая', 'к. 226', 'yellow'],
-        ['3', 'Индивидуальный проект', 'Солодкая', 'чит. зал', 'green']
+        ['3', 'Индив. проект', 'Солодкая', 'к. 226', 'yellow'],
+        ['3', 'Индив. проект', 'Солодкая', 'чит. зал', 'green']
     ],
     6: [ /* saturday */
         ['1', 'Английский язык', 'Венедиктова, Черкасова', 'к. 404а/311', 'default'],
@@ -127,12 +127,13 @@ function pairHTML(pairList) {
         if (pairList[i][4] == 'default') { inj = '--root-button-color' }
         else { inj = `--week-${weekNameEN}` }
         result += `
-            <div style="background-color: var(${inj});">
+            <div style="background-color: var(${inj}); height: 46px; padding: 10px; margin: 16px 0px; border-radius: 16px;">
                 <div style="display: flex;">
-                    <p>${pairList[i][0]}. ${pairList[i][1]}</p>
+                    <p style="margin: 0; font-size: 18px;">${pairList[i][0]}. ${pairList[i][1]}</p>
                     <div style="margin-right: auto;"></div>
-                    <p>${pairList[i][3]}</p>
+                    <p style="margin: 0; font-size: 14px;">${pairList[i][3]}</p>
                 </div>
+                <p style="margin: 0px 0px 0px 20px; font-size: 14px;">${pairList[i][2]}</p>
             </div>
         `
     }
