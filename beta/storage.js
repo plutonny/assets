@@ -162,7 +162,7 @@ function enableLogger() {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register(`/assets/${betaFolder}service-worker.js`).then(
                 function(registration) {
-                    if (BETA) { logs('info', `ServiceWorker: registration successful with scope ${registration.scope}`)}
+                    if (BETA) { logs('info', `ServiceWorker: registration with scope ${registration.scope}`)}
                 },
                 function(e) { 
                     logs('error', `Error: ServiceWorker registration failed: ${e}`)
