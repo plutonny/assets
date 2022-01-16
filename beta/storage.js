@@ -151,7 +151,7 @@ async function gTableTheme() {
 async function activePage(type) {
      if (type == 'siteBack')     { history.back() }
 else if (type == 'settingsPage') { location.assign(`/assets/${betaFolder}settings.html`) }
-else                             { con('error', `Error: activities function not found instruction to "${type}"`) }
+else                             { logs('error', `Error: activities function not found instruction to "${type}"`) }
 }
 
 /**
