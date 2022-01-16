@@ -1,5 +1,3 @@
-var BETA = true;
-
 var CACHE_NAME = '';
 
 if (BETA) { CACHE_NAME = 'plutonny-csc11-beta' } else { CACHE_NAME = 'plutonny-csc11' }
