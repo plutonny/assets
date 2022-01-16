@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 4;
+var timetableBuild = 5;
 
 /**
  *  Example of timetble:
@@ -129,11 +129,11 @@ function pairHTML(pairList) {
         result += `
             <div style="background-color: var(${inj}); height: 46px; padding: 10px; margin: 16px 0px; border-radius: 16px;">
                 <div style="display: flex;">
-                    <p style="margin: 0px 0px 0px 4px; font-size: 18px;">${pairList[i][0]}. ${pairList[i][1]}</p>
+                    <p style="margin: 0px 0px 0px 4px; font-size: 18px;">${pairList[i][0]}.<b style="margin: 0px 0px 0px 4px; font-size: 18px; font-family: 'Montserrat';">${pairList[i][1]}</b></p>
                     <div style="margin-right: auto;"></div>
                     <p style="margin: 0px 4px 0px 0px; font-size: 14px;">${pairList[i][3]}</p>
                 </div>
-                <p style="margin: 0px 0px 0px 25px; font-size: 14px;">${pairList[i][2]}</p>
+                <b style="margin: 0px 0px 0px 25px; font-size: 14px; font-family: 'Montserrat';">${pairList[i][2]}</b>
             </div>
         `
     }
