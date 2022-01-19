@@ -151,10 +151,10 @@ function logInHTML(data) {
     var result = '', oneOfLog;
     for (var i = 0; i < data.length; i++) { 
         oneOfLog = data[i]
-             if (oneOfLog[0] == 'info')     { result += `<p style="box-shadow: 0px 0px 8px var(--navbar-box-color); color: var(--root-text-color); background-color: #0000FF70; border-radius: 12px; padding: 6px;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'warn')     { result += `<p style="box-shadow: 0px 0px 8px var(--navbar-box-color); color: var(--root-text-color); background-color: #ffff0070; border-radius: 12px; padding: 6px;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'error')    { result += `<p style="box-shadow: 0px 0px 8px var(--navbar-box-color); color: var(--root-text-color); background-color: #ff000070; border-radius: 12px; padding: 6px;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'critical') { result += `<p style="box-shadow: 0px 0px 8px var(--navbar-box-color); color: var(--root-text-color); background-color: #00000070; border-radius: 12px; padding: 6px;">${oneOfLog[1]}</p>` } 
+             if (oneOfLog[0] == 'info')     { result += `<p style="background-color: #0000FF70; border-radius: 12px; padding: 4px 8px;">${oneOfLog[1]}</p>` } 
+        else if (oneOfLog[0] == 'warn')     { result += `<p style="background-color: #ffff0070; border-radius: 12px; padding: 4px 8px;">${oneOfLog[1]}</p>` } 
+        else if (oneOfLog[0] == 'error')    { result += `<p style="background-color: #ff000070; border-radius: 12px; padding: 4px 8px;">${oneOfLog[1]}</p>` } 
+        else if (oneOfLog[0] == 'critical') { result += `<p style="background-color: #00000070; border-radius: 12px; padding: 4px 8px;">${oneOfLog[1]}</p>` } 
     }
     return result
 }
