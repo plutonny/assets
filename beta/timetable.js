@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 5;
+var timetableBuild = 6;
 
 /**
  *  Example of timetble:
@@ -66,7 +66,7 @@ var TIMETABLE = {
  *  Work with timetable
  *
  *      "type" - timeCurrent (return current pair) or pairOfDay (return list of pairs on this day)
- *      "data" - secondary varable (in pairOfDay is day of week)
+ *      "data" - secondary varable (in pairOfDay is list: [week day, color week])
  * 
  */
 function pairGet(type, data) {
@@ -111,9 +111,9 @@ function pairGet(type, data) {
     if (type == 'pairOfDay') {
         var result = []
 
-        if (data != 0) {
-            for (let i = 0; i < TIMETABLE[data].length; i++) {
-                if (TIMETABLE[data][i][4] == weekNameEN || TIMETABLE[data][i][4] == 'default') { result.push(TIMETABLE[data][i]) }
+        if (data[0] != 0) {
+            for (let i = 0; i < TIMETABLE[data[0]].length; i++) {
+                if (TIMETABLE[data[0]][i][4] == data[1] || TIMETABLE[data[0]][i][4] == 'default') { result.push(TIMETABLE[data[0]][i]) }
             }
         } else { return false }
 
@@ -137,6 +137,18 @@ function pairHTML(pairList) {
             </div>
         `
     }
+    return result
+}
+
+function pairTableHTML() {
+    var result = ''
+
+    for (var i = 1; i <= 6; i++) {
+        for (var j = 0; j < TIMETABLE[i].length; j++) {
+            result += `<p>${TIMETABLE[i][j]}</p>`
+        }
+    }
+
     return result
 }
 
