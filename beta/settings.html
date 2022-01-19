@@ -41,12 +41,12 @@
         <div class="settings" id="settings"></div>
 
         <script>
-            var enthemechk = '', tyth1 = '', tyth2 = '', tyth3 = '', tyti1 = '', tyti2 = '', ti1 = '', ti2 = '';
+            var tyti1 = '', tyti2 = '', ti1 = '', ti2 = '';
 
             if (!deviceStorage('check', 'tytheme3time')) { 
-                tyti1 += `value="${ti1}"`; tyti2 += `value="${ti2}"` 
                 ti1 = deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(2) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4); 
                 ti2 = deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(7) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9);
+                tyti1 += `value="${ti1}"`; tyti2 += `value="${ti2}"`
             }
             function tytheme3(setting) { 
                 if (setting == 'gettime') { 
@@ -69,10 +69,6 @@
                 }
             }
 
-            if (deviceStorage('check', 'enablethemebutton')) { deviceStorage('write', 'enablethemebutton', 'true') }
-            if (deviceStorage('get', 'enablethemebutton') == 'true') { enthemechk += 'checked' }
-            if (deviceStorage('get', 'themeType') == 1) { tyth1 = 'checked' } else if (deviceStorage('get', 'themeType') == 2) { tyth2 = 'checked' } else if (deviceStorage('get', 'themeType') == 3) { tyth3 = 'checked' }
-
             output(`settings`, `
             <style>
                 .settings { background-color: var(--secondary-bg-color); border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px 24px 73px 24px; min-height: calc(100vh - 100px); }
@@ -89,19 +85,19 @@
                 <p>Работа смены темы:</p>
                 <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start;">
                     <div>
-                        <input type="radio" id="tytheme1" name="tytheme" ${tyth1} onchange="tytheme(1)" style="margin-right: 12px;" value="theme">
+                        <input type="radio" id="tytheme1" name="tytheme" ${deviceStorage('get', 'themeType') == 1 ? 'checked' : ''} onchange="tytheme(1)" style="margin-right: 12px;" value="theme">
                         <label for="tytheme1">по нажатию кнопки</label>
                     </div>
                     <div style="margin: 6px 0px 6px 16px;">
-                        <input type="checkbox" id="entheme" name="entheme" ${enthemechk} onchange="entheme(${deviceStorage('get', 'enablethemebutton')})" style="margin-right: 6px;" value="theme">
+                        <input type="checkbox" id="entheme" name="entheme" ${deviceStorage('get', 'themeEnableThemeButton') == 'true' ? 'checked' : ''} onchange="entheme(${deviceStorage('get', 'themeEnableThemeButton')})" style="margin-right: 6px;" value="theme">
                         <label for="entheme">включить кнопку смены темы</label>
                     </div>
                     <div>
-                        <input type="radio" id="tytheme2" name="tytheme" ${tyth2} onchange="tytheme(2)" style="margin-right: 12px;" value="theme">
+                        <input type="radio" id="tytheme2" name="tytheme" ${deviceStorage('get', 'themeType') == 2 ? 'checked' : ''} onchange="tytheme(2)" style="margin-right: 12px;" value="theme">
                         <label for="tytheme2">по времени рассвета/заката</label>
                     </div>
                     <div style="margin-top: 3px;">
-                        <input type="radio" id="tytheme3" name="tytheme" ${tyth3} onchange="tytheme(3)" onclick="tytheme3('settime')" style="margin-right: 12px;" value="theme">
+                        <input type="radio" id="tytheme3" name="tytheme" ${deviceStorage('get', 'themeType') == 3 ? 'checked' : ''} onchange="tytheme(3)" onclick="tytheme3('settime')" style="margin-right: 12px;" value="theme">
                         <label for="tytheme3">по времени: ${tytheme3('gettime')}</label>
                     </div>
                 </div>
@@ -112,10 +108,10 @@
             var etcb = document.getElementById('entheme');
             if (deviceStorage('get', 'themeType') == 2) { etcb.setAttribute('disabled', 'disabled') } else if (deviceStorage('get', 'themeType') == 3) { etcb.setAttribute('disabled', 'disabled') }
 
-            function entheme(tof) { etcb.setAttribute('disabled', 'disabled'); deviceStorage('write', 'enablethemebutton', `${!tof}`)}
+            function entheme(tof) { etcb.setAttribute('disabled', 'disabled'); deviceStorage('write', 'themeEnableThemeButton', `${!tof}`)}
             
             /* 1 - theme button (or none); 2 - sunrise/sunset; 3 - custom time */
-            function tytheme(type) { deviceStorage('write', 'themeType', `${type}`); if (type == 1) { entheme(false); deviceStorage('write', 'enablethemebutton', `true`); etcb.setAttribute('checked', 'checked')} if (type == 2 || type == 3) {deviceStorage('write', 'enablethemebutton', `false`); etcb.setAttribute('disabled', 'disabled'); etcb.removeAttribute('checked')} }
+            function tytheme(type) { deviceStorage('write', 'themeType', `${type}`); if (type == 1) { entheme(false); deviceStorage('write', 'themeEnableThemeButton', `true`); etcb.setAttribute('checked', 'checked')} if (type == 2 || type == 3) {deviceStorage('write', 'themeEnableThemeButton', `false`); etcb.setAttribute('disabled', 'disabled'); etcb.removeAttribute('checked')}; theme('load') }
 
             username.oninput = async function() { deviceStorage('write', 'username', username.value); usernamesave.innerHTML = 'сохранено'; await sleep(2500); usernamesave.innerHTML = '' }
             

@@ -46,11 +46,11 @@ if (deviceStorage('check', 'theme'))
 if (deviceStorage('get', 'theme') != 'light' && deviceStorage('get', 'theme') != 'dark')
     { logs('warn', 'Warning: theme is incorrect, set theme to light'); deviceStorage('write', 'theme', 'light') }
 
-if (deviceStorage('check', 'enablethemebutton'))
-    { logs('warn', 'Warning: theme button is undefined, turned it on'); deviceStorage('write', 'enablethemebutton', 'true') }
+if (deviceStorage('check', 'themeEnableThemeButton'))
+    { logs('warn', 'Warning: theme button is undefined, turned it on'); deviceStorage('write', 'themeEnableThemeButton', 'true') }
 
 if (deviceStorage('get', 'themeType') == 2 || deviceStorage('get', 'themeType') == 3)
-    { deviceStorage('write', 'enablethemebutton', `false`) }
+    { deviceStorage('write', 'themeEnableThemeButton', `false`) }
 
 if (BETA) {
     storageVersion += ' beta';
@@ -247,7 +247,7 @@ function navbar(navbarActive) {
 function header(headerText, buttonTheme, buttonBack) {
     try {
         var inj = '';
-        if (buttonTheme && deviceStorage('get', 'enablethemebutton') == 'true' && deviceStorage('get', 'themeType') == 1) {
+        if (buttonTheme && deviceStorage('get', 'themeEnableThemeButton') == 'true' && deviceStorage('get', 'themeType') == 1) {
             inj += `<button 
                         class="theme_button" 
                         style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
