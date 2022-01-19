@@ -25,9 +25,7 @@
             div.setting_tytheme { display: flex; flex-direction: column; align-items: flex-start; margin-right: 12px; margin-bottom: 18px; }
             div.setting_tytheme_in { display: flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start; }
             input.setting_username { padding-left: 6px; color: var(--root-text-color); border: none; border-radius: 18px; background-color: var(--primary-bg-color); height: 22px; width: 156px; margin-left: 4px; }
-            input.setting_entheme, input.setting_tytheme, input.setting_nytheme { margin-right: 12px; }
-            p.usernamesave { font-size: 14px; margin-left: 4px; opacity: 0.5; user-select: none; }
-            input[type="time"]::-webkit-calendar-picker-indicator { display: none; }
+            input.setting_entheme, input.setting_tytheme { margin-right: 12px; }
         </style>
         
         <script type="text/javascript"              src="/assets/beta/debug.js"></script>
@@ -47,18 +45,17 @@
     </head>
     <body>
         <div class="modal" id="modal"></div>
-        <div class="header" id="header"></div>
+        <div class="header" id="header"><script>header(`Настройки`, true, true)</script></div>
         <div class="settings" id="settings"></div>
-        <script>
-            header(`Настройки`, true, true, false);
 
+        <script>
             try { var ti1 = '', ti2 = ''; 
                 ti1 = deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(2) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4); 
                 ti2 = deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(7) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9);
             } catch {}
             function tytheme3(setting) { 
                 if (setting == 'gettime') { 
-                      if (deviceStorage('get', 'tytheme3time') == null || deviceStorage('get', 'tytheme3time') == '') { return 'не назначено' } 
+                      if (deviceStorage('check', 'tytheme3time')) { return 'не назначено' } 
                     else { return `${ti1} - ${ti2}` } 
                 }
                 else if (setting == 'settime') {
@@ -77,34 +74,58 @@
                 }
             }
 
-            var enthemechk = '', nythemechk = '', tyth1 = '', tyth2 = '', tyth3 = '', tyti1 = '', tyti2 = '';
-            if (deviceStorage('get', 'enablethemebutton') == null || deviceStorage('get', 'enablethemebutton') == '') { deviceStorage('write', 'enablethemebutton', 'true') }
+            var enthemechk = '', tyth1 = '', tyth2 = '', tyth3 = '', tyti1 = '', tyti2 = '';
+            if (deviceStorage('check', 'enablethemebutton')) { deviceStorage('write', 'enablethemebutton', 'true') }
             if (deviceStorage('get', 'enablethemebutton') == 'true') { enthemechk += 'checked'; }
-            if (!(deviceStorage('get', 'tytheme3time') == null || deviceStorage('get', 'tytheme3time') == '')) { tyti1 += `value="${ti1}"`; tyti2 += `value="${ti2}"` }
-            if (deviceStorage('get', 'typetheme') == null || deviceStorage('get', 'typetheme') == '') { deviceStorage('write', 'typetheme', 1) }
-            if (deviceStorage('get', 'typetheme') == 1) { tyth1 = 'checked' } else if (deviceStorage('get', 'typetheme') == 2) { tyth2 = 'checked' } else if (deviceStorage('get', 'typetheme') == 3) { tyth3 = 'checked' }
+            if (!deviceStorage('check', 'tytheme3time')) { tyti1 += `value="${ti1}"`; tyti2 += `value="${ti2}"` }
+            if (deviceStorage('check', 'themeType')) { deviceStorage('write', 'themeType', 1) }
+            if (deviceStorage('get', 'themeType') == 1) { tyth1 = 'checked' } else if (deviceStorage('get', 'themeType') == 2) { tyth2 = 'checked' } else if (deviceStorage('get', 'themeType') == 3) { tyth3 = 'checked' }
 
             output(`settings`, `
             <style>
                 .settings { background-color: var(--secondary-bg-color); border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px 24px 73px 24px; min-height: calc(100vh - 100px); }
+                input[type="time"]::-webkit-calendar-picker-indicator { display: none; }
             </style>
-            <div class="setting_username"><p style="margin-right:8px;">Ник: </p><input autocomplete="off" type="text" id="username" class="setting_username"><p id="usernamesave" class="usernamesave" style="padding-left: 8px;"></p></div>
-            <div class="setting_entheme"><input ${enthemechk} onchange="entheme(${deviceStorage('get', 'enablethemebutton')})" class="setting_entheme" type="checkbox" id="entheme" name="entheme" value="theme"><label for="entheme">включить кнопку смены темы</label></div>
-            <div class="setting_tytheme"><p style="margin-right:8px;">Изменять тему: </p><div class="setting_tytheme_in"><div><input ${tyth1} onchange="tytheme(1)" class="setting_tytheme" type="radio" id="tytheme1" name="tytheme" value="theme"><label for="tytheme1">по нажатию кнопки</label></div><div><input ${tyth2} onchange="tytheme(2)" class="setting_tytheme" type="radio" id="tytheme2" name="tytheme" value="theme"><label for="tytheme2">по времени рассвета/заката</label></div><div><input ${tyth3} onclick="tytheme3('settime')" onchange="tytheme(3)" class="setting_tytheme" type="radio" id="tytheme3" name="tytheme" value="theme"><label for="tytheme3">по времени: ${tytheme3('gettime')}</label></div></div></div>
+            <div class="setting_username">
+                <p style="margin-right:8px;">Ник:</p>
+                <input autocomplete="off" type="text" id="username" class="setting_username">
+                <p id="usernamesave" class="usernamesave" style="font-size: 14px; margin-left: 12px; opacity: 0.5; user-select: none;"></p>
+            </div>
+            <div class="setting_tytheme">
+                <p style="margin-right:8px;">Работа смены темы:</p>
+                <div class="setting_tytheme_in">
+                    <div>
+                        <input ${tyth1} onchange="tytheme(1)" class="setting_tytheme" type="radio" id="tytheme1" name="tytheme" value="theme">
+                        <label for="tytheme1">по нажатию кнопки</label>
+                    </div>
+                    <div>
+                        <input ${enthemechk} onchange="entheme(${deviceStorage('get', 'enablethemebutton')})" class="setting_entheme" type="checkbox" id="entheme" name="entheme" value="theme">
+                        <label for="entheme">включить кнопку смены темы</label>
+                    </div>
+                    <div>
+                        <input ${tyth2} onchange="tytheme(2)" class="setting_tytheme" type="radio" id="tytheme2" name="tytheme" value="theme">
+                        <label for="tytheme2">по времени рассвета/заката</label>
+                    </div>
+                    <div>
+                        <input ${tyth3} onclick="tytheme3('settime')" onchange="tytheme(3)" class="setting_tytheme" type="radio" id="tytheme3" name="tytheme" value="theme">
+                        <label for="tytheme3">по времени: ${tytheme3('gettime')}</label>
+                    </div>
+                </div>
+            </div>
             <div id="beta"></div>
             `)
 
             var etcb = document.getElementById('entheme');
-            if (deviceStorage('get', 'typetheme') == 2) { etcb.setAttribute('disabled', 'disabled') } else if (deviceStorage('get', 'typetheme') == 3) { etcb.setAttribute('disabled', 'disabled') }
+            if (deviceStorage('get', 'themeType') == 2) { etcb.setAttribute('disabled', 'disabled') } else if (deviceStorage('get', 'themeType') == 3) { etcb.setAttribute('disabled', 'disabled') }
 
             function entheme(tof) { etcb.setAttribute('disabled', 'disabled'); deviceStorage('write', 'enablethemebutton', `${!tof}`)}
             
             /* 1 - theme button (or none); 2 - sunrise/sunset; 3 - custom time */
-            function tytheme(type) { deviceStorage('write', 'typetheme', `${type}`); if (type == 1) { entheme(false); deviceStorage('write', 'enablethemebutton', `true`); etcb.setAttribute('checked', 'checked')} if (type == 2 || type == 3) {deviceStorage('write', 'enablethemebutton', `false`); etcb.setAttribute('disabled', 'disabled'); etcb.removeAttribute('checked')} }
+            function tytheme(type) { deviceStorage('write', 'themeType', `${type}`); if (type == 1) { entheme(false); deviceStorage('write', 'enablethemebutton', `true`); etcb.setAttribute('checked', 'checked')} if (type == 2 || type == 3) {deviceStorage('write', 'enablethemebutton', `false`); etcb.setAttribute('disabled', 'disabled'); etcb.removeAttribute('checked')} }
 
             username.oninput = async function() { deviceStorage('write', 'username', username.value); usernamesave.innerHTML = 'сохранено'; await sleep(2500); usernamesave.innerHTML = '' }
+            
+            outBetaNotes()
         </script>
-
-        <script>outBetaNotes()</script>
     </body>
 </html>

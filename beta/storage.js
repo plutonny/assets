@@ -49,34 +49,8 @@ if (deviceStorage('get', 'theme') != 'light' && deviceStorage('get', 'theme') !=
 if (deviceStorage('check', 'enablethemebutton'))
     { logs('warn', 'Warning: theme button is undefined, turned it on'); deviceStorage('write', 'enablethemebutton', 'true') }
 
-if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'typetheme') == 3)
-    { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'typetheme', 1) }
-
-if (deviceStorage('check', 'typetheme'))
-    { logs('warn', 'Warning: theme type is undefined, set to default'); deviceStorage('write', 'typetheme', 1) }
-
-if (deviceStorage('get', 'typetheme') == 2 || deviceStorage('get', 'typetheme') == 3)
+if (deviceStorage('get', 'themeType') == 2 || deviceStorage('get', 'themeType') == 3)
     { deviceStorage('write', 'enablethemebutton', `false`) }
-
-var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
-if (deviceStorage('get', 'typetheme') == 2) { 
-      if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { deviceStorage('write', 'theme', 'light') } 
-    else                                                                                   { deviceStorage('write', 'theme', 'dark') } 
-}
-
-if (deviceStorage('get', 'typetheme') == 3) {
-    var themeTimeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes()))) 
-    var themeTimeFrom = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
-    var themeTimeTo = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
-    if (themeTimeFrom < themeTimeTo) {
-          if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
-        else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
-    }
-    else if (themeTimeFrom > themeTimeTo) {
-          if ((themeTimeFrom < themeTimeNow && themeTimeNow < 23) || (0 < themeTimeNow && themeTimeNow < themeTimeTo)) { deviceStorage('write', 'theme', 'light') } 
-        else                                                                                                           { deviceStorage('write', 'theme', 'dark') } 
-    }
-}
 
 if (BETA) {
     storageVersion += ' beta';
@@ -117,6 +91,33 @@ logs('info', `Current builds (version ${storageVersion}):
  * 
  */
 async function theme(type) {
+    if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'themeType') == 3)
+        { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'themeType', 1) }
+
+    if (deviceStorage('check', 'themeType'))
+        { logs('warn', 'Warning: theme type is undefined, set to default'); deviceStorage('write', 'themeType', 1) }
+
+    try {
+        var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
+        if (deviceStorage('get', 'themeType') == 2) { 
+            if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { deviceStorage('write', 'theme', 'light') } 
+            else                                                                                 { deviceStorage('write', 'theme', 'dark') } 
+        }
+
+        if (deviceStorage('get', 'themeType') == 3) {
+            var themeTimeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes()))) 
+            var themeTimeFrom = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
+            var themeTimeTo = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
+            if (themeTimeFrom < themeTimeTo) {
+                if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
+                else                                                                                                         { deviceStorage('write', 'theme', 'dark') } 
+            }
+            else if (themeTimeFrom > themeTimeTo) {
+                if ((themeTimeFrom < themeTimeNow && themeTimeNow < 23) || (0 < themeTimeNow && themeTimeNow < themeTimeTo)) { deviceStorage('write', 'theme', 'light') } 
+                else                                                                                                         { deviceStorage('write', 'theme', 'dark') } 
+            }
+        }
+    } catch (e) { logs('critical', `Error: theme function prepare (${e})`) }
     try {
         var themeCurrent = deviceStorage('get', 'theme');
         if (type == 'change') {
@@ -127,7 +128,7 @@ async function theme(type) {
                  if (themeCurrent == 'light') { output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#e9e9e9' } 
             else if (themeCurrent == 'dark')  { output('root-colors-theme', `${darkThemeColors} #thMoon { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#181818' }
         }
-    } catch (e) { logs('critical', `Error: theme function (${e})`) }
+    } catch (e) { logs('critical', `Error: theme function work (${e})`) }
 }
 
 /**
@@ -241,15 +242,12 @@ function navbar(navbarActive) {
  *      headerText     - text in header
  *      buttonTheme    - (bool) enable or disable theme button
  *      buttonBack     - (bool) enable or disable back to home button
- *      buttonSettings - (bool) enable or disable settings button
- * 
- *      DONT use enableTheme and enableSettings in one time!!!
  * 
  */
-function header(headerText, buttonTheme, buttonBack, buttonSettings) {
+function header(headerText, buttonTheme, buttonBack) {
     try {
         var inj = '';
-        if (buttonTheme && deviceStorage('get', 'enablethemebutton') == 'true' && deviceStorage('get', 'typetheme') == 1) {
+        if (buttonTheme && deviceStorage('get', 'enablethemebutton') == 'true' && deviceStorage('get', 'themeType') == 1) {
             inj += `<button 
                         class="theme_button" 
                         style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
@@ -263,14 +261,6 @@ function header(headerText, buttonTheme, buttonBack, buttonSettings) {
                         style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="activePage('siteBack')">
                             ${SVG.back_button}
-                    </button>`
-        }
-        if (buttonSettings) {
-            inj += `<button 
-                        class="settings_button" 
-                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
-                        onclick="activePage('settingsPage')">
-                            ${SVG.settings_button}
                     </button>`
         }
         output(`header`, `
