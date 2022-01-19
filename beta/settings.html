@@ -52,19 +52,18 @@
                     else { return `${ti1} - ${ti2}` } 
                 }
                 else if (setting == 'settime') {
-                    modal('max', 
-                    `<style>div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; }</style>
-                    <div class="update_modal">
-                        <h1 class="update_modal" style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">ВРЕМЯ</h1>
-                        <b style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">Светлая тема:<b>
-                        <div style="margin-left: 12px;"><label for="settingstimefrom" style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">С:</label><input ${tyti1} type="time" id="settingstimefrom" name="settingstimefrom" min="00:01" max="23:59" style="padding-left: 16px; padding-right: 16px; color: var(--main-text-color); border: var(--main-text-color) 2px solid; border-radius: 18px; background-color: var(--timetable-bg); height: 22px; margin-top: 8px; margin-left: 4px;"></div>
-                        <div style="margin-left: 12px;"><label for="settingstimeto" style="font-family: 'Montserrat' !important; margin:16px;" class="update_modal">По:</label><input ${tyti2} type="time" id="settingstimeto" name="settingstimeto" min="00:01" max="23:59" style="padding-left: 16px; padding-right: 16px; color: var(--main-text-color); border: var(--main-text-color) 2px solid; border-radius: 18px; background-color: var(--timetable-bg); height: 22px; margin-top: 8px; margin-left: 4px;"></div>
-                        <div style="display:flex;justify-content:center;">
-                            <button style="cursor: pointer; border: 2px solid var(--main-text-color); border-radius: 24px; height: 36px; font-size: 17px; width: 50%; margin: 24px 16px 0px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme(1)">ОТМЕНА</button>
-                            <button style="cursor: pointer; border: 2px solid var(--main-text-color); border-radius: 24px; height: 36px; font-size: 17px; width: 50%; margin: 24px 16px 0px 16px; background-color: #00ff0020;" onclick="settings('write', 'tytheme3time', settingstimefrom.value + settingstimeto.value); document.getElementById('modal').innerHTML = ''; theme(1)">СОХРАНИТЬ</button>
+                    modal('max', `
+                    <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+                        <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Время</h1>
+                        <b style="font-family: 'Montserrat' !important; margin:16px;">Светлая тема:</b>
+                        <div style="margin-left: 12px;"><label for="settingstimefrom" style="font-family: 'Montserrat' !important; margin:16px;">С:</label><input ${tyti1} type="time" id="settingstimefrom" name="settingstimefrom" min="00:01" max="23:59" style="padding-left: 16px; padding-right: 16px; color: var(--root-text-color); border: none; border-radius: 18px; background-color: var(--secondary-bg-color); height: 22px; margin-top: 8px; margin-left: 4px;"></div>
+                        <div style="margin-left: 12px;"><label for="settingstimeto" style="font-family: 'Montserrat' !important; margin:16px;">По:</label><input ${tyti2} type="time" id="settingstimeto" name="settingstimeto" min="00:01" max="23:59" style="padding-left: 16px; padding-right: 16px; color: var(--root-text-color); border: none; border-radius: 18px; background-color: var(--secondary-bg-color); height: 22px; margin-top: 8px; margin-left: 4px;"></div>
+                        <div style="display: flex; justify-content: center;">
+                            <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">Отмена</button>
+                            <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 148px; margin: 16px; background-color: #00ff0020;" onclick="deviceStorage('write', 'tytheme3time', settingstimefrom.value + settingstimeto.value); document.getElementById('modal').innerHTML = ''; theme('load')">Сохранить</button>
                         </div>
-                    </div>`
-                    )
+                    </div>
+                    `)
                 }
             }
 
@@ -77,9 +76,16 @@
             if (deviceStorage('get', 'typetheme') == 1) { tyth1 = 'checked' } else if (deviceStorage('get', 'typetheme') == 2) { tyth2 = 'checked' } else if (deviceStorage('get', 'typetheme') == 3) { tyth3 = 'checked' }
 
             output(`settings`, `
+            <style>
+                .settings { background-color: var(--secondary-bg-color); border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px 24px 73px 24px; min-height: calc(100vh - 100px); }
+            </style>
             <div class="setting_username"><p style="margin-right:8px;">Ник: </p><input autocomplete="off" type="text" id="username" class="setting_username"><p id="usernamesave" class="usernamesave"></p></div>
             <div class="setting_entheme"><input ${enthemechk} onchange="entheme(${deviceStorage('get', 'enablethemebutton')})" class="setting_entheme" type="checkbox" id="entheme" name="entheme" value="theme"><label for="entheme">включить кнопку смены темы</label></div>
             <div class="setting_tytheme"><p style="margin-right:8px;">Изменять тему: </p><div class="setting_tytheme_in"><div><input ${tyth1} onchange="tytheme(1)" class="setting_tytheme" type="radio" id="tytheme1" name="tytheme" value="theme"><label for="tytheme1">по нажатию кнопки</label></div><div><input ${tyth2} onchange="tytheme(2)" class="setting_tytheme" type="radio" id="tytheme2" name="tytheme" value="theme"><label for="tytheme2">по времени рассвета/заката</label></div><div><input ${tyth3} onclick="tytheme3('settime')" onchange="tytheme(3)" class="setting_tytheme" type="radio" id="tytheme3" name="tytheme" value="theme"><label for="tytheme3">по времени: ${tytheme3('gettime')}</label></div></div></div>
+            <div class="warning" style="margin-top: 36px;">
+                <p class="warning"><b class="warning">примечание: </b>изменения вступят в силу только после перезагрузки страницы</p>
+            </div>
+            <div id="beta"></div>
             `)
 
             var etcb = document.getElementById('entheme');
@@ -93,9 +99,6 @@
             username.oninput = async function() { deviceStorage('write', 'username', username.value); usernamesave.innerHTML = 'сохранено'; await sleep(2500); usernamesave.innerHTML = '' }
         </script>
 
-        <div class="warning" style="margin-top: 36px;">
-            <p class="warning"><b class="warning">примечание: </b>изменения вступят в силу только после перезагрузки страницы</p>
-        </div>
-        <div id="beta"><script>outBetaNotes()</script></div>
+        <script>outBetaNotes()</script>
     </body>
 </html>
