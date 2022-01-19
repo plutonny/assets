@@ -19,14 +19,6 @@
         <link   rel="preload prefetch stylesheet"   href="/assets/beta/main.css" as="style">
         
         <style  id="root-colors-theme"></style>
-
-        <style>
-            div.setting_username, div.setting_entheme, div.setting_tytheme { display: flex; align-items: center; flex-direction: row; flex-wrap: nowrap; margin-right: 12px; margin-bottom: 18px; }
-            div.setting_tytheme { display: flex; flex-direction: column; align-items: flex-start; margin-right: 12px; margin-bottom: 18px; }
-            div.setting_tytheme_in { display: flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start; }
-            input.setting_username { padding-left: 6px; color: var(--root-text-color); border: none; border-radius: 18px; background-color: var(--primary-bg-color); height: 22px; width: 156px; margin-left: 4px; }
-            input.setting_entheme, input.setting_tytheme { margin-right: 12px; }
-        </style>
         
         <script type="text/javascript"              src="/assets/beta/debug.js"></script>
         <script type="text/javascript"              src="/assets/beta/storage.js"></script>
@@ -49,10 +41,13 @@
         <div class="settings" id="settings"></div>
 
         <script>
-            try { var ti1 = '', ti2 = ''; 
+            var enthemechk = '', tyth1 = '', tyth2 = '', tyth3 = '', tyti1 = '', tyti2 = '', ti1 = '', ti2 = '';
+
+            if (!deviceStorage('check', 'tytheme3time')) { 
+                tyti1 += `value="${ti1}"`; tyti2 += `value="${ti2}"` 
                 ti1 = deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(2) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4); 
                 ti2 = deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(7) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9);
-            } catch {}
+            }
             function tytheme3(setting) { 
                 if (setting == 'gettime') { 
                       if (deviceStorage('check', 'tytheme3time')) { return 'не назначено' } 
@@ -74,11 +69,8 @@
                 }
             }
 
-            var enthemechk = '', tyth1 = '', tyth2 = '', tyth3 = '', tyti1 = '', tyti2 = '';
             if (deviceStorage('check', 'enablethemebutton')) { deviceStorage('write', 'enablethemebutton', 'true') }
-            if (deviceStorage('get', 'enablethemebutton') == 'true') { enthemechk += 'checked'; }
-            if (!deviceStorage('check', 'tytheme3time')) { tyti1 += `value="${ti1}"`; tyti2 += `value="${ti2}"` }
-            if (deviceStorage('check', 'themeType')) { deviceStorage('write', 'themeType', 1) }
+            if (deviceStorage('get', 'enablethemebutton') == 'true') { enthemechk += 'checked' }
             if (deviceStorage('get', 'themeType') == 1) { tyth1 = 'checked' } else if (deviceStorage('get', 'themeType') == 2) { tyth2 = 'checked' } else if (deviceStorage('get', 'themeType') == 3) { tyth3 = 'checked' }
 
             output(`settings`, `
@@ -86,28 +78,30 @@
                 .settings { background-color: var(--secondary-bg-color); border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px 24px 73px 24px; min-height: calc(100vh - 100px); }
                 input[type="time"]::-webkit-calendar-picker-indicator { display: none; }
             </style>
-            <div class="setting_username">
-                <p style="margin-right:8px;">Ник:</p>
-                <input autocomplete="off" type="text" id="username" class="setting_username">
-                <p id="usernamesave" class="usernamesave" style="font-size: 14px; margin-left: 12px; opacity: 0.5; user-select: none;"></p>
+
+            <div style="display: flex; align-items: center; flex-direction: row; flex-wrap: nowrap;">
+                <p style="margin-right: 14px;">Ник:</p>
+                <input type="text" id="username" autocomplete="off" style="padding-left: 6px; color: var(--root-text-color); border: none; border-radius: 18px; background-color: var(--primary-bg-color); height: 22px; width: 156px;" ${ deviceStorage('check', 'username') ? '' : `value="${deviceStorage('get', 'username')}"` }>
+                <p id="usernamesave" style="font-size: 14px; margin-left: 12px; opacity: 0.5; user-select: none;"></p>
             </div>
-            <div class="setting_tytheme">
-                <p style="margin-right:8px;">Работа смены темы:</p>
-                <div class="setting_tytheme_in">
+
+            <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                <p>Работа смены темы:</p>
+                <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start;">
                     <div>
-                        <input ${tyth1} onchange="tytheme(1)" class="setting_tytheme" type="radio" id="tytheme1" name="tytheme" value="theme">
+                        <input type="radio" id="tytheme1" name="tytheme" ${tyth1} onchange="tytheme(1)" style="margin-right: 12px;" value="theme">
                         <label for="tytheme1">по нажатию кнопки</label>
                     </div>
-                    <div>
-                        <input ${enthemechk} onchange="entheme(${deviceStorage('get', 'enablethemebutton')})" class="setting_entheme" type="checkbox" id="entheme" name="entheme" value="theme">
+                    <div style="margin: 6px 0px 6px 16px;">
+                        <input type="checkbox" id="entheme" name="entheme" ${enthemechk} onchange="entheme(${deviceStorage('get', 'enablethemebutton')})" style="margin-right: 6px;" value="theme">
                         <label for="entheme">включить кнопку смены темы</label>
                     </div>
                     <div>
-                        <input ${tyth2} onchange="tytheme(2)" class="setting_tytheme" type="radio" id="tytheme2" name="tytheme" value="theme">
+                        <input type="radio" id="tytheme2" name="tytheme" ${tyth2} onchange="tytheme(2)" style="margin-right: 12px;" value="theme">
                         <label for="tytheme2">по времени рассвета/заката</label>
                     </div>
-                    <div>
-                        <input ${tyth3} onclick="tytheme3('settime')" onchange="tytheme(3)" class="setting_tytheme" type="radio" id="tytheme3" name="tytheme" value="theme">
+                    <div style="margin-top: 3px;">
+                        <input type="radio" id="tytheme3" name="tytheme" ${tyth3} onchange="tytheme(3)" onclick="tytheme3('settime')" style="margin-right: 12px;" value="theme">
                         <label for="tytheme3">по времени: ${tytheme3('gettime')}</label>
                     </div>
                 </div>
