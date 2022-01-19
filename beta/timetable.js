@@ -70,7 +70,7 @@ var TIMETABLE = {
  * 
  */
 function pairGet(type, data) {
-    var timeNow = parseInt(String(CURRDATE.getHours()) + String(CURRDATE.getMinutes()))
+    var timeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes()))) 
 
     if (type == 'timeCurrent') {
         if (timeNow <= TIMETABLE.alerts[1][0][0]) { return 'Пары скоро начнутся' }
