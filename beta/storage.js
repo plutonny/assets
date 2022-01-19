@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 64;
+var storageVersion = '3.0.0', storageBuild = 65;
 
 var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = ''; 
 if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green' } 
@@ -91,7 +91,7 @@ logs('info', `Current builds (version ${storageVersion}):
  * 
  */
 async function theme(type) {
-    if (deviceStorage('check', 'tytheme3time') && deviceStorage('get', 'themeType') == 3)
+    if (deviceStorage('check', 'themeType3Time') && deviceStorage('get', 'themeType') == 3)
         { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'themeType', 1) }
 
     if (deviceStorage('check', 'themeType'))
@@ -103,11 +103,11 @@ async function theme(type) {
             if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { deviceStorage('write', 'theme', 'light') } 
             else                                                                                 { deviceStorage('write', 'theme', 'dark') } 
         }
-
+        /*
         if (deviceStorage('get', 'themeType') == 3) {
             var themeTimeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes()))) 
-            var themeTimeFrom = parseInt(deviceStorage('get', 'tytheme3time').charAt(0) + deviceStorage('get', 'tytheme3time').charAt(1) + deviceStorage('get', 'tytheme3time').charAt(3) + deviceStorage('get', 'tytheme3time').charAt(4)); 
-            var themeTimeTo = parseInt(deviceStorage('get', 'tytheme3time').charAt(5) + deviceStorage('get', 'tytheme3time').charAt(6) + deviceStorage('get', 'tytheme3time').charAt(8) + deviceStorage('get', 'tytheme3time').charAt(9));
+            var themeTimeFrom = parseInt(deviceStorage('get', 'themeType3Time').charAt(0) + deviceStorage('get', 'themeType3Time').charAt(1) + deviceStorage('get', 'themeType3Time').charAt(3) + deviceStorage('get', 'themeType3Time').charAt(4)); 
+            var themeTimeTo = parseInt(deviceStorage('get', 'themeType3Time').charAt(5) + deviceStorage('get', 'themeType3Time').charAt(6) + deviceStorage('get', 'themeType3Time').charAt(8) + deviceStorage('get', 'themeType3Time').charAt(9));
             if (themeTimeFrom < themeTimeTo) {
                 if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
                 else                                                                                                         { deviceStorage('write', 'theme', 'dark') } 
@@ -117,6 +117,7 @@ async function theme(type) {
                 else                                                                                                         { deviceStorage('write', 'theme', 'dark') } 
             }
         }
+        */
     } catch (e) { logs('critical', `Error: theme function prepare (${e})`) }
     try {
         var themeCurrent = deviceStorage('get', 'theme');
@@ -203,7 +204,7 @@ function navbar(navbarActive) {
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/home.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p class="homeNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.home_icon}</p>
+                        <p class="homeNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.home}</p>
                         <p class="homeNavbar" style="color: #707070; margin: 0; font-size: 14px;">главная</p>
                     </div>
                 </a>
@@ -211,7 +212,7 @@ function navbar(navbarActive) {
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/gtable.html?table=grades">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done_icon}</p>
+                        <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done}</p>
                         <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
                     </div>
                 </a>
@@ -219,7 +220,7 @@ function navbar(navbarActive) {
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/gtable.html?table=attendance">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar_icon}</p>
+                        <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar}</p>
                         <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
                     </div>
                 </a>
@@ -227,7 +228,7 @@ function navbar(navbarActive) {
             <div style="width: 20%">
                 <a style="text-decoration: none;" href="/college-beta/other.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                        <p class="otherNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.other_icon}</p>
+                        <p class="otherNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.other}</p>
                         <p class="otherNavbar" style="color: #707070; margin: 0; font-size: 14px;">другое</p>
                     </div>
                 </a>
@@ -252,7 +253,7 @@ function header(headerText, buttonTheme, buttonBack) {
                         class="theme_button" 
                         style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="theme('change')">
-                            ${SVG.theme_button}
+                            ${SVG.theme}
                     </button>`
         }
         if (buttonBack) {
@@ -260,7 +261,7 @@ function header(headerText, buttonTheme, buttonBack) {
                         class="back_button" 
                         style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
                         onclick="activePage('siteBack')">
-                            ${SVG.back_button}
+                            ${SVG.back}
                     </button>`
         }
         output(`header`, `
