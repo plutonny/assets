@@ -19,6 +19,16 @@
         <link   rel="preload prefetch stylesheet"   href="/assets/beta/main.css" as="style">
         
         <style  id="root-colors-theme"></style>
+
+        <style>
+            div.setting_username, div.setting_entheme, div.setting_tytheme { display: flex; align-items: center; flex-direction: row; flex-wrap: nowrap; margin-right: 12px; margin-bottom: 18px; }
+            div.setting_tytheme { display: flex; flex-direction: column; align-items: flex-start; margin-right: 12px; margin-bottom: 18px; }
+            div.setting_tytheme_in { display: flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start; }
+            input.setting_username { padding-left: 6px; color: var(--root-text-color); border: none; border-radius: 18px; background-color: var(--primary-bg-color); height: 22px; width: 156px; margin-left: 4px; }
+            input.setting_entheme, input.setting_tytheme, input.setting_nytheme { margin-right: 12px; }
+            p.usernamesave { font-size: 14px; margin-left: 4px; opacity: 0.5; user-select: none; }
+            input[type="time"]::-webkit-calendar-picker-indicator { display: none; }
+        </style>
         
         <script type="text/javascript"              src="/assets/beta/debug.js"></script>
         <script type="text/javascript"              src="/assets/beta/storage.js"></script>
@@ -70,7 +80,6 @@
             var enthemechk = '', nythemechk = '', tyth1 = '', tyth2 = '', tyth3 = '', tyti1 = '', tyti2 = '';
             if (deviceStorage('get', 'enablethemebutton') == null || deviceStorage('get', 'enablethemebutton') == '') { deviceStorage('write', 'enablethemebutton', 'true') }
             if (deviceStorage('get', 'enablethemebutton') == 'true') { enthemechk += 'checked'; }
-            if (deviceStorage('get', '21NewYearThemeEnable') == 'true') { nythemechk += 'checked'; }
             if (!(deviceStorage('get', 'tytheme3time') == null || deviceStorage('get', 'tytheme3time') == '')) { tyti1 += `value="${ti1}"`; tyti2 += `value="${ti2}"` }
             if (deviceStorage('get', 'typetheme') == null || deviceStorage('get', 'typetheme') == '') { deviceStorage('write', 'typetheme', 1) }
             if (deviceStorage('get', 'typetheme') == 1) { tyth1 = 'checked' } else if (deviceStorage('get', 'typetheme') == 2) { tyth2 = 'checked' } else if (deviceStorage('get', 'typetheme') == 3) { tyth3 = 'checked' }
@@ -79,12 +88,9 @@
             <style>
                 .settings { background-color: var(--secondary-bg-color); border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px 24px 73px 24px; min-height: calc(100vh - 100px); }
             </style>
-            <div class="setting_username"><p style="margin-right:8px;">Ник: </p><input autocomplete="off" type="text" id="username" class="setting_username"><p id="usernamesave" class="usernamesave"></p></div>
+            <div class="setting_username"><p style="margin-right:8px;">Ник: </p><input autocomplete="off" type="text" id="username" class="setting_username"><p id="usernamesave" class="usernamesave" style="padding-left: 8px;"></p></div>
             <div class="setting_entheme"><input ${enthemechk} onchange="entheme(${deviceStorage('get', 'enablethemebutton')})" class="setting_entheme" type="checkbox" id="entheme" name="entheme" value="theme"><label for="entheme">включить кнопку смены темы</label></div>
             <div class="setting_tytheme"><p style="margin-right:8px;">Изменять тему: </p><div class="setting_tytheme_in"><div><input ${tyth1} onchange="tytheme(1)" class="setting_tytheme" type="radio" id="tytheme1" name="tytheme" value="theme"><label for="tytheme1">по нажатию кнопки</label></div><div><input ${tyth2} onchange="tytheme(2)" class="setting_tytheme" type="radio" id="tytheme2" name="tytheme" value="theme"><label for="tytheme2">по времени рассвета/заката</label></div><div><input ${tyth3} onclick="tytheme3('settime')" onchange="tytheme(3)" class="setting_tytheme" type="radio" id="tytheme3" name="tytheme" value="theme"><label for="tytheme3">по времени: ${tytheme3('gettime')}</label></div></div></div>
-            <div class="warning" style="margin-top: 36px;">
-                <p class="warning"><b class="warning">примечание: </b>изменения вступят в силу только после перезагрузки страницы</p>
-            </div>
             <div id="beta"></div>
             `)
 
