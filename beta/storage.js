@@ -6,9 +6,9 @@
 /*  ---  Global variables  ---  */
 var storageVersion = '3.0.0', storageBuild = 65;
 
-var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = ''; 
-if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green' } 
-else                  { weekNameRU = 'желтая'; weekNameEN = 'yellow' }
+var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = '', weekNameENAlt = ''; 
+if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green'; weekNameENAlt = 'yellow' } 
+else                  { weekNameRU = 'желтая'; weekNameEN = 'yellow'; weekNameENAlt = 'green' }
 
 var lightThemeColors = `:root {
     --root-text-color      :#101520;
@@ -70,15 +70,15 @@ function outBetaNotes() {
 }
 
 logs('info', `Current builds (version ${storageVersion}):
-    { Storage JS:     build ${deviceStorage('get', 'storageJSBuild')} },
-    { Timeable JS:    build ${deviceStorage('get', 'timetableJSBuild')} },
-    { Debug JS:       build ${deviceStorage('get', 'debugJSBuild')} },
-    { Home:           build ${deviceStorage('get', 'homeBuildPage')} },
-    { Timetableweek:  build ${deviceStorage('get', 'timetableweekBuildPage')} },
-    { Other:          build ${deviceStorage('get', 'otherBuildPage')} },
-    { Gtable:         build ${deviceStorage('get', 'gtableBuildPage')} },
-    { Simple:         build ${deviceStorage('get', 'simpleBuildPage')} },
-    { Support:        build ${deviceStorage('get', 'supportBuildPage')} }.
+    { Storage JS:  build ${deviceStorage('get', 'storageJSBuild')} },
+    { Timeable JS: build ${deviceStorage('get', 'timetableJSBuild')} },
+    { Debug JS:    build ${deviceStorage('get', 'debugJSBuild')} },
+    { Home:        build ${deviceStorage('get', 'homeBuildPage')} },
+    { Timetable:   build ${deviceStorage('get', 'timetableBuildPage')} },
+    { Other:       build ${deviceStorage('get', 'otherBuildPage')} },
+    { Gtable:      build ${deviceStorage('get', 'gtableBuildPage')} },
+    { Simple:      build ${deviceStorage('get', 'simpleBuildPage')} },
+    { Support:     build ${deviceStorage('get', 'supportBuildPage')} }.
 `);
 
 /*  ---  Functions to work  ---  */

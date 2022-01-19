@@ -48,11 +48,11 @@
                 themeTimeT = deviceStorage('get', 'themeType3Time').charAt(5) + deviceStorage('get', 'themeType3Time').charAt(6) + deviceStorage('get', 'themeType3Time').charAt(7) + deviceStorage('get', 'themeType3Time').charAt(8) + deviceStorage('get', 'themeType3Time').charAt(9);
             }
             function tytheme3(setting) { 
-                if (setting == 'gettime') { 
+                if (setting == 'get') { 
                       if (deviceStorage('check', 'themeType3Time')) { return 'не назначено' } 
                     else { return `${themeTimeF} - ${themeTimeT}` } 
                 }
-                else if (setting == 'settime') {
+                else if (setting == 'set') {
                     modal('max', `
                     <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
                         <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Время</h1>
@@ -97,8 +97,8 @@
                     </div>
                     <!--
                     <div style="margin-top: 3px;">
-                        <input type="radio" id="tytheme3" name="tytheme" ${deviceStorage('get', 'themeType') == 3 ? 'checked' : ''} onchange="tytheme(3)" onclick="tytheme3('settime')" style="margin-right: 12px;" value="theme">
-                        <label for="tytheme3">по времени: ${tytheme3('gettime')}</label>
+                        <input type="radio" id="tytheme3" name="tytheme" ${deviceStorage('get', 'themeType') == 3 ? 'checked' : ''} onchange="tytheme(3)" onclick="tytheme3('set')" style="margin-right: 12px;" value="theme">
+                        <label for="tytheme3">по времени: ${tytheme3('get')}</label>
                     </div>
                     -->
                 </div>
@@ -106,17 +106,17 @@
             <div id="beta"></div>
             `)
 
-            var etcb = document.getElementById('entheme');
-            function entheme(tof) { etcb.setAttribute('disabled', 'disabled'); deviceStorage('write', 'themeEnableThemeButton', `${!tof}`)}
+            var themeCheckboxBox = document.getElementById('entheme');
+            function entheme(tof) { themeCheckboxBox.setAttribute('disabled', 'disabled'); deviceStorage('write', 'themeEnableThemeButton', `${!tof}`)}
             
             /* 1 - theme button (or none); 2 - sunrise/sunset; 3 - custom time */
             function tytheme(type) { 
                 deviceStorage('write', 'themeType', `${type}`)
                 if (type == 1) { 
-                    entheme(false); deviceStorage('write', 'themeEnableThemeButton', `true`); etcb.setAttribute('checked', 'checked')
+                    entheme(false); deviceStorage('write', 'themeEnableThemeButton', `true`); themeCheckboxBox.setAttribute('checked', 'checked')
                 }
                 if (type == 2 || type == 3) {
-                    deviceStorage('write', 'themeEnableThemeButton', `false`); etcb.setAttribute('disabled', 'disabled'); etcb.removeAttribute('checked')
+                    deviceStorage('write', 'themeEnableThemeButton', `false`); themeCheckboxBox.setAttribute('disabled', 'disabled'); themeCheckboxBox.removeAttribute('checked')
                 } 
                 theme('load') 
             }
