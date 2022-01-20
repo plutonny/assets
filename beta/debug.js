@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 24;
+var debugBuild = 25;
 var BETA = true;
 
 var CURRDATE = new Date();
@@ -192,16 +192,16 @@ function deleteLocalStorage() { modal('max', `
  */
 function allInfoErrorModal(selfError, selfLog) {
     var listLocalStrage =  '';
-    for (var i = 0; i < localStorage.length; i++) { listLocalStrage += `<p style="font-family: 'Montserrat' !important; background-color: #00000020; border-radius: 12px; padding: 6px; margin: 4px">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>`  }
+    for (var i = 0; i < localStorage.length; i++) { listLocalStrage += `<p style="font-family: 'Montserrat' !important; background-color: #00000020; border-radius: 12px; padding: 4px 8px; margin: 4px; font-size: 14px;">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>`  }
     modal('max', `
         <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
 
         <h2 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px 6px; background-color: #ff000070; border-radius: 12px; padding: 6px;">${selfError}</h2>
 
-        <p style="font-family: 'Montserrat' !important; margin:16px; text-align: center;">Последние логи:</p>
-        <p style="font-family: 'Montserrat' !important; margin:16px;">${selfLog}</p>
+        <p style="font-family: 'Montserrat' !important; margin: 16px; text-align: center; font-size: 20px;">Последние логи:</p>
+        <p style="font-family: 'Montserrat' !important; margin: 16px;">${selfLog}</p>
 
-        <p style="font-family: 'Montserrat' !important; margin:16px; text-align: center;">Ключи localStorage:</p>
+        <p style="font-family: 'Montserrat' !important; margin:16px; text-align: center; font-size: 20px;">Ключи localStorage:</p>
         <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">${listLocalStrage}</div>
 
         <div style="display:flex;justify-content:center;">
