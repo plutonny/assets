@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 6;
+var timetableBuild = 8;
 
 /**
  *  Example of timetble:
@@ -163,6 +163,18 @@ function pairTableHTML() {
     }
 
     return result
+}
+
+function timetableWeekDayChanger(day) {
+    if (day == 0) { timetableWeekDayChanger(1) }
+    var result = ''
+
+    for (var i = 1; i <= 6; i++) {
+        if (i == day) { result += `.timetableWorkButton${i} { background-color: var(--active-button-color) }` }
+        else          { result += `.timetableWork${i} { display: none }` }
+    }
+
+    output('timetableCSS', result) 
 }
 
 deviceStorage('write', 'timetableJSBuild', timetableBuild)
