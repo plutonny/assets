@@ -141,12 +141,25 @@ function pairHTML(pairList) {
 }
 
 function pairTableHTML() {
-    var result = ''
+    var result = '', inj = ''
 
     for (var i = 1; i <= 6; i++) {
+        result += `<div class="timetableWork${i}">`
         for (var j = 0; j < TIMETABLE[i].length; j++) {
-            result += `<p>${TIMETABLE[i][j]}</p>`
+            if (TIMETABLE[i][j][4] == 'default') { inj = '--root-button-color' }
+            else { inj = `--week-${TIMETABLE[i][j][4]}` }
+            result += `
+            <div style="background-color: var(${inj}); height: 46px; padding: 10px; margin: 16px 0px; border-radius: 16px;">
+            <div style="display: flex;">
+                <p style="margin: 0px 0px 0px 4px; font-size: 18px;">${TIMETABLE[i][j][0]}.<b style="margin: 0px 0px 0px 4px; font-size: 18px; font-family: 'Montserrat';">${TIMETABLE[i][j][1]}</b></p>
+                <div style="margin-right: auto;"></div>
+                <p style="margin: 0px 4px 0px 0px; font-size: 14px;">${TIMETABLE[i][j][3]}</p>
+            </div>
+            <b style="margin: 0px 0px 0px 25px; font-size: 14px; font-family: 'Montserrat';">${TIMETABLE[i][j][2]}</b>
+            </div>
+            `
         }
+        result += `</div>`
     }
 
     return result
