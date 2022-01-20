@@ -210,7 +210,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college-beta/gtable.html?table=grades">
+                <a style="text-decoration: none;" href="/college-beta/gtable.html?pres=grades">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done}</p>
                         <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
@@ -218,7 +218,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college-beta/gtable.html?table=attendance">
+                <a style="text-decoration: none;" href="/college-beta/gtable.html?pres=attendance">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar}</p>
                         <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
