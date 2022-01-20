@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 65;
+var storageVersion = '3.0.0', storageBuild = 66;
 
 var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = '', weekNameENAlt = ''; 
 if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green'; weekNameENAlt = 'yellow' } 
@@ -62,7 +62,7 @@ function outBetaNotes() {
             <div>
                 <p><b style="font-family: 'Montserrat' !important;">Перед выходом в релиз:</b></p>
                 <p style="font-family: 'Montserrat' !important;"><b style="font-family: 'Montserrat' !important;">Все файлы .html:</b> поменять директории файлов на релиз</p>
-                <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important; text-decoration: none;" href="/assets/${betaFolder}debug.html"><b style="font-family: 'Montserrat' !important;">debug.js:</b></a> переменная BETA</p>
+                <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important; text-decoration: none;" href="/college${betaRepos}/debug.html"><b style="font-family: 'Montserrat' !important;">debug.js:</b></a> переменная BETA</p>
                 <p><button style="font-family: 'Montserrat' !important; border: none; width: 100%; height: 64px; font-size: 24px; border-radius: 16px; cursor: pointer;" onclick="modalLog()">Консоль</button></p>
             </div>
         `);
@@ -152,7 +152,7 @@ async function gTableTheme() {
  */
 async function activePage(type) {
      if (type == 'siteBack')     { history.back() }
-else if (type == 'settingsPage') { location.assign(`/assets/${betaFolder}settings.html`) }
+else if (type == 'settingsPage') { location.assign(`/college${betaRepos}/settings.html`) }
 else                             { logs('error', `Error: activities function not found instruction to "${type}"`) }
 }
 

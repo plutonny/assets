@@ -3,15 +3,16 @@
 
 "use strict";
 
-var debugBuild = 23;
+var debugBuild = 24;
 var BETA = true;
 
 var CURRDATE = new Date();
 var LOG = [];
 
-var betaFolder = '';
+var betaFolder = '', betaRepos = '';
 if (BETA) {
     betaFolder += 'beta/'; 
+    betaRepos += '-beta'; 
     output('csc11-title-of-page', 'Beta version');
 };
 
@@ -122,7 +123,7 @@ function logs(type, data) {
          if (type == 'info')     { LOG.push([type, data]); console.info(data) }
     else if (type == 'warn')     { LOG.push([type, data]); console.warn(data) }
     else if (type == 'error')    { LOG.push([type, data]); console.error(data); modal('mini', `<p style="margin: 0;">${data}</p>`) }
-    else if (type == 'critical') { LOG.push([type, data]); sessionStorage.setItem('errorPageError', data); sessionStorage.setItem('errorPageLog', logInHTML(LOG)); location.assign(`/assets/${betaFolder}error.html`) }
+    else if (type == 'critical') { LOG.push([type, data]); sessionStorage.setItem('errorPageError', data); sessionStorage.setItem('errorPageLog', logInHTML(LOG)); location.assign(`/college${betaRepos}/error.html`) }
 }
 
 /**
