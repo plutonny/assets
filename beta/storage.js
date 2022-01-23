@@ -162,7 +162,7 @@ else                             { logs('error', `Error: activities function not
 function enableLogger() {
     if ('serviceWorker' in navigator) { 
         window.addEventListener('load', function() {
-            navigator.serviceWorker.register(`/assets/${betaFolder}service-worker.js`).then(
+            navigator.serviceWorker.register(`service-worker.js`).then(
                 function(registration) {
                     if (BETA) { logs('info', `ServiceWorker: registration with scope ${registration.scope}`)}
                 },
