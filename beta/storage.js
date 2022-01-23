@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 68;
+var storageVersion = '3.0.0', storageBuild = 69;
 
 var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = '', weekNameENAlt = ''; 
 if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green'; weekNameENAlt = 'yellow' } 
@@ -251,7 +251,7 @@ function header(headerText, buttonTheme, buttonBack) {
         if (buttonTheme && deviceStorage('get', 'themeEnableThemeButton') == 'true' && deviceStorage('get', 'themeType') == 1) {
             inj += `<button 
                         class="theme_button" 
-                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: transparent;" 
                         onclick="theme('change')">
                             ${SVG.theme}
                     </button>`
@@ -259,7 +259,7 @@ function header(headerText, buttonTheme, buttonBack) {
         if (buttonBack) {
             inj += `<button 
                         class="back_button" 
-                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: var(--primary-bg-color)" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: transparent;" 
                         onclick="activePage('siteBack')">
                             ${SVG.back}
                     </button>`
