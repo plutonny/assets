@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 67;
+var storageVersion = '3.0.0', storageBuild = 68;
 
 var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = '', weekNameENAlt = ''; 
 if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green'; weekNameENAlt = 'yellow' } 
@@ -62,7 +62,7 @@ function outBetaNotes() {
             <div>
                 <p><b style="font-family: 'Montserrat' !important;">Перед выходом в релиз:</b></p>
                 <p style="font-family: 'Montserrat' !important;"><b style="font-family: 'Montserrat' !important;">Все файлы .html:</b> поменять директории файлов на релиз</p>
-                <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important; text-decoration: none;" href="/college${betaRepos}/debug.html"><b style="font-family: 'Montserrat' !important;">debug.js:</b></a> переменная BETA</p>
+                <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important; text-decoration: none;" href="/college${betaRepos}/debug/"><b style="font-family: 'Montserrat' !important;">debug.js:</b></a> переменная BETA</p>
                 <p><button style="font-family: 'Montserrat' !important; border: none; width: 100%; height: 64px; font-size: 24px; border-radius: 16px; cursor: pointer;" onclick="modalLog()">Консоль</button></p>
             </div>
         `);
@@ -152,7 +152,7 @@ async function gTableTheme() {
  */
 async function activePage(type) {
      if (type == 'siteBack')     { history.back() }
-else if (type == 'settingsPage') { location.assign(`/college${betaRepos}/settings.html`) }
+else if (type == 'settingsPage') { location.assign(`/college${betaRepos}/settings/`) }
 else                             { logs('error', `Error: activities function not found instruction to "${type}"`) }
 }
 
@@ -162,7 +162,7 @@ else                             { logs('error', `Error: activities function not
 function enableLogger() {
     if ('serviceWorker' in navigator) { 
         window.addEventListener('load', function() {
-            navigator.serviceWorker.register(`service-worker.js`).then(
+            navigator.serviceWorker.register(`/college${betaRepos}/service-worker.js`).then(
                 function(registration) {
                     if (BETA) { logs('info', `ServiceWorker: registration with scope ${registration.scope}`)}
                 },
@@ -210,7 +210,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college${betaRepos}/gtable.html?pres=grades">
+                <a style="text-decoration: none;" href="/college${betaRepos}/gtable/?pres=grades">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done}</p>
                         <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
@@ -218,7 +218,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college${betaRepos}/gtable.html?pres=attendance">
+                <a style="text-decoration: none;" href="/college${betaRepos}/gtable/?pres=attendance">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar}</p>
                         <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
@@ -226,7 +226,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college${betaRepos}/other.html">
+                <a style="text-decoration: none;" href="/college${betaRepos}/other/">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="otherNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.other}</p>
                         <p class="otherNavbar" style="color: #707070; margin: 0; font-size: 14px;">другое</p>
