@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 66;
+var storageVersion = '3.0.0', storageBuild = 67;
 
 var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = '', weekNameENAlt = ''; 
 if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green'; weekNameENAlt = 'yellow' } 
@@ -202,7 +202,7 @@ function navbar(navbarActive) {
         
         <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-around;">
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college-beta/home.html">
+                <a style="text-decoration: none;" href="/college${betaRepos}/">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="homeNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.home}</p>
                         <p class="homeNavbar" style="color: #707070; margin: 0; font-size: 14px;">главная</p>
@@ -210,7 +210,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college-beta/gtable.html?pres=grades">
+                <a style="text-decoration: none;" href="/college${betaRepos}/gtable.html?pres=grades">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done}</p>
                         <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
@@ -218,7 +218,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college-beta/gtable.html?pres=attendance">
+                <a style="text-decoration: none;" href="/college${betaRepos}/gtable.html?pres=attendance">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar}</p>
                         <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
@@ -226,7 +226,7 @@ function navbar(navbarActive) {
                 </a>
             </div>
             <div style="width: 20%">
-                <a style="text-decoration: none;" href="/college-beta/other.html">
+                <a style="text-decoration: none;" href="/college${betaRepos}/other.html">
                     <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                         <p class="otherNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.other}</p>
                         <p class="otherNavbar" style="color: #707070; margin: 0; font-size: 14px;">другое</p>
