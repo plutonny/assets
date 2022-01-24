@@ -141,7 +141,7 @@ function logs(type, data) {
          if (type == 'info')     { LOG.push([type, data]); console.info(data) }
     else if (type == 'warn')     { LOG.push([type, data]); console.warn(data) }
     else if (type == 'error')    { LOG.push([type, data]); console.error(data); modal('mini', `<p style="margin: 0;">${data}</p>`) }
-    else if (type == 'critical') { LOG.push([type, data]); sessionStorage.setItem('errorPageError', data); sessionStorage.setItem('errorPageLog', logInHTML(LOG)); location.assign(`/college${betaRepos}/error.html`) }
+    else if (type == 'critical') { LOG.push([type, data]); sessionStorage.setItem('errorPageError', data); sessionStorage.setItem('errorPageLog', logInHTML(LOG)); location.assign(`/college${betaRepos}/error/`) }
 }
 
 /**

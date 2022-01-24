@@ -78,6 +78,7 @@ logs('info', `Current builds (version ${storageVersion}):
     { Other:       build ${deviceStorage('get', 'otherBuildPage')} },
     { Gtable:      build ${deviceStorage('get', 'gtableBuildPage')} },
     { Simple:      build ${deviceStorage('get', 'simpleBuildPage')} },
+    { Settings:    build ${deviceStorage('get', 'settingsBuildPage')} },
     { Support:     build ${deviceStorage('get', 'supportBuildPage')} }.
 `);
 
