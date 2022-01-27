@@ -125,7 +125,7 @@ function pairHTML(pairList) {
     var result = '', inj = ''
     for (var i = 0; i < pairList.length; i++) {
         if (pairList[i][4] == 'default') { inj = '--root-button-color' }
-        else { inj = `--week-${weekNameEN}` }
+        else { inj = `--week-${WEEK.name.EN}` }
         result += `
             <div style="background-color: var(${inj}); height: 46px; padding: 10px; margin: 16px 0px; border-radius: 16px;">
                 <div style="display: flex;">

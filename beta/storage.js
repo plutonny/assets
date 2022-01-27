@@ -4,40 +4,50 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 69;
+var storageVersion = '3.0.0', storageBuild = 70;
 
-var weekNum = luxon.DateTime.now().weekNumber, weekNameRU = '', weekNameEN = '', weekNameENAlt = ''; 
-if (weekNum % 2 == 1) { weekNameRU = 'зеленая'; weekNameEN = 'green'; weekNameENAlt = 'yellow' } 
-else                  { weekNameRU = 'желтая'; weekNameEN = 'yellow'; weekNameENAlt = 'green' }
+var WEEK = {
+    num: luxon.DateTime.now().weekNumber,
+    name: {
+        RU: WEEK % 2 == 1 ? 'зеленая' : 'желтая',
+        EN: WEEK % 2 == 1 ? 'green' : 'yellow',
+        alt: {
+            RU: WEEK % 2 == 1 ? 'желтая' : 'зеленая',
+            EN: WEEK % 2 == 1 ? 'yellow' : 'green',
+        }
+    }
+}
 
-var lightThemeColors = `:root {
-    --root-text-color      :#101520;
-    --active-text-color    :#353535;
-    --primary-bg-color     :#e9e9e9;
-    --secondary-bg-color   :#f5f5f5;
-    --root-button-color    :#dddddd;
-    --hover-button-color   :#d2d2d2;
-    --active-button-color  :#c0c0c0;
-    --root-navbar-bg-color :#e0e0e0;
-    --navbar-box-color     :#aaaaaa;
-    --week-green           :#7cf779;
-    --week-yellow          :#f3ee67;
-    --week-color           :var(--week-${weekNameEN}) !important;
-}`;
-var darkThemeColors  = `:root {
-    --root-text-color      :#f4f4f4;
-    --active-text-color    :#a9a9a9;
-    --primary-bg-color     :#181818;
-    --secondary-bg-color   :#000000;
-    --root-button-color    :#303030;
-    --hover-button-color   :#3a3a3a;
-    --active-button-color  :#454545;
-    --root-navbar-bg-color :#111111;
-    --navbar-box-color     :#080808;
-    --week-green           :#114110;
-    --week-yellow          :#454306;
-    --week-color           :var(--week-${weekNameEN}) !important;
-}`;
+var THEME = {
+    light: `:root {
+            --root-text-color      :#101520;
+            --active-text-color    :#353535;
+            --primary-bg-color     :#e9e9e9;
+            --secondary-bg-color   :#f5f5f5;
+            --root-button-color    :#dddddd;
+            --hover-button-color   :#d2d2d2;
+            --active-button-color  :#c0c0c0;
+            --root-navbar-bg-color :#e0e0e0;
+            --navbar-box-color     :#aaaaaa;
+            --week-green           :#7cf779;
+            --week-yellow          :#f3ee67;
+            --week-color           :var(--week-${WEEK.name.EN}) !important;
+        }`,
+    dark: `:root {
+            --root-text-color      :#f4f4f4;
+            --active-text-color    :#a9a9a9;
+            --primary-bg-color     :#181818;
+            --secondary-bg-color   :#000000;
+            --root-button-color    :#303030;
+            --hover-button-color   :#3a3a3a;
+            --active-button-color  :#454545;
+            --root-navbar-bg-color :#111111;
+            --navbar-box-color     :#080808;
+            --week-green           :#114110;
+            --week-yellow          :#454306;
+            --week-color           :var(--week-${WEEK.name.EN}) !important;
+        }`
+}
 
 /*  ---  Prepare to work  ---  */
 if (deviceStorage('check', 'theme'))
@@ -127,8 +137,8 @@ async function theme(type) {
             else if (themeCurrent == 'dark')  { deviceStorage('write', 'theme', 'light'); theme('load') };
         } 
         if (type == 'load') {
-                 if (themeCurrent == 'light') { output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#e9e9e9' } 
-            else if (themeCurrent == 'dark')  { output('root-colors-theme', `${darkThemeColors} #thMoon { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#181818' }
+                 if (themeCurrent == 'light') { output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#e9e9e9' } 
+            else if (themeCurrent == 'dark')  { output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#181818' }
         }
     } catch (e) { logs('critical', `Error: theme function work (${e})`) }
 }
@@ -137,7 +147,7 @@ async function theme(type) {
  *  For gtable page script
  */
 async function gTableTheme() {
-    output('root-colors-theme', `${lightThemeColors} #thSun { display: none; }`)
+    output('root-colors-theme', `${THEME.light} #thSun { display: none; }`)
     await sleep(70)
     document.getElementById('theme-color').content = '#ffffff'
     await sleep(5000)
