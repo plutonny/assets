@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 27
+var debugBuild = 28
 var BETA = true
 
 var betaFolder = '', betaRepos = '';
@@ -14,8 +14,6 @@ if (BETA) {
 }
 
 var CURRDATE = new Date()
-var LOG = []
-
 var REQUEST = new Object()
 try {
     var parameters = window.location.href.split('?')[1].split('&')
@@ -96,46 +94,31 @@ var SVG = {
  *      "data" - text (HTML, what else)
  * 
  */
-function output(id, data) { try { document.getElementById(id).innerHTML = data; return true } catch (e) { logs('critical', `Error: output function (maybe couldn't find tag id ${id}): (${e})`); return false } }
+function output(id, data) { try { document.getElementById(id).innerHTML = data; return true } catch (e) { error(true, `Error: output function (maybe couldn't find tag id ${id}): (${e})`); return false } }
 
 /**
  *  Outputted modal (div id "modal" need)
  * 
- *      "type" - mini (small text on top of the page) or max (modal on fullscreen)
+ *      "content" - HTML code for output on fullscreen
  * 
  */
- async function modal(type, content) {
+ async function modal(content) {
     try {
         await sleep(200)
-        if (type == 'mini') { 
-            document.getElementById('modal').innerHTML += `
-                <div class="mini-modal">
-                    <style>
-                        div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; }
-                        div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }
-                    </style>
-                    ${content}
-                </div>
-            `; 
-            await sleep(2000);
-            output('modal', '') 
-        }
-        else if (type == 'max')  { 
-            if (deviceStorage('get','theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
-            if (deviceStorage('get','theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
-            output('modal', `
-                <div class="max-modal">
-                    <style>
-                        div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; z-index: 99; }
-                        div.max-modal { height: 100%; display: flex; justify-content: center; align-items: center; z-index: 100; }
-                    </style>
-                    ${content}
-                </div>
-            `) 
-        }
+        if (deviceStorage('get','theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
+        if (deviceStorage('get','theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
+        output('modal', `
+            <div class="max-modal">
+                <style>
+                    div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; z-index: 99; }
+                    div.max-modal { height: 100%; display: flex; justify-content: center; align-items: center; z-index: 100; }
+                </style>
+                ${content}
+            </div>
+        `) 
         return true
     } catch (e) {
-        logs('error', `Error: modal function (${e})`)
+        error(false, `Error: modal function (${e})`)
         return false
     }
 }
@@ -149,17 +132,16 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 
 /**
- *  Work with console log and logging on page
+ *  Work with errors
  * 
- *      "type" - (info, warn, error, critical)
+ *      "type" - true: critical err, false: defailt err (modal)
  *      "data" - text of log data
  * 
  */
-function logs(type, data) {
-         if (type == 'info')     { LOG.push([type, data]); console.info(data) }
-    else if (type == 'warn')     { LOG.push([type, data]); console.warn(data) }
-    else if (type == 'error')    { LOG.push([type, data]); console.error(data); modal('mini', `<p style="margin: 0;">${data}</p>`) }
-    else if (type == 'critical') { LOG.push([type, data]); sessionStorage.setItem('errorPageError', data); sessionStorage.setItem('errorPageLog', logInHTML(LOG)); location.assign(`/college${betaRepos}/error/`) }
+async function error(type, data) {
+         if (type)  { console.error(data); sessionStorage.setItem('errorPageError', data); location.assign(`/college${betaRepos}/error/`) }
+    else if (!type) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; } div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }</style><p style="margin: 0;">${data}</p></div>`; await sleep(2000); output('modal', '') }
+    else            { error(false, 'Error: error function') }
 }
 
 /**
@@ -174,44 +156,13 @@ function deviceStorage(type, key, value) {
     else if (type == 'write')  { localStorage.setItem(key, value) }
     else if (type == 'remove') { localStorage.removeItem(key) }
     else if (type == 'check')  { return (deviceStorage('get', key) == null || deviceStorage('get', key) == '') }
-    else                       { logs('error', 'Error: localStorage function (type is undefined)') }
+    else                       { error(false, 'Error: localStorage function (type is undefined)') }
 }
 
-/**
- *  Returned logs in HTML format
- * 
- *      "data" - log in list formal (variable LOG or in type [[type log, data log], ..., [type log, data log]])
- * 
- */
-function logInHTML(data) {
-    var result = '', oneOfLog;
-    for (var i = 0; i < data.length; i++) { 
-        oneOfLog = data[i]
-             if (oneOfLog[0] == 'info')     { result += `<p style="background-color: #0000FF70; border-radius: 12px; padding: 4px 8px;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'warn')     { result += `<p style="background-color: #ffff0070; border-radius: 12px; padding: 4px 8px;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'error')    { result += `<p style="background-color: #ff000070; border-radius: 12px; padding: 4px 8px;">${oneOfLog[1]}</p>` } 
-        else if (oneOfLog[0] == 'critical') { result += `<p style="background-color: #00000070; border-radius: 12px; padding: 4px 8px;">${oneOfLog[1]}</p>` } 
-    }
-    return result
-}
-
-/**
- *  Output modal of logs
- */
-function modalLog() { modal('max', `
-        <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
-            <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Данные консоли</h1>
-            <p style="font-family: 'Montserrat' !important; margin:16px;">${logInHTML(LOG)}</p>
-            <div style="display:flex;justify-content:center;">
-                <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">Закрыть</button>
-            </div>
-        </div>
-    `)
-}
 /**
  *  Output modal to accept clear localStorage
  */
-function deleteLocalStorage() { modal('max', `
+function deleteLocalStorage() { modal(`
     <div style="max-height: 95%; overflow-y: auto; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
         <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Очистить</h1>
         <p style="font-family: 'Montserrat' !important; text-align: center;">Ты уверен?</p>
@@ -226,16 +177,13 @@ function deleteLocalStorage() { modal('max', `
 /**
  *  Output modal with additional info in error page
  */
-function allInfoErrorModal(selfError, selfLog) {
+function allInfoErrorModal(selfError) {
     var listLocalStrage =  '';
     for (var i = 0; i < localStorage.length; i++) { listLocalStrage += `<p style="font-family: 'Montserrat' !important; background-color: #00000020; border-radius: 12px; padding: 4px 8px; margin: 4px; font-size: 14px;">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>`  }
-    modal('max', `
+    modal(`
     <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
 
         <h2 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px 6px; background-color: #ff000070; border-radius: 12px; padding: 6px;">${selfError}</h2>
-
-        <p style="font-family: 'Montserrat' !important; margin: 16px; text-align: center; font-size: 20px;">Последние логи:</p>
-        <p style="font-family: 'Montserrat' !important; margin: 16px;">${selfLog}</p>
 
         <p style="font-family: 'Montserrat' !important; margin:16px; text-align: center; font-size: 20px;">Ключи localStorage:</p>
         <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">${listLocalStrage}</div>
@@ -270,10 +218,8 @@ function debugModal() {
                 <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 16px;" onclick="theme('change')">Сменить тему</button>
                 <h2 style="text-align: center;">Logs</h2>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
-                    <button style="margin: 4px; background-color: #0000ff55;" onclick="logs('info', 'Info: debug.js is calling')">info</button>
-                    <button style="margin: 4px; background-color: #ffff0055;" onclick="logs('warn', 'Warning: debug.js is calling')">warn</button>
-                    <button style="margin: 4px; background-color: #ff000055;" onclick="logs('error', 'Error: debug.js is calling')">error</button>
-                    <button style="margin: 4px; background-color: #00000055;" onclick="logs('critical', 'Critical: debug.js is calling')">critical</button>
+                    <button style="margin: 4px; background-color: #ff000055;" onclick="error(false, 'Error: debug.js is calling')">error</button>
+                    <button style="margin: 4px; background-color: #00000055;" onclick="error(true, 'Critical: debug.js is calling')">critical</button>
                 </div>
                 <h1 style="text-align: center;">localStorage:</h1>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly; align-items: center;">
@@ -285,7 +231,7 @@ function debugModal() {
                     <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''">Закрыть</button>
                 </div>
             </div>`
-    modal('max', inj)
+    modal(inj)
 }
 
 deviceStorage('write', 'debugJSBuild', debugBuild);

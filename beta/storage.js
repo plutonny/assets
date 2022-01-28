@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 70;
+var storageVersion = '3.0.0', storageBuild = 71
 
 var WEEK = {
     num: luxon.DateTime.now().weekNumber,
@@ -51,22 +51,22 @@ var THEME = {
 
 /*  ---  Prepare to work  ---  */
 if (deviceStorage('check', 'theme'))
-    { logs('warn', 'Warning: theme is undefined, set theme to light'); deviceStorage('write', 'theme', 'light') }
+    { console.warn('Warning: theme is undefined, set theme to light'); deviceStorage('write', 'theme', 'light') }
 
 if (deviceStorage('get', 'theme') != 'light' && deviceStorage('get', 'theme') != 'dark')
-    { logs('warn', 'Warning: theme is incorrect, set theme to light'); deviceStorage('write', 'theme', 'light') }
+    { console.warn('Warning: theme is incorrect, set theme to light'); deviceStorage('write', 'theme', 'light') }
 
 if (deviceStorage('check', 'themeEnableThemeButton'))
-    { logs('warn', 'Warning: theme button is undefined, turned it on'); deviceStorage('write', 'themeEnableThemeButton', 'true') }
+    { console.warn('Warning: theme button is undefined, turned it on'); deviceStorage('write', 'themeEnableThemeButton', true) }
 
 if (deviceStorage('get', 'themeType') == 2 || deviceStorage('get', 'themeType') == 3)
-    { deviceStorage('write', 'themeEnableThemeButton', `false`) }
+    { deviceStorage('write', 'themeEnableThemeButton', false) }
 
 if (BETA) {
     output('csc11-title-of-page', 'Beta version')
     var blink = window.location.href.charAt(window.location.href.length - 1) == '/' ? `${window.location.href}?debug=true` : `${window.location.href}&debug=true`
     storageVersion += ' beta'
-    logs(`info`, `
+    console.log(`
     Перед выходом в релиз:
         • Все файлы .html: поменять директории файлов на релиз
         • debug.js: переменная BETA
@@ -75,7 +75,7 @@ if (BETA) {
     `)
 }
 
-logs('info', `Current builds (version ${storageVersion}):
+console.log(`Current builds (version ${storageVersion}):
     { Storage JS:  build ${deviceStorage('get', 'storageJSBuild')} },
     { Timeable JS: build ${deviceStorage('get', 'timetableJSBuild')} },
     { Debug JS:    build ${deviceStorage('get', 'debugJSBuild')} },
@@ -99,10 +99,10 @@ logs('info', `Current builds (version ${storageVersion}):
  */
 async function theme(type) {
     if (deviceStorage('check', 'themeType3Time') && deviceStorage('get', 'themeType') == 3)
-        { logs('warn', 'Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'themeType', 1) }
+        { console.warn('Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'themeType', 1) }
 
     if (deviceStorage('check', 'themeType'))
-        { logs('warn', 'Warning: theme type is undefined, set to default'); deviceStorage('write', 'themeType', 1) }
+        { console.warn('Warning: theme type is undefined, set to default'); deviceStorage('write', 'themeType', 1) }
 
     try {
         var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
@@ -125,7 +125,7 @@ async function theme(type) {
             }
         }
         */
-    } catch (e) { logs('critical', `Error: theme function prepare (${e})`) }
+    } catch (e) { error(true, `Error: theme function prepare (${e})`) }
     try {
         var themeCurrent = deviceStorage('get', 'theme');
         if (type == 'change') {
@@ -136,7 +136,7 @@ async function theme(type) {
                  if (themeCurrent == 'light') { output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#e9e9e9' } 
             else if (themeCurrent == 'dark')  { output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#181818' }
         }
-    } catch (e) { logs('critical', `Error: theme function work (${e})`) }
+    } catch (e) { error(true, `Error: theme function work (${e})`) }
 }
 
 /**
@@ -151,19 +151,6 @@ async function gTableTheme() {
 }
 
 /**
- *  Universal function to navigation on site
- * 
- *      siteBack     - backed page (for back button)
- *      settingsPage - returned to settings page
- * 
- */
-async function activePage(type) {
-     if (type == 'siteBack')     { history.back() }
-else if (type == 'settingsPage') { location.assign(`/college${betaRepos}/settings/`) }
-else                             { logs('error', `Error: activities function not found instruction to "${type}"`) }
-}
-
-/**
  *  Service worker enable function
  */
 function enableLogger() {
@@ -171,15 +158,15 @@ function enableLogger() {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register(`/college${betaRepos}/service-worker.js`).then(
                 function(registration) {
-                    if (BETA) { logs('info', `ServiceWorker: registration with scope ${registration.scope}`)}
+                    if (BETA) { console.log(`ServiceWorker: registration with scope ${registration.scope}`)}
                 },
                 function(e) { 
-                    logs('error', `Error: ServiceWorker registration failed: ${e}`)
+                    error(false, `Error: ServiceWorker registration failed: ${e}`)
                 }
-            ).catch(function(e) { logs('error', `Error: ServiceWorker function (${e})`) })
+            ).catch(function(e) { error(false, `Error: ServiceWorker function (${e})`) })
         })
     }
-    else { logs('warn', 'Warning: Service worker is not supported') }
+    else { console.warn('Warning: Service worker is not supported') }
 }
 
 /**
@@ -267,7 +254,7 @@ function header(headerText, buttonTheme, buttonBack) {
             inj += `<button 
                         class="back_button" 
                         style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 8px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: transparent;" 
-                        onclick="activePage('siteBack')">
+                        onclick="history.back()">
                             ${SVG.back}
                     </button>`
         }
@@ -280,7 +267,7 @@ function header(headerText, buttonTheme, buttonBack) {
         `)
         return true
     } catch (e) { 
-        logs('critical', `Error: header function (${e})`) 
+        error(true, `Error: header function (${e})`) 
         return false
     }
 }
