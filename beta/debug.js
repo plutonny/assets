@@ -24,6 +24,8 @@ try {
     console.log(`Page URL doesn't have any parameters`)
 }
 
+if (REQUEST.debug) { debugModal() }
+
 /* Storage SVG icons */
 
 var SVG = {
@@ -224,7 +226,7 @@ function allInfoErrorModal(selfError, selfLog) {
     var listLocalStrage =  '';
     for (var i = 0; i < localStorage.length; i++) { listLocalStrage += `<p style="font-family: 'Montserrat' !important; background-color: #00000020; border-radius: 12px; padding: 4px 8px; margin: 4px; font-size: 14px;">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>`  }
     modal('max', `
-        <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+    <div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
 
         <h2 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px 6px; background-color: #ff000070; border-radius: 12px; padding: 6px;">${selfError}</h2>
 
@@ -241,7 +243,7 @@ function allInfoErrorModal(selfError, selfLog) {
 `)
 }
 
-function debugPage() {
+function debugModal() {
     var inj = '', localStorageKeys = ''
     for (var i = 0; i < localStorage.length; i++) { 
         localStorageKeys += `
@@ -254,7 +256,7 @@ function debugPage() {
             </div>
         </div>`
     }
-    inj += `<div style="background-color: var(--secondary-bg-color); border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px 24px 73px 24px; min-height: calc(100vh - 70px);">
+    inj += `<div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
                 <style>
                     button:not(.back_button) { border-radius: 10px; border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); height: 32px; width: 128px; cursor: pointer; }
                 </style>
@@ -273,9 +275,13 @@ function debugPage() {
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly; align-items: center;">
                     ${localStorageKeys}
                 </div>
-                <button style="margin-top: 32px; width: 100%; height: 64px; font-size: 24px; border-radius: 16px; background-color: #ff000055;" onclick="deleteLocalStorage()">DELETE ALL</button>
+                <button style="margin: 32px 0px; width: 100%; height: 64px; font-size: 24px; border-radius: 16px; background-color: #ff000055;" onclick="deleteLocalStorage()">DELETE ALL</button>
+
+                <div style="display:flex;justify-content:center;">
+                    <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''">Закрыть</button>
+                </div>
             </div>`
-    output('debug', inj)
+    modal('max', inj)
 }
 
 deviceStorage('write', 'debugJSBuild', debugBuild);

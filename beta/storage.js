@@ -63,17 +63,16 @@ if (deviceStorage('get', 'themeType') == 2 || deviceStorage('get', 'themeType') 
     { deviceStorage('write', 'themeEnableThemeButton', `false`) }
 
 if (BETA) {
-    output('csc11-title-of-page', 'Beta version');
-    storageVersion += ' beta';
+    output('csc11-title-of-page', 'Beta version')
+    var blink = window.location.href.charAt(window.location.href.length - 1) == '/' ? `${window.location.href}?debug=true` : `${window.location.href}&debug=true`
+    storageVersion += ' beta'
     logs(`info`, `
 Перед выходом в релиз:
     • Все файлы .html: поменять директории файлов на релиз
     • debug.js: переменная BETA
     
-Чтобы получить модальное окно консоли, введите команду: modalLog()
-
-Чтобы перейти на страницу дебага, введите комманду: window.location.assign('/college${betaRepos}/debug/')
-    `);
+Чтобы получить модальное окно дебага, введите команду: debugModal() или перейдите по ссылке: ${blink}
+    `)
 }
 
 logs('info', `Current builds (version ${storageVersion}):
