@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 8;
+var timetableBuild = 9;
 
 /**
  *  Example of timetble:
@@ -166,14 +166,17 @@ function pairTableHTML() {
 }
 
 function timetableWeekDayChanger(day) {
-    if (day == 0) { timetableWeekDayChanger(1) }
-    var result = ''
+    var result = '', weekNames = ['Воскресенье:', 'Понедельник:', 'Вторник:', 'Среда:', 'Четверг:', 'Пятница:', 'Суббота:']
+    var j
+    if (day == 0) { j = 1 }
+    else { j = day }
 
     for (var i = 1; i <= 6; i++) {
-        if (i == day) { result += `.timetableWorkButton${i} { background-color: var(--active-button-color) }` }
-        else          { result += `.timetableWork${i} { display: none }` }
+        if (i == j) { result += `.timetableWorkButton${i} { background-color: var(--active-button-color) }` }
+        else        { result += `.timetableWork${i} { display: none }` }
     }
 
+    output('timetableWeekName', weekNames[j]) 
     output('timetableCSS', result) 
 }
 

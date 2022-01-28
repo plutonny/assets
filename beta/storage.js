@@ -64,14 +64,13 @@ if (deviceStorage('get', 'themeType') == 2 || deviceStorage('get', 'themeType') 
 
 if (BETA) {
     output('csc11-title-of-page', 'Beta version')
-    var blink = window.location.href.charAt(window.location.href.length - 1) == '/' ? `${window.location.href}?debug=true` : `${window.location.href}&debug=true`
     storageVersion += ' beta'
     console.log(`
     Перед выходом в релиз:
         • Все файлы .html: поменять директории файлов на релиз
         • debug.js: переменная BETA
         
-    Чтобы получить модальное окно дебага, введите команду: debugModal() или перейдите по ссылке: ${blink}
+    Чтобы получить модальное окно дебага, введите команду: debugModal() или перейдите по ссылке: ${window.location.href.charAt(window.location.href.length - 1) == '/' ? `${window.location.href}?debug=true` : `${window.location.href}&debug=true`}
     `)
 }
 
@@ -269,6 +268,28 @@ function header(headerText, buttonTheme, buttonBack) {
         error(true, `Error: header function (${e})`) 
         return false
     }
+}
+
+if (deviceStorage('get', 'noDisplayUpdate30') != 'true') { modal(`
+    <div style=" margin-right: 7%; margin-left: 7%; max-height: 95%; overflow-y: auto; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+        <h2 style="font-family: 'Montserrat' !important; text-align: center; margin:16px;">Вышло обновление!</h2>
+        <h1 style="font-family: 'Montserrat' !important; text-align: center; margin:2px; font-size: 52px">${storageVersion}</h1>
+        <b style="font-family: 'Montserrat' !important; margin-left:16px;">Изменения:</b>
+        <ul style="margin-left:12px;">
+            <li style="font-family: 'Montserrat' !important;">Все написано с нуля</li>
+            <li style="font-family: 'Montserrat' !important;">Новый дизайн</li>
+            <li style="font-family: 'Montserrat' !important;">Удобная навигация</li>
+            <li style="font-family: 'Montserrat' !important;">Много оптимизации</li>
+        </ul>
+        <p style="margin-left:22px;margin-right:22px;">
+            <b style="font-family: 'Montserrat' !important;">Переустановите приложение, чтобы избежать ошибок! </b>
+            <a href="/college${betaRepos}/support/?q=reinstall" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">Как это сделать?</a>
+        </p>
+        <div style="display: flex; justify-content: center;">
+            <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="deviceStorage('write', 'noDisplayUpdate30', 'true'); document.getElementById('modal').innerHTML = ''; theme('load')">Больше не показывать</button>
+        </div>
+    </div>
+    `) 
 }
 
 deviceStorage('write', 'storageJSBuild', storageBuild); theme('load'); enableLogger()
