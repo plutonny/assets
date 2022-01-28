@@ -267,7 +267,7 @@ function header(headerText, buttonTheme, buttonBack) {
         if (buttonBack) {
             inj += `<button 
                         class="back_button" 
-                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 14px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: transparent;" 
+                        style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 8px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: transparent;" 
                         onclick="activePage('siteBack')">
                             ${SVG.back}
                     </button>`
