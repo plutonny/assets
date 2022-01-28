@@ -212,13 +212,11 @@ function debugModal() {
                 <style>
                     button:not(.back_button) { border-radius: 10px; border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); height: 32px; width: 128px; cursor: pointer; }
                 </style>
-                <h1 style="text-align: center;">Testing functions:</h1>
-                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 16px;" onclick="modalLog()">Данные консоли</button>
-                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 16px;" onclick="outBetaNotes()">Вывести бета текст</button>
-                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px; margin-top: 16px;" onclick="theme('change')">Сменить тему</button>
-                <h2 style="text-align: center;">Logs</h2>
+                <h1 style="text-align: center;">Debug modal:</h1>
+                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px;" onclick="theme('change')">Сменить тему</button>
+                <h2 style="text-align: center;">Error</h2>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
-                    <button style="margin: 4px; background-color: #ff000055;" onclick="error(false, 'Error: debug.js is calling')">error</button>
+                    <button style="margin: 4px; background-color: #ff000055;" onclick="error(false, 'Error: debug.js is calling')">default</button>
                     <button style="margin: 4px; background-color: #00000055;" onclick="error(true, 'Critical: debug.js is calling')">critical</button>
                 </div>
                 <h1 style="text-align: center;">localStorage:</h1>

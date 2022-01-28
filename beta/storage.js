@@ -80,7 +80,6 @@ console.log(`Current builds (version ${storageVersion}):
     { Timeable JS: build ${deviceStorage('get', 'timetableJSBuild')} },
     { Debug JS:    build ${deviceStorage('get', 'debugJSBuild')} },
     { Home:        build ${deviceStorage('get', 'homeBuildPage')} },
-    { Timetable:   build ${deviceStorage('get', 'timetableBuildPage')} },
     { Other:       build ${deviceStorage('get', 'otherBuildPage')} },
     { Gtable:      build ${deviceStorage('get', 'gtableBuildPage')} },
     { Simple:      build ${deviceStorage('get', 'simpleBuildPage')} },
