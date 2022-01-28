@@ -13,7 +13,6 @@ var betaFolder = '', betaRepos = '';
 if (BETA) {
     betaFolder += 'beta/'; 
     betaRepos += '-beta'; 
-    output('csc11-title-of-page', 'Beta version');
 };
 
 /* Storage SVG icons */

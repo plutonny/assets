@@ -63,20 +63,17 @@ if (deviceStorage('get', 'themeType') == 2 || deviceStorage('get', 'themeType') 
     { deviceStorage('write', 'themeEnableThemeButton', `false`) }
 
 if (BETA) {
+    output('csc11-title-of-page', 'Beta version');
     storageVersion += ' beta';
-}
+    logs(`info`, `
+Перед выходом в релиз:
+    • Все файлы .html: поменять директории файлов на релиз
+    • debug.js: переменная BETA
+    
+Чтобы получить модальное окно консоли, введите команду: modalLog()
 
-function outBetaNotes() {
-    if (BETA) {
-        output(`beta`, `
-            <div>
-                <p><b style="font-family: 'Montserrat' !important;">Перед выходом в релиз:</b></p>
-                <p style="font-family: 'Montserrat' !important;"><b style="font-family: 'Montserrat' !important;">Все файлы .html:</b> поменять директории файлов на релиз</p>
-                <p style="font-family: 'Montserrat' !important;"><a style="font-family: 'Montserrat' !important; text-decoration: none;" href="/college${betaRepos}/debug/"><b style="font-family: 'Montserrat' !important;">debug.js:</b></a> переменная BETA</p>
-                <p><button style="font-family: 'Montserrat' !important; border: none; width: 100%; height: 64px; font-size: 24px; border-radius: 16px; cursor: pointer;" onclick="modalLog()">Консоль</button></p>
-            </div>
-        `);
-    }
+Чтобы перейти на страницу дебага, введите комманду: window.location.assign('/college${betaRepos}/debug/')
+    `);
 }
 
 logs('info', `Current builds (version ${storageVersion}):
