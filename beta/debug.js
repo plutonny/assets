@@ -3,17 +3,26 @@
 
 "use strict";
 
-var debugBuild = 26;
-var BETA = true;
-
-var CURRDATE = new Date();
-var LOG = [];
+var debugBuild = 27
+var BETA = true
 
 var betaFolder = '', betaRepos = '';
 if (BETA) {
-    betaFolder += 'beta/'; 
-    betaRepos += '-beta'; 
-};
+    betaFolder += 'beta/'
+    betaRepos += '-beta'
+    eruda.init()
+}
+
+var CURRDATE = new Date()
+var LOG = []
+
+var REQUEST = new Object()
+try {
+    var parameters = window.location.href.split('?')[1].split('&')
+    for (var i = 0; i < parameters.length; i++) { var par = parameters[i].split('='); REQUEST[par[0]] = par[1] }
+} catch {
+    console.log(`Page URL doesn't have any parameters`)
+}
 
 /* Storage SVG icons */
 
