@@ -67,11 +67,11 @@ if (BETA) {
     var blink = window.location.href.charAt(window.location.href.length - 1) == '/' ? `${window.location.href}?debug=true` : `${window.location.href}&debug=true`
     storageVersion += ' beta'
     logs(`info`, `
-Перед выходом в релиз:
-    • Все файлы .html: поменять директории файлов на релиз
-    • debug.js: переменная BETA
-    
-Чтобы получить модальное окно дебага, введите команду: debugModal() или перейдите по ссылке: ${blink}
+    Перед выходом в релиз:
+        • Все файлы .html: поменять директории файлов на релиз
+        • debug.js: переменная BETA
+        
+    Чтобы получить модальное окно дебага, введите команду: debugModal() или перейдите по ссылке: ${blink}
     `)
 }
 
