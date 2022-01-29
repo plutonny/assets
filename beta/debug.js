@@ -22,8 +22,6 @@ try {
     console.log(`Page URL doesn't have any parameters`)
 }
 
-if (REQUEST.debug) { debugModal() }
-
 /* Storage SVG icons */
 
 var SVG = {
@@ -222,5 +220,7 @@ function debugModal() {
             </div>`
     modal(inj)
 }
+
+if (REQUEST.debug) { debugModal() }
 
 deviceStorage.write('debugJSBuild', debugBuild);
