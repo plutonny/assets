@@ -127,7 +127,7 @@ var theme = {
                 }
             }
             */
-        } catch (e) { error(true, `Error: theme function prepare (${e})`) }
+        } catch (e) { page.critical(`Error: theme function prepare (${e})`) }
         if (deviceStorage('get', 'theme') == 'light') { return false }
         if (deviceStorage('get', 'theme') == 'dark')  { return true }
     },
@@ -163,9 +163,9 @@ function enableLogger() {
                     if (BETA) { console.log(`ServiceWorker: registration with scope ${registration.scope}`)}
                 },
                 function(e) { 
-                    error(false, `Error: ServiceWorker registration failed: ${e}`)
+                    page.error(`Error: ServiceWorker registration failed: ${e}`)
                 }
-            ).catch(function(e) { error(false, `Error: ServiceWorker function (${e})`) })
+            ).catch(function(e) { page.error(`Error: ServiceWorker function (${e})`) })
         })
     }
     else { console.warn('Warning: Service worker is not supported') }
@@ -269,7 +269,7 @@ function header(headerText, buttonTheme, buttonBack) {
         `)
         return true
     } catch (e) { 
-        error(true, `Error: header function (${e})`) 
+        page.critical(`Error: header function (${e})`) 
         return false
     }
 }

@@ -94,7 +94,7 @@ var SVG = {
  *      "data" - text (HTML, what else)
  * 
  */
-function output(id, data) { try { document.getElementById(id).innerHTML = data; return true } catch (e) { error(true, `Error: output function (maybe couldn't find tag id ${id}): (${e})`); return false } }
+function output(id, data) { try { document.getElementById(id).innerHTML = data; return true } catch (e) { page.critical(`Error: output function (maybe couldn't find tag id ${id}): (${e})`); return false } }
 
 /**
  *  Outputted modal (div id "modal" need)
@@ -118,7 +118,7 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
         `) 
         return true
     } catch (e) {
-        error(false, `Error: modal function (${e})`)
+        page.error(`Error: modal function (${e})`)
         return false
     }
 }
@@ -134,14 +134,14 @@ function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 /**
  *  Work with errors
  * 
- *      "type" - true: critical err, false: defailt err (modal)
- *      "data" - text of log data
+ *      page.error(data) outputted default error in console + mini modal in top of the page
+ *      page.critical(data) returned in error page with err info (variable data)
+ *      "data" - text of error data
  * 
  */
-async function error(type, data) {
-         if (type)  { console.error(data); sessionStorage.setItem('errorPageError', data); location.assign(`/college${betaRepos}/error/`) }
-    else if (!type) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; } div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }</style><p style="margin: 0;">${data}</p></div>`; await sleep(2000); output('modal', '') }
-    else            { error(false, 'Error: error function') }
+var page = {
+    error: async function(data) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; } div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }</style><p style="margin: 0;">${data}</p></div>`; await sleep(2000); output('modal', '') },
+    critical : function { console.error(data); sessionStorage.setItem('errorPageError', data); location.assign(`/college${betaRepos}/error/`) }
 }
 
 /**
@@ -156,7 +156,7 @@ function deviceStorage(type, key, value) {
     else if (type == 'write')  { localStorage.setItem(key, value) }
     else if (type == 'remove') { localStorage.removeItem(key) }
     else if (type == 'check')  { return (deviceStorage('get', key) == null || deviceStorage('get', key) == '') }
-    else                       { error(false, 'Error: localStorage function (type is undefined)') }
+    else                       { page.error('Error: localStorage function (type is undefined)') }
 }
 
 /**
@@ -216,8 +216,8 @@ function debugModal() {
                 <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px;" onclick="theme.change()">Сменить тему</button>
                 <h2 style="text-align: center;">Error</h2>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
-                    <button style="margin: 4px; background-color: #ff000055;" onclick="error(false, 'Error: debug.js is calling')">default</button>
-                    <button style="margin: 4px; background-color: #00000055;" onclick="error(true, 'Critical: debug.js is calling')">critical</button>
+                    <button style="margin: 4px; background-color: #ff000055;" onclick="page.error('Error: debug.js is calling')">default</button>
+                    <button style="margin: 4px; background-color: #00000055;" onclick="page.critical('Critical: debug.js is calling')">critical</button>
                 </div>
                 <h1 style="text-align: center;">localStorage:</h1>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly; align-items: center;">
