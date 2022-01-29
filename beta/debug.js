@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 28
+var debugBuild = 30
 var BETA = true
 
 var betaFolder = '', betaRepos = '';
@@ -104,7 +104,7 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
  */
  async function modal(content) {
     try {
-        await sleep(200)
+        await page.sleep(200)
         if (deviceStorage('get', 'theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
         if (deviceStorage('get', 'theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
         output('modal', `
@@ -124,15 +124,7 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
 }
 
 /**
- *  Await function
- * 
- *      "ms" - count of miliseconds to await
- * 
- */
-function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
-
-/**
- *  Work with errors
+ *  Work with page
  * 
  *      page.error(data) outputted default error in console + mini modal in top of the page
  *      page.critical(data) returned in error page with err info (variable data)
@@ -140,8 +132,9 @@ function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
  * 
  */
 var page = {
-    error: async function(data) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; } div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }</style><p style="margin: 0;">${data}</p></div>`; await sleep(2000); output('modal', '') },
-    critical : function { console.error(data); sessionStorage.setItem('errorPageError', data); location.assign(`/college${betaRepos}/error/`) }
+    error: async function(data) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; } div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }</style><p style="margin: 0;">${data}</p></div>`; await page.sleep(2000); output('modal', '') },
+    critical: function(data) { console.error(data); sessionStorage.setItem('errorPageError', data); location.assign(`/college${betaRepos}/error/`) },
+    sleep: function(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 }
 
 /**

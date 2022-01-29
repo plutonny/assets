@@ -136,8 +136,8 @@ var theme = {
         else                   { deviceStorage('write', 'theme', 'dark'); theme.load() }
     }, 
     load: async function() {
-          if (theme.prepare()) { output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await sleep(75); document.getElementById('theme-color').content = '#181818' }
-        else                   { output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await sleep(75); document.getElementById('theme-color').content = '#e9e9e9' }
+          if (theme.prepare()) { output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await page.sleep(65); document.getElementById('theme-color').content = '#181818' }
+        else                   { output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await page.sleep(65); document.getElementById('theme-color').content = '#e9e9e9' }
     }
 }
 
@@ -146,9 +146,9 @@ var theme = {
  */
 async function gTableTheme() {
     output('root-colors-theme', `${THEME.light} #thSun { display: none; }`)
-    await sleep(70)
+    await page.sleep(70)
     document.getElementById('theme-color').content = '#ffffff'
-    await sleep(5000)
+    await page.sleep(5000)
     output('loadText', '')
 }
 
