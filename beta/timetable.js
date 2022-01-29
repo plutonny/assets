@@ -176,8 +176,8 @@ function timetableWeekDayChanger(day) {
         else        { result += `.timetableWork${i} { display: none }` }
     }
 
-    output('timetableWeekName', weekNames[j]) 
-    output('timetableCSS', result) 
+    page.output('timetableWeekName', weekNames[j]) 
+    page.output('timetableCSS', result) 
 }
 
-deviceStorage('write', 'timetableJSBuild', timetableBuild)
+deviceStorage.write('timetableJSBuild', timetableBuild)

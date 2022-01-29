@@ -3,7 +3,7 @@
 
 "use strict";
 
-var debugBuild = 30
+var debugBuild = 31
 var BETA = true
 
 var betaFolder = '', betaRepos = '';
@@ -88,15 +88,6 @@ var SVG = {
 }
 
 /**
- *  Output text on page by id element
- * 
- *      "id"   - HTML element id (need to create one)
- *      "data" - text (HTML, what else)
- * 
- */
-function output(id, data) { try { document.getElementById(id).innerHTML = data; return true } catch (e) { page.critical(`Error: output function (maybe couldn't find tag id ${id}): (${e})`); return false } }
-
-/**
  *  Outputted modal (div id "modal" need)
  * 
  *      "content" - HTML code for output on fullscreen
@@ -105,9 +96,9 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
  async function modal(content) {
     try {
         await page.sleep(200)
-        if (deviceStorage('get', 'theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
-        if (deviceStorage('get', 'theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
-        output('modal', `
+        if (deviceStorage.get('theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
+        if (deviceStorage.get('theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
+        page.output('modal', `
             <div class="max-modal">
                 <style>
                     div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; z-index: 99; }
@@ -126,30 +117,37 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
 /**
  *  Work with page
  * 
+ *      page.output(id, data) write in HTML element with id (variable id) data (variable data)
  *      page.error(data) outputted default error in console + mini modal in top of the page
  *      page.critical(data) returned in error page with err info (variable data)
+ *      page.sleep(ms) create pause of work any js (in ms) 
+ * 
  *      "data" - text of error data
  * 
  */
 var page = {
-    error: async function(data) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; } div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }</style><p style="margin: 0;">${data}</p></div>`; await page.sleep(2000); output('modal', '') },
-    critical: function(data) { console.error(data); sessionStorage.setItem('errorPageError', data); location.assign(`/college${betaRepos}/error/`) },
-    sleep: function(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
+    output:   function(id, data)   { try { document.getElementById(id).innerHTML = data; return true } catch (e) { page.critical(`Error: output function (maybe couldn't find tag id ${id}): (${e})`); return false } },
+    error:    async function(data) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; height: 72px; width: 100%; z-index: 99; } div.mini-modal { display: flex; align-items: center; height: 36px; z-index: 100; margin: 8px; padding-left: 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 100px; }</style><p style="margin: 0;">${data}</p></div>`; await page.sleep(2000); page.output('modal', '') },
+    critical: function(data)       { console.error(data); sessionStorage.setItem('errorPageError', data); location.assign(`/college${betaRepos}/error/`) },
+    sleep:    function(ms)         { return new Promise(resolve => setTimeout(resolve, ms)) }
 }
 
 /**
  *  Work with localStorage
  * 
- *      "type"            - returned, writing or checking localStorage
+ *      deviceStorage.get(key) get value of key
+ *      deviceStorage.write(key, value) write value in localStorage key
+ *      deviceStorage.remove(key) deleted key in localStorage
+ *      deviceStorage.check(key) check to avialible key in localStorage
+ * 
  *      "key" and "value" - key and value of localStorage
  * 
  */
-function deviceStorage(type, key, value) {
-         if (type == 'get')    { return localStorage.getItem(key) }
-    else if (type == 'write')  { localStorage.setItem(key, value) }
-    else if (type == 'remove') { localStorage.removeItem(key) }
-    else if (type == 'check')  { return (deviceStorage('get', key) == null || deviceStorage('get', key) == '') }
-    else                       { page.error('Error: localStorage function (type is undefined)') }
+var deviceStorage = {
+    get:    function(key)        { return localStorage.getItem(key) },
+    write:  function(key, value) { try { localStorage.setItem(key, value); return true } catch { return false } },
+    remove: function(key)        { try { localStorage.removeItem(key); return true } catch { return false } },
+    check:  function(key)        { return (deviceStorage.get(key) == null || deviceStorage.get(key) == '') }
 }
 
 /**
@@ -196,8 +194,8 @@ function debugModal() {
             <p style="margin: 0; text-align: center;">${localStorage.key(i)} - ${localStorage.getItem(localStorage.key(i))}</p>
             <div style="display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: center;">
                 <input style="padding-left: 6px; color: var(--root-text-color); border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 10px; background-color: #00000055; height: 30px; width: 128px; margin: 4px;" autocomplete="off" type="text" id="lssedit${i}" class="debug_lssedit${i}">
-                <script>lssedit${i}.oninput = async function() { deviceStorage("write", "${localStorage.key(i)}", lssedit${i}.value);}</script>
-                <button style="width: 64px; margin: 4px; background-color: #ff000055;" onclick="deviceStorage('remove', '${localStorage.key(i)}')">delete</button>
+                <script>lssedit${i}.oninput = async function() { deviceStorage.write("${localStorage.key(i)}", lssedit${i}.value);}</script>
+                <button style="width: 64px; margin: 4px; background-color: #ff000055;" onclick="deviceStorage.remove('${localStorage.key(i)}')">delete</button>
             </div>
         </div>`
     }
@@ -225,4 +223,4 @@ function debugModal() {
     modal(inj)
 }
 
-deviceStorage('write', 'debugJSBuild', debugBuild);
+deviceStorage.write('debugJSBuild', debugBuild);
