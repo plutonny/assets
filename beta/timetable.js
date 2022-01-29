@@ -35,7 +35,7 @@ var TIMETABLE = {
     3: [ /* wednesday */
         ['1', 'Математика', 'Панфилова', 'к. 406', 'default'],
         ['2', 'Литература', 'Горбова', 'к. 404', 'default'],
-        ['3', 'Английский язык', 'Венедиктова, Черкасова', 'к. 404а/311', 'yellow'],
+        ['3', 'Английский язык', 'Венедиктова, Черкасова', '404а/311', 'yellow'],
         ['3', 'Физкультура', 'Топорков', '0100', 'green']
     ],
     4: [ /* thursday */
@@ -51,7 +51,7 @@ var TIMETABLE = {
         ['3', 'Индив. проект', 'Солодкая', 'чит. зал', 'green']
     ],
     6: [ /* saturday */
-        ['1', 'Английский язык', 'Венедиктова, Черкасова', 'к. 404а/311', 'default'],
+        ['1', 'Английский язык', 'Венедиктова, Черкасова', '404а/311', 'default'],
         ['2', 'История', 'Глущенко', 'к. 407', 'default'],
         ['3', 'Химия', 'Петрова', 'л. 402', 'default'],
     ],
@@ -168,12 +168,12 @@ function pairTableHTML() {
                 result += `
                 <tr style="background-color: var(${inj.color});">
                     <td rowspan="2" style="width: 16px; border: 1px solid #707070; ${inj.border.left.top}${inj.border.left.bottom}"><b>${TIMETABLE[i][j][0]}</b></td>
-                    <td class="timetableTableWeek">${TIMETABLE[i][j][1]}</td>
+                    <td style="width: 220px;" class="timetableTableWeek">${TIMETABLE[i][j][1]}</td>
                     <td class="timetableTableWeek" style="${inj.border.right.top}">${TIMETABLE[i][j][3]}</td>
                 </tr>
                 <tr style="background-color: var(${inj.color});">
                     <!-- Here <td> of num of pair -->
-                    <td class="timetableTableWeek">${TIMETABLE[i][j][2]}</td>
+                    <td style="width: 220px;" class="timetableTableWeek">${TIMETABLE[i][j][2]}</td>
                     <td class="timetableTableWeek" style="${inj.border.right.bottom}"></td>
                 </tr>
                 `
@@ -183,12 +183,12 @@ function pairTableHTML() {
                 result += `
                 <tr style="background-color: var(--week-${TIMETABLE[i][j][4]});">
                     <td rowspan="2" style=" background-color: var(--root-button-color); width: 16px; border: 1px solid #707070; ${inj.border.left.top}${injLeftBottom}"><b>${TIMETABLE[i][j][0]}</b></td>
-                    <td class="timetableTableWeek">${TIMETABLE[i][j][1]}</td>
+                    <td style="width: 220px;" class="timetableTableWeek">${TIMETABLE[i][j][1]}</td>
                     <td class="timetableTableWeek" style="${inj.border.right.top}">${TIMETABLE[i][j][3]}</td>
                 </tr>
                 <tr style="background-color: var(--week-${TIMETABLE[i][j + 1][4]});">
                     <!-- Here <td> of num of pair -->
-                    <td class="timetableTableWeek">${TIMETABLE[i][j + 1][2]}</td>
+                    <td style="width: 220px;" class="timetableTableWeek">${TIMETABLE[i][j + 1][1]}</td>
                     <td class="timetableTableWeek" style="${injRightBottom}">${TIMETABLE[i][j + 1][3]}</td>
                 </tr>
                 `
