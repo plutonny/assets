@@ -4,7 +4,7 @@
 "use strict";
 
 /*  ---  Global variables  ---  */
-var storageVersion = '3.0.0', storageBuild = 71
+var storageVersion = '3.0.0', storageBuild = 72
 
 var WEEK = {
     num: luxon.DateTime.now().weekNumber,
@@ -50,17 +50,6 @@ var THEME = {
 }
 
 /*  ---  Prepare to work  ---  */
-if (deviceStorage('check', 'theme'))
-    { console.warn('Warning: theme is undefined, set theme to light'); deviceStorage('write', 'theme', 'light') }
-
-if (deviceStorage('get', 'theme') != 'light' && deviceStorage('get', 'theme') != 'dark')
-    { console.warn('Warning: theme is incorrect, set theme to light'); deviceStorage('write', 'theme', 'light') }
-
-if (deviceStorage('check', 'themeEnableThemeButton'))
-    { console.warn('Warning: theme button is undefined, turned it on'); deviceStorage('write', 'themeEnableThemeButton', true) }
-
-if (deviceStorage('get', 'themeType') == 2 || deviceStorage('get', 'themeType') == 3)
-    { deviceStorage('write', 'themeEnableThemeButton', false) }
 
 if (BETA) {
     output('csc11-title-of-page', 'Beta version')
@@ -92,49 +81,64 @@ console.log(`Current builds (version ${storageVersion}):
 /**
  *  Work with theme in site (style id "root-colors-theme" need)
  *      
- *      "type" - load or change, I think all clear
+ *      theme.prepare() returned current theme in bool format (true - dark theme, false - light theme)
+ *      theme.load() loaded theme (used in storage.js and in modals)
+ *      theme.change() changed theme to reverse and load theme again
  * 
  */
-async function theme(type) {
-    if (deviceStorage('check', 'themeType3Time') && deviceStorage('get', 'themeType') == 3)
-        { console.warn('Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'themeType', 1) }
+var theme = {
+    prepare: function() {
+        if (deviceStorage('check', 'themeType3Time') && deviceStorage('get', 'themeType') == 3)
+            { console.warn('Warning: script found inconsistency in localStorage and fixes it'); deviceStorage('write', 'themeType', 1) }
 
-    if (deviceStorage('check', 'themeType'))
-        { console.warn('Warning: theme type is undefined, set to default'); deviceStorage('write', 'themeType', 1) }
+        if (deviceStorage('check', 'themeType'))
+            { console.warn('Warning: theme type is undefined, set to default'); deviceStorage('write', 'themeType', 1) }
 
-    try {
-        var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
-        if (deviceStorage('get', 'themeType') == 2) { 
-            if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { deviceStorage('write', 'theme', 'light') } 
-            else                                                                                 { deviceStorage('write', 'theme', 'dark') } 
-        }
-        /*
-        if (deviceStorage('get', 'themeType') == 3) {
-            var themeTimeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes()))) 
-            var themeTimeFrom = parseInt(deviceStorage('get', 'themeType3Time').charAt(0) + deviceStorage('get', 'themeType3Time').charAt(1) + deviceStorage('get', 'themeType3Time').charAt(3) + deviceStorage('get', 'themeType3Time').charAt(4)); 
-            var themeTimeTo = parseInt(deviceStorage('get', 'themeType3Time').charAt(5) + deviceStorage('get', 'themeType3Time').charAt(6) + deviceStorage('get', 'themeType3Time').charAt(8) + deviceStorage('get', 'themeType3Time').charAt(9));
-            if (themeTimeFrom < themeTimeTo) {
-                if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
-                else                                                                                                         { deviceStorage('write', 'theme', 'dark') } 
+        if (deviceStorage('check', 'theme'))
+            { console.warn('Warning: theme is undefined, set theme to light'); deviceStorage('write', 'theme', 'light') }
+
+        if (deviceStorage('get', 'theme') != 'light' && deviceStorage('get', 'theme') != 'dark')
+            { console.warn('Warning: theme is incorrect, set theme to light'); deviceStorage('write', 'theme', 'light') }
+
+        if (deviceStorage('check', 'themeEnableThemeButton'))
+            { console.warn('Warning: theme button is undefined, turned it on'); deviceStorage('write', 'themeEnableThemeButton', true) }
+
+        if (deviceStorage('get', 'themeType') == 2 || deviceStorage('get', 'themeType') == 3)
+            { deviceStorage('write', 'themeEnableThemeButton', false) }
+
+        try {
+            var onDateSunriseSunset = SunCalc.getTimes(CURRDATE, 64.4, 40.4)
+            if (deviceStorage('get', 'themeType') == 2) { 
+                if (onDateSunriseSunset.sunrise < CURRDATE && CURRDATE < onDateSunriseSunset.sunset) { deviceStorage('write', 'theme', 'light') } 
+                else                                                                                 { deviceStorage('write', 'theme', 'dark') } 
             }
-            else if (themeTimeFrom > themeTimeTo) {
-                if ((themeTimeFrom < themeTimeNow && themeTimeNow < 23) || (0 < themeTimeNow && themeTimeNow < themeTimeTo)) { deviceStorage('write', 'theme', 'light') } 
-                else                                                                                                         { deviceStorage('write', 'theme', 'dark') } 
+            /*
+            if (deviceStorage('get', 'themeType') == 3) {
+                var themeTimeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes()))) 
+                var themeTimeFrom = parseInt(deviceStorage('get', 'themeType3Time').charAt(0) + deviceStorage('get', 'themeType3Time').charAt(1) + deviceStorage('get', 'themeType3Time').charAt(3) + deviceStorage('get', 'themeType3Time').charAt(4)); 
+                var themeTimeTo = parseInt(deviceStorage('get', 'themeType3Time').charAt(5) + deviceStorage('get', 'themeType3Time').charAt(6) + deviceStorage('get', 'themeType3Time').charAt(8) + deviceStorage('get', 'themeType3Time').charAt(9));
+                if (themeTimeFrom < themeTimeTo) {
+                    if (themeTimeFrom < themeTimeNow && themeTimeNow < themeTimeTo)                                              { deviceStorage('write', 'theme', 'light') } 
+                    else                                                                                                         { deviceStorage('write', 'theme', 'dark') } 
+                }
+                else if (themeTimeFrom > themeTimeTo) {
+                    if ((themeTimeFrom < themeTimeNow && themeTimeNow < 23) || (0 < themeTimeNow && themeTimeNow < themeTimeTo)) { deviceStorage('write', 'theme', 'light') } 
+                    else                                                                                                         { deviceStorage('write', 'theme', 'dark') } 
+                }
             }
-        }
-        */
-    } catch (e) { error(true, `Error: theme function prepare (${e})`) }
-    try {
-        var themeCurrent = deviceStorage('get', 'theme');
-        if (type == 'change') {
-                 if (themeCurrent == 'light') { deviceStorage('write', 'theme', 'dark'); theme('load') } 
-            else if (themeCurrent == 'dark')  { deviceStorage('write', 'theme', 'light'); theme('load') };
-        } 
-        if (type == 'load') {
-                 if (themeCurrent == 'light') { output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#e9e9e9' } 
-            else if (themeCurrent == 'dark')  { output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await sleep(55); document.getElementById('theme-color').content = '#181818' }
-        }
-    } catch (e) { error(true, `Error: theme function work (${e})`) }
+            */
+        } catch (e) { error(true, `Error: theme function prepare (${e})`) }
+        if (deviceStorage('get', 'theme') == 'light') { return false }
+        if (deviceStorage('get', 'theme') == 'dark')  { return true }
+    },
+    change: async function() {
+          if (theme.prepare()) { deviceStorage('write', 'theme', 'light'); theme.load() }
+        else                   { deviceStorage('write', 'theme', 'dark'); theme.load() }
+    }, 
+    load: async function() {
+          if (theme.prepare()) { output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await sleep(75); document.getElementById('theme-color').content = '#181818' }
+        else                   { output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await sleep(75); document.getElementById('theme-color').content = '#e9e9e9' }
+    }
 }
 
 /**
@@ -244,7 +248,7 @@ function header(headerText, buttonTheme, buttonBack) {
             inj += `<button 
                         class="theme_button" 
                         style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: transparent;" 
-                        onclick="theme('change')">
+                        onclick="theme.change()">
                             ${SVG.theme}
                     </button>`
         }
@@ -286,10 +290,10 @@ if (deviceStorage('get', 'noDisplayUpdate30') != 'true') { modal(`
             <a href="/college${betaRepos}/support/?q=reinstall" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">Как это сделать?</a>
         </p>
         <div style="display: flex; justify-content: center;">
-            <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="deviceStorage('write', 'noDisplayUpdate30', 'true'); document.getElementById('modal').innerHTML = ''; theme('load')">Больше не показывать</button>
+            <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="deviceStorage('write', 'noDisplayUpdate30', 'true'); document.getElementById('modal').innerHTML = ''; theme.load()">Больше не показывать</button>
         </div>
     </div>
     `) 
 }
 
-deviceStorage('write', 'storageJSBuild', storageBuild); theme('load'); enableLogger()
+deviceStorage('write', 'storageJSBuild', storageBuild); theme.load(); enableLogger()

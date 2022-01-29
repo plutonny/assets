@@ -105,8 +105,8 @@ function output(id, data) { try { document.getElementById(id).innerHTML = data; 
  async function modal(content) {
     try {
         await sleep(200)
-        if (deviceStorage('get','theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
-        if (deviceStorage('get','theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
+        if (deviceStorage('get', 'theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
+        if (deviceStorage('get', 'theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
         output('modal', `
             <div class="max-modal">
                 <style>
@@ -167,8 +167,8 @@ function deleteLocalStorage() { modal(`
         <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Очистить</h1>
         <p style="font-family: 'Montserrat' !important; text-align: center;">Ты уверен?</p>
         <div style="display: flex; justify-content: center;">
-            <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #00ff0020;" onclick="document.getElementById('modal').innerHTML = ''; theme('load')">НЕТ</button>
-            <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #ff000020;" onclick="localStorage.clear(); document.getElementById('modal').innerHTML = ''; theme('load')">ДА</button>
+            <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #00ff0020;" onclick="document.getElementById('modal').innerHTML = ''; theme.load()">НЕТ</button>
+            <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #ff000020;" onclick="localStorage.clear(); document.getElementById('modal').innerHTML = ''; theme.load()">ДА</button>
         </div>
     </div>
 `) 
@@ -213,7 +213,7 @@ function debugModal() {
                     button:not(.back_button) { border-radius: 10px; border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); height: 32px; width: 128px; cursor: pointer; }
                 </style>
                 <h1 style="text-align: center;">Debug modal:</h1>
-                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px;" onclick="theme('change')">Сменить тему</button>
+                <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px;" onclick="theme.change()">Сменить тему</button>
                 <h2 style="text-align: center;">Error</h2>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
                     <button style="margin: 4px; background-color: #ff000055;" onclick="error(false, 'Error: debug.js is calling')">default</button>
@@ -226,7 +226,7 @@ function debugModal() {
                 <button style="margin: 32px 0px; width: 100%; height: 64px; font-size: 24px; border-radius: 16px; background-color: #ff000055;" onclick="deleteLocalStorage()">DELETE ALL</button>
 
                 <div style="display:flex;justify-content:center;">
-                    <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''">Закрыть</button>
+                    <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="document.getElementById('modal').innerHTML = ''; theme.load()">Закрыть</button>
                 </div>
             </div>`
     modal(inj)
