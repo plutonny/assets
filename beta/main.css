@@ -44,7 +44,7 @@ a:active { color: var(--active-text-color); }
 /* Styles for all sizes */
 html, body { margin: 0; overflow-x: hidden; transition: 350ms; }
 h1, h2, h3, h4, h5, h6, p, a, b, td, div, li, button, br, input, label { z-index: 2; transition: 200ms; font-family: 'Nunito'; word-wrap: break-word; }
-.btl { border-top-left-radius: 16px; } .btr { border-top-right-radius: 16px; } .bbl { border-bottom-left-radius: 16px; } .bbr { border-bottom-right-radius: 16px; }
+.btl { border-top-left-radius: 17px; } .btr { border-top-right-radius: 17px; } .bbl { border-bottom-left-radius: 17px; } .bbr { border-bottom-right-radius: 17px; }
 
 
 @media (min-width: 1401px) { /* Styles for PC */

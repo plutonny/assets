@@ -155,12 +155,12 @@ function pairTableHTML() {
                 color: TIMETABLE[i][j][4] == 'default' ? `--root-button-color` : `--week-${TIMETABLE[i][j][4]}`,
                 border: {
                     left: {
-                        top:    j == 0 ?                       'border-top-left-radius: 16px'     : '',
-                        bottom: j == TIMETABLE[i].length - 1 ? 'border-bottom-left-radius: 16px'  : ''
+                        top:    j == 0 ?                       'border-top-left-radius: 17px'     : '',
+                        bottom: j == TIMETABLE[i].length - 1 ? 'border-bottom-left-radius: 17px'  : ''
                     },
                     right: {
-                        top:    j == 0 ?                       'border-top-right-radius: 16px'    : '',
-                        bottom: j == TIMETABLE[i].length - 1 ? 'border-bottom-right-radius: 16px' : ''
+                        top:    j == 0 ?                       'border-top-right-radius: 17px'    : '',
+                        bottom: j == TIMETABLE[i].length - 1 ? 'border-bottom-right-radius: 17px' : ''
                     }
                 }
             }
@@ -178,7 +178,7 @@ function pairTableHTML() {
                 </tr>
                 `
             } else {
-                if (j + 1 == TIMETABLE[i].length - 1) { var injLeftBottom = 'border-bottom-left-radius: 16px', injRightBottom = 'border-bottom-right-radius: 16px' }
+                if (j + 1 == TIMETABLE[i].length - 1) { var injLeftBottom = 'border-bottom-left-radius: 17px', injRightBottom = 'border-bottom-right-radius: 17px' }
                 else { var injLeftBottom = '', injRightBottom = '' }
                 result += `
                 <tr style="background-color: var(--week-${TIMETABLE[i][j][4]});">
