@@ -84,6 +84,7 @@ console.log(`Current builds (version ${storageVersion}):
  *      theme.prepare() returned current theme in bool format (true - dark theme, false - light theme)
  *      theme.load() loaded theme (used in storage.js and in modals)
  *      theme.change() changed theme to reverse and load theme again
+ *      theme.gtable() special onle gtable page (set light theme and remove load gif)
  * 
  */
 var theme = {
@@ -138,18 +139,14 @@ var theme = {
     load: async function() {
           if (theme.prepare()) { page.output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await page.sleep(65); document.getElementById('theme-color').content = '#181818' }
         else                   { page.output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await page.sleep(65); document.getElementById('theme-color').content = '#e9e9e9' }
+    },
+    gtable: async function() {
+        page.output('root-colors-theme', `${THEME.light} #thSun { display: none; }`)
+        await page.sleep(70)
+        document.getElementById('theme-color').content = '#ffffff'
+        await page.sleep(5000)
+        page.output('loadText', '')
     }
-}
-
-/**
- *  For gtable page script
- */
-async function gTableTheme() {
-    page.output('root-colors-theme', `${THEME.light} #thSun { display: none; }`)
-    await page.sleep(70)
-    document.getElementById('theme-color').content = '#ffffff'
-    await page.sleep(5000)
-    page.output('loadText', '')
 }
 
 /**
