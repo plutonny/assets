@@ -30,19 +30,16 @@ try {
 
 /* Week variable: num week and names (EN, RU, alternative) */
 var WEEK = {
+    num: luxon.DateTime.now().weekNumber
+}
+WEEK.name = {
 
-    num: luxon.DateTime.now().weekNumber,
+    RU: WEEK.num % 2 == 1 ? 'зеленая' : 'желтая',
+    EN: WEEK.num % 2 == 1 ? 'green' : 'yellow',
 
-    name: {
-
-        RU: WEEK % 2 == 1 ? 'зеленая' : 'желтая',
-        EN: WEEK % 2 == 1 ? 'green' : 'yellow',
-
-        alt: {
-            RU: WEEK % 2 == 1 ? 'желтая' : 'зеленая',
-            EN: WEEK % 2 == 1 ? 'yellow' : 'green',
-        }
-
+    alt: {
+        RU: WEEK.num % 2 == 1 ? 'желтая' : 'зеленая',
+        EN: WEEK.num % 2 == 1 ? 'yellow' : 'green',
     }
 
 }
