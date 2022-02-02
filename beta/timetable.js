@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 11
+var timetableBuild = 12
 
 var timeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes())))
 
@@ -83,32 +83,32 @@ var TIMETABLE = {
                 if (timeNow <= TIMETABLE.alerts[1][0][0]) { return 'Пары скоро начнутся' }
                 /* 1 pair */
                 if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 1) {
-                        if (TIMETABLE.alerts[1][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[1][0][1]) { return 'Сейчас 1-я пара' }
+                         if (TIMETABLE.alerts[1][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[1][0][1]) { return 'Сейчас 1-я пара' }
                     else if (TIMETABLE.alerts[1][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[1][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[1][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[1][1][1]) { return 'Сейчас 1-я пара' }
                 }
                 /* 2 pair */
                 if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 2) {
-                        if (TIMETABLE.alerts[2][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][0][1]) { return 'Сейчас 2-я пара' }
+                         if (TIMETABLE.alerts[2][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][0][1]) { return 'Сейчас 2-я пара' }
                     else if (TIMETABLE.alerts[2][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[2][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[2][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][1][1]) { return 'Сейчас 2-я пара' }
                 }
                 /* 3 pair */
                 if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 3) {
-                        if (TIMETABLE.alerts[2][1][1] <= timeNow && timeNow <= TIMETABLE.alerts[3][0][0]) { return 'Сейчас перерыв' }
+                         if (TIMETABLE.alerts[2][1][1] <= timeNow && timeNow <= TIMETABLE.alerts[3][0][0]) { return 'Сейчас перерыв' }
                     else if (TIMETABLE.alerts[3][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[3][0][1]) { return 'Сейчас 3-я пара' }
                     else if (TIMETABLE.alerts[3][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[3][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[3][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[3][1][1]) { return 'Сейчас 3-я пара' }
                 }
                 /* 4 pair */
                 if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 4) {
-                        if (TIMETABLE.alerts[4][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][0][1]) { return 'Сейчас 4-я пара' }
+                         if (TIMETABLE.alerts[4][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][0][1]) { return 'Сейчас 4-я пара' }
                     else if (TIMETABLE.alerts[4][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[4][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[4][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][1][1]) { return 'Сейчас 4-я пара' }
                 }
                 /* 5 pair */
                 if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 5) {
-                        if (TIMETABLE.alerts[5][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][0][1]) { return 'Сейчас 5-я пара' }
+                         if (TIMETABLE.alerts[5][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][0][1]) { return 'Сейчас 5-я пара' }
                     else if (TIMETABLE.alerts[5][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[5][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][1]) { return 'Сейчас 5-я пара' }
                 }
@@ -170,12 +170,18 @@ var TIMETABLE = {
                                 result += `
                                 <tr style="background-color: var(${inj.color});">
                                     <td rowspan="2" style="width: 16px; border: 1px solid #707070; ${inj.border.left.top}${inj.border.left.bottom}"><b>${TIMETABLE[i][j][0]}</b></td>
-                                    <td style="width: 220px;" class="timetableTableWeek"><b style="font-family: 'Montserrat';">${TIMETABLE[i][j][1]}</b></td>
-                                    <td class="timetableTableWeek" style="${inj.border.right.top}">${TIMETABLE[i][j][3]}</td>
+                                    <td style="width: 220px;" class="timetableTableWeek"><b style="font-family: 'Montserrat';">
+                                        ${TIMETABLE[i][j][1]}
+                                    </b></td>
+                                    <td class="timetableTableWeek" style="${inj.border.right.top}">
+                                        ${TIMETABLE[i][j][3]}
+                                    </td>
                                 </tr>
                                 <tr style="background-color: var(${inj.color});">
                                     <!-- Here <td> of num of pair -->
-                                    <td style="width: 220px;" class="timetableTableWeek">${TIMETABLE[i][j][2]}</td>
+                                    <td style="width: 220px;" class="timetableTableWeek">
+                                        ${TIMETABLE[i][j][2]}
+                                    </td>
                                     <td class="timetableTableWeek" style="${inj.border.right.bottom}"></td>
                                 </tr>
                                 `
@@ -185,13 +191,21 @@ var TIMETABLE = {
                                 result += `
                                 <tr style="background-color: var(--week-${TIMETABLE[i][j][4]});">
                                     <td rowspan="2" style=" background-color: var(--primary-bg-color); width: 16px; border: 1px solid #707070; ${inj.border.left.top}${injLeftBottom}"><b>${TIMETABLE[i][j][0]}</b></td>
-                                    <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">${TIMETABLE[i][j][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j][1]}${TIMETABLE[i][j][4] == WEEK.name.EN ? `</b>` : ''}</td>
-                                    <td class="timetableTableWeek" style="${inj.border.right.top}">${TIMETABLE[i][j][3]}</td>
+                                    <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">
+                                        ${TIMETABLE[i][j][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j][1]}${TIMETABLE[i][j][4] == WEEK.name.EN ? `</b>` : ''}
+                                    </td>
+                                    <td class="timetableTableWeek" style="${inj.border.right.top}">
+                                        ${TIMETABLE[i][j][3]}
+                                    </td>
                                 </tr>
                                 <tr style="background-color: var(--week-${TIMETABLE[i][j + 1][4]});">
                                     <!-- Here <td> of num of pair -->
-                                    <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">${TIMETABLE[i][j + 1][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j + 1][1]}${TIMETABLE[i][j + 1][4] == WEEK.name.EN ? `</b>` : ''}</td>
-                                    <td class="timetableTableWeek" style="${injRightBottom}">${TIMETABLE[i][j + 1][3]}</td>
+                                    <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">
+                                        ${TIMETABLE[i][j + 1][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j + 1][1]}${TIMETABLE[i][j + 1][4] == WEEK.name.EN ? `</b>` : ''}
+                                    </td>
+                                    <td class="timetableTableWeek" style="${injRightBottom}">
+                                        ${TIMETABLE[i][j + 1][3]}
+                                    </td>
                                 </tr>
                                 `
                                 j++
@@ -205,7 +219,7 @@ var TIMETABLE = {
             }
         },
         weekChanger: function(day) {
-            var result = '', weekNames = ['Воскресенье:', 'Понедельник:', 'Вторник:', 'Среда:', 'Четверг:', 'Пятница:', 'Суббота:']
+            var result = '', weekNames = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
             var j
             if (day == 0) { j = 1 }
             else { j = day }
@@ -215,7 +229,7 @@ var TIMETABLE = {
                 else        { result += `.timetableWork${i} { display: none }` }
             }
 
-            page.output('timetableWeekName', weekNames[j]) 
+            page.output('timetableWeekName', `${weekNames[j]},<br>${WEEK.name.RU} неделя:`) 
             page.output('timetableCSS', result) 
         }
     }
