@@ -185,12 +185,12 @@ var TIMETABLE = {
                                 result += `
                                 <tr style="background-color: var(--week-${TIMETABLE[i][j][4]});">
                                     <td rowspan="2" style=" background-color: var(--primary-bg-color); width: 16px; border: 1px solid #707070; ${inj.border.left.top}${injLeftBottom}"><b>${TIMETABLE[i][j][0]}</b></td>
-                                    <td style="width: 220px;" class="timetableTableWeek"><b style="font-family: 'Montserrat';">${TIMETABLE[i][j][1]}</b></td>
+                                    <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">${TIMETABLE[i][j][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j][1]}${TIMETABLE[i][j][4] == WEEK.name.EN ? `</b>` : ''}</td>
                                     <td class="timetableTableWeek" style="${inj.border.right.top}">${TIMETABLE[i][j][3]}</td>
                                 </tr>
                                 <tr style="background-color: var(--week-${TIMETABLE[i][j + 1][4]});">
                                     <!-- Here <td> of num of pair -->
-                                    <td style="width: 220px;" class="timetableTableWeek"><b style="font-family: 'Montserrat';">${TIMETABLE[i][j + 1][1]}</b></td>
+                                    <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">${TIMETABLE[i][j + 1][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j + 1][1]}${TIMETABLE[i][j + 1][4] == WEEK.name.EN ? `</b>` : ''}</td>
                                     <td class="timetableTableWeek" style="${injRightBottom}">${TIMETABLE[i][j + 1][3]}</td>
                                 </tr>
                                 `
