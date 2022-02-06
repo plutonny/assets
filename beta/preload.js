@@ -105,4 +105,9 @@ async function modal(content) {
     }
 }
 
+/**
+ *  Capitalize (first letter in upper case)
+ */
+function capitalize(text) { return text.charAt(0).toUpperCase() + text.slice(1) }
+
 deviceStorage.write('preloadJSBuild', preloadBuild);

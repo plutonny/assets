@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 12
+var timetableBuild = 13
 
 var timeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes())))
 
@@ -219,7 +219,7 @@ var TIMETABLE = {
             }
         },
         weekChanger: function(day) {
-            var result = '', weekNames = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
+            var result = '', weekNames = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота']
             var j
             if (day == 0) { j = 1 }
             else { j = day }
@@ -229,7 +229,7 @@ var TIMETABLE = {
                 else        { result += `.timetableWork${i} { display: none }` }
             }
 
-            page.output('timetableWeekName', `${weekNames[j]},<br>${WEEK.name.RU} неделя:`) 
+            page.output('timetableWeekName', `${CURRDATE.getDay() == 0 ? `С пон-ка ${WEEK.name.alt.RU}` : capitalize(WEEK.name.RU)} неделя, ${weekNames[j]}:`) 
             page.output('timetableCSS', result) 
         }
     }
