@@ -1,4 +1,4 @@
-/*       -------         Main file         -------       */
+/*       -------         Main file         -------      */
 /*     -------       Made by plutonny       -------     */
 
 "use strict";

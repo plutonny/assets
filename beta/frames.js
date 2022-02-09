@@ -1,4 +1,4 @@
-/*       -------        Frames file        -------       */
+/*       -------        Frames file        -------      */
 /*     -------       Made by plutonny       -------     */
 
 "use strict";
