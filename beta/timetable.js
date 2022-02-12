@@ -154,7 +154,7 @@ var TIMETABLE = {
                         result += `<table class="timetableWork${i}" style="border: 1px solid #707070; border-radius: 18px; width: 330px; text-align: center; border-collapse: separate; border-spacing: 0px; margin: auto; background-color: var(--root-navbar-bg-color);">`
                         for (var j = 0; j < TIMETABLE[i].length; j++) {
                             var inj = { 
-                                color: TIMETABLE[i][j][4] == 'default' ? `--primary-bg-color` : `--week-${TIMETABLE[i][j][4]}`,
+                                color: TIMETABLE[i][j][4] == 'default' ? `--root-navbar-bg-color` : `--week-${TIMETABLE[i][j][4]}`,
                                 border: {
                                     left: {
                                         top:    j == 0 ?                       'border-top-left-radius: 17px'     : '',
@@ -190,7 +190,7 @@ var TIMETABLE = {
                                 else { var injLeftBottom = '', injRightBottom = '' }
                                 result += `
                                 <tr style="background-color: var(--week-${TIMETABLE[i][j][4]});">
-                                    <td rowspan="2" style=" background-color: var(--primary-bg-color); width: 16px; border: 1px solid #707070; ${inj.border.left.top}${injLeftBottom}"><b>${TIMETABLE[i][j][0]}</b></td>
+                                    <td rowspan="2" style=" background-color: var(--root-navbar-bg-color); width: 16px; border: 1px solid #707070; ${inj.border.left.top}${injLeftBottom}"><b>${TIMETABLE[i][j][0]}</b></td>
                                     <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">
                                         ${TIMETABLE[i][j][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j][1]}${TIMETABLE[i][j][4] == WEEK.name.EN ? `</b>` : ''}
                                     </td>
