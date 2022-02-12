@@ -7,14 +7,14 @@
     This file using for storage any HTML functions and modules
 */
 
-var framesBuild = 2
+var framesBuild = 3
 
 /* Theme variable: light and dark color palette for theme function */
 var THEME = {
     light: `:root {
             --root-text-color      :#101520;
             --active-text-color    :#353535;
-            --primary-bg-color     :linear-gradient(#e9e9e9, #cccccc);
+            --primary-bg-color     :linear-gradient(#e9e9e9, ${deviceStorage.get('acbgcolor') == 'default' ? '#cccccc' : ''}${deviceStorage.get('acbgcolor') == 'weekcolor' ? 'var(--week-color)' : ''});
             --secondary-bg-color   :#f5f5f5;
             --root-button-color    :#dddddd;
             --hover-button-color   :#d2d2d2;
@@ -28,7 +28,7 @@ var THEME = {
     dark: `:root {
             --root-text-color      :#f4f4f4;
             --active-text-color    :#a9a9a9;
-            --primary-bg-color     :linear-gradient(#181818, #404040);
+            --primary-bg-color     :linear-gradient(#181818, ${deviceStorage.get('acbgcolor') == 'default' ? '#404040' : ''}${deviceStorage.get('acbgcolor') == 'weekcolor' ? 'var(--week-color)' : ''});
             --secondary-bg-color   :#000000;
             --root-button-color    :#303030;
             --hover-button-color   :#3a3a3a;

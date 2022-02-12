@@ -7,7 +7,7 @@
     This file using for main functions for site
 */
 
-var mainBuild = 73
+var mainBuild = 74
 
 /* Logging and display if that version (variable BETA) is beta */
 if (BETA) {
@@ -134,5 +134,8 @@ function enableLogger() {
 }
 
 if (REQUEST.debug) { frames.debugModal() }
+
+if (deviceStorage.check('acbgcolor'))
+    { console.warn('Warning: accent second color is undefined, set to default'); deviceStorage.write('acbgcolor', 'default') }
 
 deviceStorage.write('mainJSBuild', mainBuild); theme.load(); enableLogger()
