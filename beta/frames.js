@@ -10,6 +10,10 @@
 var framesBuild = 3
 
 /* Theme variable: light and dark color palette for theme function */
+
+if (deviceStorage.check('acbgcolor'))
+    { console.warn('Warning: accent second color is undefined, set to default'); deviceStorage.write('acbgcolor', 'default') }
+
 var THEME = {
     light: `:root {
             --root-text-color      :#101520;
