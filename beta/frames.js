@@ -7,7 +7,7 @@
     This file using for storage any HTML functions and modules
 */
 
-var framesBuild = 3
+var framesBuild = 4
 
 /* Theme variable: light and dark color palette for theme function */
 
@@ -229,16 +229,16 @@ var frames = {
      *  Outputted header (div id "header" need)
      * 
      *      headerText     - text in header
-     *      buttonTheme    - (bool) enable or disable theme button
-     *      buttonBack     - (bool) enable or disable back to home button
+     *      buttons        - [(bool), (bool)] enable or disable theme button [0] and back button [1]
+     *      hrEnable       - (bool) enable or disable hr (line) after header
      * 
      */
-    header: function(headerText, buttonTheme, buttonBack) {
+    header: function(headerText, buttons, hrEnable) {
         try {
 
             var inj = '';
 
-            if (buttonTheme && deviceStorage.get('themeEnableThemeButton') == 'true' && deviceStorage.get('themeType') == 1) {
+            if (buttons[0] && deviceStorage.get('themeEnableThemeButton') == 'true' && deviceStorage.get('themeType') == 1) {
                 inj += `<button 
                             class="theme_button" 
                             style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; left: 100%; position: absolute; margin: 14px 0px 0px -52px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: transparent;" 
@@ -247,7 +247,7 @@ var frames = {
                         </button>`
             }
 
-            if (buttonBack) {
+            if (buttons[1]) {
                 inj += `<button 
                             class="back_button" 
                             style="height: 38px; width: 38px; z-index: 90; border: none !important; fill: currentColor; position: absolute; margin-left: 8px; margin-top: 14px; border-radius: 100px; cursor: pointer; padding: 2px 3px 0px 3px; background-color: transparent;" 
@@ -257,11 +257,14 @@ var frames = {
             }
 
             page.output(`header`, `
-                <style>.header { padding-bottom: 12px; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; user-select: none; }</style>
-                <div style="margin-right: auto;"></div>
-                <p style="text-align: center; font-size: 20px; margin-bottom: 8px; z-index: 10;">${headerText}</p>
-                <div style="margin-right: auto;"></div>
-                ${inj}
+                <div class="hdr">
+                    <style>.hdr { padding-bottom: 12px; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; user-select: none; }</style>
+                    <div style="margin-right: auto;"></div>
+                    <p style="text-align: center; font-size: 20px; margin-bottom: 8px; z-index: 10;">${headerText}</p>
+                    <div style="margin-right: auto;"></div>
+                    ${inj}
+                </div>
+                ${hrEnable ? `<hr class="mobile" style="border: none; height: 0.5px; margin-top: 0; margin-bottom: 0; background-color: var(--root-text-color); opacity: 0.1; width: calc(100% - 20px);">` : ''}
             `)
 
             return true
