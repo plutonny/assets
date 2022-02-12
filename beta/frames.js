@@ -113,11 +113,11 @@ var frames = {
     /* Delete localStorage (modal window) */
     deleteLocalStorage: function() {
         modal(`
-        <div style="max-height: 95%; overflow-y: auto; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+        <div style="max-height: 95%; overflow-y: auto; background-color: var(--secondary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
             <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Очистить</h1>
             <p style="font-family: 'Montserrat' !important; text-align: center;">Ты уверен?</p>
             <div style="display: flex; justify-content: center;">
-                <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #00ff0020;" onclick="document.getElementById('modal').innerHTML = ''; theme.load()">НЕТ</button>
+                <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #00ff0020;" onclick="frames.debugModal()">НЕТ</button>
                 <button style="cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 128px; margin: 4px 16px 16px 16px; background-color: #ff000020;" onclick="localStorage.clear(); document.getElementById('modal').innerHTML = ''; theme.load()">ДА</button>
             </div>
         </div>
@@ -140,7 +140,7 @@ var frames = {
             </div>`
         }
 
-        inj += `<div style="max-height: 95%; overflow-y: auto; margin-right: 5%; margin-left: 5%; padding-right: 12px; padding-left: 12px; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+        inj += `<div style="max-height: 98%; overflow-y: auto; margin-right: 2%; margin-left: 2%; padding-right: 12px; padding-left: 12px; background-color: var(--secondary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
                     <style>
                         button:not(.back_button) { border-radius: 10px; border: none; box-shadow: 0px 0px 8px var(--navbar-box-color); height: 32px; width: 128px; cursor: pointer; }
                     </style>
@@ -282,7 +282,7 @@ var frames = {
 
 /* Update modal (edit o every update) */
 if (deviceStorage.get(`noDisplayUpdate${siteVersion}`) != 'true') { modal(`
-    <div style=" margin-right: 7%; margin-left: 7%; max-height: 95%; overflow-y: auto; background-color: var(--primary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
+    <div style=" margin-right: 7%; margin-left: 7%; max-height: 95%; overflow-y: auto; background-color: var(--secondary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
         <h2 style="font-family: 'Montserrat' !important; text-align: center; margin:16px;">Вышло обновление!</h2>
         <h1 style="font-family: 'Montserrat' !important; text-align: center; margin:2px; font-size: 52px">${siteVersion}</h1>
         <b style="font-family: 'Montserrat' !important; margin-left:16px;">Изменения:</b>
