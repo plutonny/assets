@@ -7,7 +7,7 @@
     This file using for storage any HTML functions and modules
 */
 
-var framesBuild = 4
+var framesBuild = 5
 
 /* Theme variable: light and dark color palette for theme function */
 
@@ -25,6 +25,7 @@ var THEME = {
             --active-button-color  :#c0c0c0;
             --root-navbar-bg-color :#e0e0e0;
             --navbar-box-color     :#aaaaaa;
+            --root-icon-color      :#909090;
             --week-green           :#7cf779;
             --week-yellow          :#f3ee67;
             --week-color           :var(--week-${WEEK.name.EN}) !important;
@@ -39,6 +40,7 @@ var THEME = {
             --active-button-color  :#454545;
             --root-navbar-bg-color :#111111;
             --navbar-box-color     :#080808;
+            --root-icon-color      :#707070;
             --week-green           :#114110;
             --week-yellow          :#454306;
             --week-color           :var(--week-${WEEK.name.EN}) !important;
