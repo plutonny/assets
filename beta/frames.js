@@ -7,12 +7,21 @@
     This file using for storage any HTML functions and modules
 */
 
-var framesBuild = 5
+var framesBuild = 6
 
 /* Theme variable: light and dark color palette for theme function */
 
 if (deviceStorage.check('acbgcolor'))
     { console.warn('Warning: accent second color is undefined, set to default'); deviceStorage.write('acbgcolor', 'default') }
+
+if (!(deviceStorage.get('acbgcolor') == 'default' || deviceStorage.get('acbgcolor') == 'weekcolor'))
+    { console.warn('Warning: accent second color is uncorrect, set to default'); deviceStorage.write('acbgcolor', 'default') }
+
+if (deviceStorage.check('worknavbar'))
+    { console.warn('Warning: navbar type is undefined, set to float'); deviceStorage.write('worknavbar', 'float') }
+
+if (!(deviceStorage.get('worknavbar') == 'default' || deviceStorage.get('worknavbar') == 'float'))
+    { console.warn('Warning: navbar type is uncorrect, set to float'); deviceStorage.write('worknavbar', 'float') }
 
 var THEME = {
     light: `:root {
@@ -172,7 +181,9 @@ var frames = {
      * 
      */
     navbar: function(navbarActive) {
-        page.output('navbar', `
+        var inj = ''
+        if (deviceStorage.get('worknavbar') == 'float') {
+            inj += `
             <style>
                 .navbar {
                     z-index: 10;
@@ -189,12 +200,46 @@ var frames = {
                 .${navbarActive}Navbar { color: var(--root-text-color) !important; }
 
             </style>
+            `
+        }
+        else if (deviceStorage.get('worknavbar') == 'default') {
+            inj += `
+            <style>
+                .navbar {
+                    z-index: 10;
+                    padding: 6px;
+                    position: fixed;
+                    height: 54px;
+                    background-color: var(--root-navbar-bg-color);
+                    top: calc(100% - 66px);
+                    width: calc(100% - 12px);
+                    box-shadow: 0px 0px 8px var(--navbar-box-color);
+                }
+
+                .iconNavbar {
+                    padding: 1px 16px;
+                    border-radius: 100px;
+                }
+
+                .buttonsNavbar {
+                    height: 100%;
+                    align-items: center;
+                }
+
+                .${navbarActive}Navbar { color: var(--root-text-color) !important; }
+                .${navbarActive}Icon { background-color: var(--week-color); }
+
+            </style>
+            `
+        }
+        page.output('navbar', `
+            ${inj}
             
-            <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-around;">
+            <div class="buttonsNavbar" style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-around;">
                 <div style="width: 20%">
                     <a style="text-decoration: none;" href="/college${betaRepos}/">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                            <p class="homeNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.home}</p>
+                            <p class="homeNavbar homeIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.home}</p>
                             <p class="homeNavbar" style="color: #707070; margin: 0; font-size: 14px;">главная</p>
                         </div>
                     </a>
@@ -202,7 +247,7 @@ var frames = {
                 <div style="width: 20%">
                     <a style="text-decoration: none;" href="/college${betaRepos}/gtable/?pres=grades">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                            <p class="gradesNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done}</p>
+                            <p class="gradesNavbar gradesIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done}</p>
                             <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
                         </div>
                     </a>
@@ -210,7 +255,7 @@ var frames = {
                 <div style="width: 20%">
                     <a style="text-decoration: none;" href="/college${betaRepos}/gtable/?pres=attendance">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                            <p class="attendanceNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar}</p>
+                            <p class="attendanceNavbar attendanceIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar}</p>
                             <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
                         </div>
                     </a>
@@ -218,7 +263,7 @@ var frames = {
                 <div style="width: 20%">
                     <a style="text-decoration: none;" href="/college${betaRepos}/other/">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
-                            <p class="otherNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.other}</p>
+                            <p class="otherNavbar otherIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.other}</p>
                             <p class="otherNavbar" style="color: #707070; margin: 0; font-size: 14px;">другое</p>
                         </div>
                     </a>
