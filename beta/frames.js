@@ -352,4 +352,7 @@ if (deviceStorage.get(`noDisplayUpdate${siteVersion}`) != 'true') { modal(`
     `) 
 }
 
+/* season code */
+console.log('frames.js: #NoWar')
+
 deviceStorage.write('framesJSBuild', framesBuild);

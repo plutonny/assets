@@ -135,4 +135,7 @@ function enableLogger() {
 
 if (REQUEST.debug) { frames.debugModal() }
 
+/* season code */
+console.log('main.js: #🇺🇦❤️🇷🇺')
+
 deviceStorage.write('mainJSBuild', mainBuild); theme.load(); enableLogger()

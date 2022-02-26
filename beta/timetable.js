@@ -235,4 +235,7 @@ var TIMETABLE = {
     }
 }
 
+/* season code */
+console.log('timetable.js: #КакиеЗавтраПары?')
+
 deviceStorage.write('timetableJSBuild', timetableBuild)
