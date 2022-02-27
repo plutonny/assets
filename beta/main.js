@@ -7,7 +7,7 @@
     This file using for main functions for site
 */
 
-var mainBuild = 74
+var mainBuild = 75
 
 /* Logging and display if that version (variable BETA) is beta */
 if (BETA) {
@@ -134,6 +134,34 @@ function enableLogger() {
 }
 
 if (REQUEST.debug) { frames.debugModal() }
+
+/* code only for 3.0.x (PC version off) */
+window.onload = function() {
+    if (window.innerWidth >= 540 && !(deviceStorage.get('ignorePCDisable') == 'true')) {
+        if (deviceStorage.get('autoReturnToPCVersion') == 'true') {
+            window.location.assign(`/college${betaRepos}/PC/`)
+        } else {
+            document.body.innerHTML = `
+            <div style="width: calc(100vw - 48px); height: calc(100vh - 48px); padding: 24px; display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center; justify-content: center;">
+                <h1 style="text-align: center;">Привет${deviceStorage.check('username') ? '' : `, ${deviceStorage.get('username')}`}!</h1>
+                <p style="text-align: center;">Понимаю, неожиданно, что вместо сайта на ПК Вы видите это окно. К сожалению, разработчик не успел сделать ПК версию в обновлении, но торопился выложить актуальную версию, которая намного лучше предыдущей.</p>
+                <p style="text-align: center;">Но разработчик предусмотрел для пользователей ПК запасной вариант: пользоваться прошлой версией, у которой все еще актуальная ПК версия.</p>
+                <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                    <button style="height: 48px; width: 256px; margin: 8px; border: none; border-radius: 100px; cursor: pointer;" onclick="window.location.assign('/college${betaRepos}/PC/')">Перейти на старую версию</button>
+                </div>
+                <div style="margin: 0; display: flex; align-items: center;">
+                    <input type="checkbox" id="arpcv" name="arpcv" onchange="deviceStorage.write('autoReturnToPCVersion', true)" style="margin: 0px 12px 0px 6px;" value="theme">
+                    <label for="arpcv">автоматически переходить на старую версию</label>
+                </div>
+                <p style="text-align: center;">Есть еще вариант: на Ваш страх и риск использовать мобильную версию на ПК. Это приведет к кривому и неюзабельному интерфейсу.</p>
+                <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                    <button style="height: 48px; width: 256px; margin: 8px; border: none; border-radius: 100px; cursor: pointer;" onclick="deviceStorage.write('ignorePCDisable', true); location.reload()">Использовать новую версию</button>
+                </div>
+            </div>
+            `
+        }
+    }
+}
 
 /* season code */
 console.log('main.js: #🇺🇦❤️🇷🇺')
