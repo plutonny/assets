@@ -351,7 +351,7 @@ if (deviceStorage.get(`noDisplayUpdate${siteVersion}`) != 'true') { modal(`
         </ul>
         <p style="margin-left:22px;margin-right:22px;">
             <b style="font-family: 'Montserrat' !important;">Переустановите приложение, чтобы избежать ошибок! </b>
-            <a href="/college${betaRepos}/support/?q=reinstall" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">Как это сделать?</a>
+            <!--<a href="/college${betaRepos}/support/?q=reinstall" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">Как это сделать?</a>-->
         </p>
         <div style="display: flex; justify-content: center;">
             <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="deviceStorage.write('noDisplayUpdate${siteVersion}', 'true'); document.getElementById('modal').innerHTML = ''; theme.load()">Больше не показывать</button>

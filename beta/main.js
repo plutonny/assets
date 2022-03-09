@@ -26,15 +26,15 @@ if (BETA) {
 
 /* Display current builds of this site */
 console.log(`Current builds (version ${siteVersion}):
-    Preload JS:  build ${deviceStorage.get('preloadJSBuild')};
-    Frames JS:   build ${deviceStorage.get('framesJSBuild')};
-    Main JS:     build ${deviceStorage.get('mainJSBuild')};
-    Timeable JS: build ${deviceStorage.get('timetableJSBuild')};
-    Home:        build ${deviceStorage.get('homeBuildPage')};
-    Other:       build ${deviceStorage.get('otherBuildPage')};
-    Gtable:      build ${deviceStorage.get('gtableBuildPage')};
-    Simple:      build ${deviceStorage.get('simpleBuildPage')};
-    Settings:    build ${deviceStorage.get('settingsBuildPage')};
+    Preload JS:  build ${deviceStorage.get('preloadJSBuild')}
+    Frames JS:   build ${deviceStorage.get('framesJSBuild')}
+    Main JS:     build ${deviceStorage.get('mainJSBuild')}
+    Timeable JS: build ${deviceStorage.get('timetableJSBuild')}
+    Home:        build ${deviceStorage.get('homeBuildPage')}
+    Other:       build ${deviceStorage.get('otherBuildPage')}
+    Gtable:      build ${deviceStorage.get('gtableBuildPage')}
+    Simple:      build ${deviceStorage.get('simpleBuildPage')}
+    Settings:    build ${deviceStorage.get('settingsBuildPage')}
     Support:     build ${deviceStorage.get('supportBuildPage')}
 `);
 
@@ -44,7 +44,7 @@ console.log(`Current builds (version ${siteVersion}):
  *      theme.prepare() returned current theme in bool format (true - dark theme, false - light theme)
  *      theme.load() loaded theme (used in storage.js and in modals)
  *      theme.change() changed theme to reverse and load theme again
- *      theme.gtable() special onle gtable page (set light theme and remove load gif)
+ *      theme.gtable() special only for gtable page (set light theme and remove load gif)
  * 
  */
 var theme = {
@@ -136,30 +136,30 @@ function enableLogger() {
 if (REQUEST.debug) { frames.debugModal() }
 
 /* code only for 3.0.x (PC version off) */
+if (deviceStorage.get('autoReturnToPCVersion') == 'true') {
+    window.location.assign(`/college${betaRepos}/PC/`)
+}
+function autoReturnToPCVersionF() { deviceStorage.write('autoReturnToPCVersion', deviceStorage.get('autoReturnToPCVersion') == 'true' ? false : true)}
 window.onload = function() {
     if (window.innerWidth >= 540 && !(deviceStorage.get('ignorePCDisable') == 'true')) {
-        if (deviceStorage.get('autoReturnToPCVersion') == 'true') {
-            window.location.assign(`/college${betaRepos}/PC/`)
-        } else {
-            document.body.innerHTML = `
-            <div style="width: calc(100vw - 48px); height: calc(100vh - 48px); padding: 24px; display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center; justify-content: center;">
-                <h1 style="text-align: center;">Привет${deviceStorage.check('username') ? '' : `, ${deviceStorage.get('username')}`}!</h1>
-                <p style="text-align: center;">Понимаю, неожиданно, что вместо сайта на ПК Вы видите это окно. К сожалению, разработчик не успел сделать ПК версию в обновлении, но торопился выложить актуальную версию, которая намного лучше предыдущей.</p>
-                <p style="text-align: center;">Но разработчик предусмотрел для пользователей ПК запасной вариант: пользоваться прошлой версией, у которой все еще актуальная ПК версия.</p>
-                <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
-                    <button style="height: 48px; width: 256px; margin: 8px; border: none; border-radius: 100px; cursor: pointer;" onclick="window.location.assign('/college${betaRepos}/PC/')">Перейти на старую версию</button>
-                </div>
-                <div style="margin: 0; display: flex; align-items: center;">
-                    <input type="checkbox" id="arpcv" name="arpcv" onchange="deviceStorage.write('autoReturnToPCVersion', true)" style="margin: 0px 12px 0px 6px;" value="theme">
-                    <label for="arpcv">автоматически переходить на старую версию</label>
-                </div>
-                <p style="text-align: center;">Есть еще вариант: на Ваш страх и риск использовать мобильную версию на ПК. Это приведет к кривому и неюзабельному интерфейсу.</p>
-                <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
-                    <button style="height: 48px; width: 256px; margin: 8px; border: none; border-radius: 100px; cursor: pointer;" onclick="deviceStorage.write('ignorePCDisable', true); location.reload()">Использовать новую версию</button>
-                </div>
+        document.body.innerHTML = `
+        <div style="background-color: var(--secondary-bg-color); width: calc(100vw - 48px); height: calc(100vh - 48px); padding: 24px; display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center; justify-content: center;">
+            <h1 style="text-align: center;">Привет${deviceStorage.check('username') ? '' : `, ${deviceStorage.get('username')}`}!</h1>
+            <p style="text-align: center;">Понимаю, неожиданно, что вместо сайта на ПК Вы видите это окно. К сожалению, разработчик не успел сделать ПК версию в обновлении, но торопился выложить актуальную версию, которая намного лучше предыдущей.</p>
+            <p style="text-align: center;">Но разработчик предусмотрел для пользователей ПК запасной вариант: пользоваться прошлой версией, у которой все еще актуальная ПК версия.</p>
+            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                <button style="height: 48px; width: 256px; margin: 8px; border: none; border-radius: 100px; cursor: pointer;" onclick="window.location.assign('/college${betaRepos}/PC/')">Перейти на старую версию</button>
             </div>
-            `
-        }
+            <div style="margin: 0; display: flex; align-items: center;">
+                <input type="checkbox" id="arpcv" name="arpcv" onchange="autoReturnToPCVersionF()" style="margin: 0px 12px 0px 6px;" value="arpcv">
+                <label for="arpcv">автоматически переходить на старую версию</label>
+            </div>
+            <p style="text-align: center;">Есть еще вариант: на Ваш страх и риск использовать мобильную версию на ПК. Это приведет к кривому и неюзабельному интерфейсу.</p>
+            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                <button style="height: 48px; width: 256px; margin: 8px; border: none; border-radius: 100px; cursor: pointer;" onclick="deviceStorage.write('ignorePCDisable', true); location.reload()">Использовать новую версию</button>
+            </div>
+        </div>
+        `
     }
 }
 
