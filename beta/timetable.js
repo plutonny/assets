@@ -5,7 +5,9 @@
 
 var timetableBuild = 13
 
-var timeNow = parseInt(String(CURRDATE.getHours()) + (CURRDATE.getMinutes() < 10 ? '0' + String(CURRDATE.getMinutes()) : String(CURRDATE.getMinutes())))
+var ThisDay = new Date()
+
+var timeNow = parseInt(String(ThisDay.getHours()) + (ThisDay.getMinutes() < 10 ? '0' + String(ThisDay.getMinutes()) : String(ThisDay.getMinutes())))
 
 /**
  *  Tree of TIMETABLE:
@@ -82,32 +84,32 @@ var TIMETABLE = {
             current: function() {
                 if (timeNow <= TIMETABLE.alerts[1][0][0]) { return 'Пары скоро начнутся' }
                 /* 1 pair */
-                if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 1) {
+                if (parseInt(TIMETABLE[ThisDay.getDay()][TIMETABLE[ThisDay.getDay()].length - 1][0]) >= 1) {
                          if (TIMETABLE.alerts[1][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[1][0][1]) { return 'Сейчас 1-я пара' }
                     else if (TIMETABLE.alerts[1][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[1][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[1][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[1][1][1]) { return 'Сейчас 1-я пара' }
                 }
                 /* 2 pair */
-                if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 2) {
+                if (parseInt(TIMETABLE[ThisDay.getDay()][TIMETABLE[ThisDay.getDay()].length - 1][0]) >= 2) {
                          if (TIMETABLE.alerts[2][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][0][1]) { return 'Сейчас 2-я пара' }
                     else if (TIMETABLE.alerts[2][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[2][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[2][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][1][1]) { return 'Сейчас 2-я пара' }
                 }
                 /* 3 pair */
-                if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 3) {
+                if (parseInt(TIMETABLE[ThisDay.getDay()][TIMETABLE[ThisDay.getDay()].length - 1][0]) >= 3) {
                          if (TIMETABLE.alerts[2][1][1] <= timeNow && timeNow <= TIMETABLE.alerts[3][0][0]) { return 'Сейчас перерыв' }
                     else if (TIMETABLE.alerts[3][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[3][0][1]) { return 'Сейчас 3-я пара' }
                     else if (TIMETABLE.alerts[3][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[3][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[3][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[3][1][1]) { return 'Сейчас 3-я пара' }
                 }
                 /* 4 pair */
-                if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 4) {
+                if (parseInt(TIMETABLE[ThisDay.getDay()][TIMETABLE[ThisDay.getDay()].length - 1][0]) >= 4) {
                          if (TIMETABLE.alerts[4][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][0][1]) { return 'Сейчас 4-я пара' }
                     else if (TIMETABLE.alerts[4][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[4][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[4][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][1][1]) { return 'Сейчас 4-я пара' }
                 }
                 /* 5 pair */
-                if (parseInt(TIMETABLE[CURRDATE.getDay()][TIMETABLE[CURRDATE.getDay()].length - 1][0]) >= 5) {
+                if (parseInt(TIMETABLE[ThisDay.getDay()][TIMETABLE[ThisDay.getDay()].length - 1][0]) >= 5) {
                          if (TIMETABLE.alerts[5][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][0][1]) { return 'Сейчас 5-я пара' }
                     else if (TIMETABLE.alerts[5][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[5][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][1]) { return 'Сейчас 5-я пара' }
@@ -229,7 +231,7 @@ var TIMETABLE = {
                 else        { result += `.timetableWork${i} { display: none }` }
             }
 
-            page.output('timetableWeekName', `${CURRDATE.getDay() == 0 ? `С пон-ка ${WEEK.name.alt.RU}` : capitalize(WEEK.name.RU)} неделя, ${weekNames[j]}:`) 
+            page.output('timetableWeekName', `${ThisDay.getDay() == 0 ? `С пон-ка ${WEEK.name.alt.RU}` : capitalize(WEEK.name.RU)} неделя, ${weekNames[j]}:`) 
             page.output('timetableCSS', result) 
         }
     }
