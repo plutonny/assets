@@ -153,7 +153,7 @@ var TIMETABLE = {
                     </style>
                     `
                     for (var i = 1; i <= 6; i++) {
-                        result += `<table class="timetableWork${i}" style="border: 1px solid #707070; border-radius: 18px; width: 330px; text-align: center; border-collapse: separate; border-spacing: 0px; margin: auto; background-color: var(--root-navbar-bg-color);">`
+                        result += `<table class="timetableWork${i}" style="border: 1px solid #707070; border-radius: 18px; text-align: center; border-collapse: separate; border-spacing: 0px; margin: auto; background-color: var(--root-navbar-bg-color);">`
                         for (var j = 0; j < TIMETABLE[i].length; j++) {
                             var inj = { 
                                 color: TIMETABLE[i][j][4] == 'default' ? `--root-navbar-bg-color` : `--week-${TIMETABLE[i][j][4]}`,
