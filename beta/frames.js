@@ -32,7 +32,7 @@ var THEME = {
             --root-button-color    :#dddddd;
             --hover-button-color   :#d2d2d2;
             --active-button-color  :#c0c0c0;
-            --root-navbar-bg-color :#e0e0e0;
+            --root-navbar-bg-color :#ebebeb;
             --navbar-box-color     :#aaaaaa;
             --root-icon-color      :#909090;
             --week-green           :#7cf779;
