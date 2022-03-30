@@ -7,7 +7,7 @@
     This file using for important scripts and variables 
 */
 
-var preloadBuild = 32
+var preloadBuild = 33
 var siteVersion = '3.0.0'
 var BETA = true
 
@@ -20,17 +20,33 @@ if (BETA) {
 }
 
 var CURRDATE = new Date()
+var NextDay = new Date()
+if (CURRDATE.getDay == 0) {
+    NextDay.setDate(NextDay.getDate() + 2)
+} else {
+    NextDay.setDate(NextDay.getDate() + 1)
+}
+
 var REQUEST = new Object()
 try {
+
     var parameters = window.location.href.split('?')[1].split('&')
-    for (var i = 0; i < parameters.length; i++) { var par = parameters[i].split('='); REQUEST[par[0]] = par[1] }
+
+    for (var i = 0; i < parameters.length; i++) {
+        var par = parameters[i].split('='); REQUEST[par[0]] = par[1] 
+    }
+
 } catch {
+
     console.log(`preload.js: page URL doesn't have any parameters`)
+
 }
 
 /* Week variable: num week and names (EN, RU, alternative) */
 var WEEK = {
+
     num: luxon.DateTime.now().weekNumber
+
 }
 WEEK.name = {
 
