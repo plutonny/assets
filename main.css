@@ -1,0 +1,63 @@
+/* Include fonts */
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/fonts/m1.woff2) format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } 
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/fonts/m2.woff2) format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } 
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/fonts/m3.woff2) format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB; } 
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/fonts/m4.woff2) format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } 
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/fonts/m5.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 600; font-display: swap; src: url(/assets/fonts/n1.woff2) format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 600; font-display: swap; src: url(/assets/fonts/n2.woff2) format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 600; font-display: swap; src: url(/assets/fonts/n3.woff2) format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 600; font-display: swap; src: url(/assets/fonts/n4.woff2) format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 600; font-display: swap; src: url(/assets/fonts/n5.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+
+/* Scrollbar disable only to Chrome users */
+::-webkit-scrollbar { width: 0px; height: 0px; }
+
+
+/* General colors */
+:root { 
+    --root-text-color      :#f4f4f4;
+    --active-text-color    :#909090;
+    --primary-bg-color     :#202020;
+    --secondary-bg-color   :#202020;
+    --root-button-color    :#303030;
+    --hover-button-color   :#353535;
+    --active-button-color  :#404040;
+    --root-navbar-bg-color :#202020;
+    --navbar-box-color     :#202020;
+    --root-icon-color      :#707070;
+    --week-green           :#008000;
+    --week-yellow          :#808000;
+    --week-color           :#55555555 !important;
+}
+
+html, body { background: var(--primary-bg-color); }
+h1, h2, h3, h4, h5, h6, p, a, b, td, div, li, button, br, input, label { color: var(--root-text-color); }
+h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection, p::selection, a::selection, b::selection, td::selection, div::selection, svg::selection, li::selection, img::selection, button::selection, br::selection, input::selection, label::selection { background-color: #22223b55; color: var(--active-text-color); }
+h1::-moz-selection, h2::-moz-selection, h3::-moz-selection, h4::-moz-selection, h5::-moz-selection, h6::-moz-selection, p::-moz-selection, a::-moz-selection, b::-moz-selection, td::-moz-selection, div::-moz-selection, svg::-moz-selection, li::-moz-selection, img::-moz-selection, button::-moz-selection, br::-moz-selection, input::-moz-selection, label::-moz-selection { background-color: #22223b55; color: var(--active-text-color); }
+button { background-color: var(--root-button-color); }
+button:hover { background-color: var(--hover-button-color); }
+button:active { background-color: var(--active-button-color); }
+a:active { color: var(--active-text-color); }
+
+
+/* Styles for all sizes */
+html, body { margin: 0; overflow-x: hidden; transition: 350ms; }
+h1, h2, h3, h4, h5, h6, p, a, b, td, div, li, button, br, input, label { z-index: 2; transition: 200ms; font-family: 'Nunito'; word-wrap: break-word; }
+.btl { border-top-left-radius: 17px; } .btr { border-top-right-radius: 17px; } .bbl { border-bottom-left-radius: 17px; } .bbr { border-bottom-right-radius: 17px; }
+
+
+@media (min-width: 1401px) { /* Styles for PC */
+
+    .mobile, .middle { display: none !important; }
+
+} @media (max-width: 1400px) and (min-width: 541px) { /* Middle styles */
+
+    .mobile, .midnone { display: none !important; }
+
+} @media (max-width: 540px) { /* Styles for MOBILE */
+
+    .pc, .middle { display: none !important; }
+
+}
