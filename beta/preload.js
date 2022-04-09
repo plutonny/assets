@@ -7,8 +7,8 @@
     This file using for important scripts and variables 
 */
 
-var preloadBuild = 33
-var siteVersion = '3.0.0'
+var preloadBuild = 34
+var siteVersion = '3.0.1'
 var BETA = true
 
 var betaFolder = '', betaRepos = '';
@@ -21,10 +21,10 @@ if (BETA) {
 
 var CURRDATE = new Date()
 var NextDay = new Date()
-if (CURRDATE.getDay == 0) {
-    NextDay.setDate(NextDay.getDate() + 2)
+if (CURRDATE.getDay() == 6) {
+    NextDay.setDate(CURRDATE.getDate() + 2)
 } else {
-    NextDay.setDate(NextDay.getDate() + 1)
+    NextDay.setDate(CURRDATE.getDate() + 1)
 }
 
 var REQUEST = new Object()
