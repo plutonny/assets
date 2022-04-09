@@ -7,7 +7,7 @@
     This file using for storage any HTML functions and modules
 */
 
-var framesBuild = 6
+var framesBuild = 7
 
 /* Theme variable: light and dark color palette for theme function */
 
@@ -323,7 +323,7 @@ var frames = {
                     <div style="margin-right: auto;"></div>
                     ${inj}
                 </div>
-                ${hrEnable ? `<hr class="mobile" style="border: none; height: 0.5px; margin-top: 0; margin-bottom: 0; background-color: var(--root-text-color); opacity: 0.1; width: calc(100% - 20px);">` : ''}
+                ${hrEnable ? `<hr style="border: none; height: 0.5px; margin-top: 0; margin-bottom: 0; background-color: var(--root-text-color); opacity: 0.1; width: calc(100% - 20px);">` : ''}
             `)
 
             return true
@@ -340,19 +340,17 @@ var frames = {
 /* Update modal (edit o every update) */
 if (!(deviceStorage.get(`noDisplayUpdate${siteVersion}`) == 'true') && !(window.innerWidth >= 540 && !(deviceStorage.get('ignorePCDisable') == 'true'))) { modal(`
     <div style=" margin-right: 7%; margin-left: 7%; max-height: 95%; overflow-y: auto; background-color: var(--secondary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
-        <h2 style="font-family: 'Montserrat' !important; text-align: center; margin:16px;">Вышло обновление!</h2>
-        <h1 style="font-family: 'Montserrat' !important; text-align: center; margin:2px; font-size: 52px">${siteVersion}</h1>
-        <b style="font-family: 'Montserrat' !important; margin-left:16px;">Изменения:</b>
-        <ul style="margin-left:12px;">
-            <li style="font-family: 'Montserrat' !important;">Все написано с нуля</li>
-            <li style="font-family: 'Montserrat' !important;">Новый дизайн</li>
-            <li style="font-family: 'Montserrat' !important;">Удобная навигация</li>
-            <li style="font-family: 'Montserrat' !important;">Много оптимизации</li>
+        <h2 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Вышло обновление!</h2>
+        <h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 2px; font-size: 52px">${siteVersion}</h1>
+        <b style="font-family: 'Montserrat' !important; margin-left: 16px;">Изменения:</b>
+        <ul style="margin: 0px 20px 12px 12px;">
+            <li style="font-family: 'Montserrat' !important;">Исправления с кнопкой изменения расписания</li>
+            <li style="font-family: 'Montserrat' !important;">Немного незаметных улучшений</li>
         </ul>
-        <p style="margin-left:22px;margin-right:22px;">
+        <!--<p style="margin-left: 22px; margin-right: 22px;">
             <b style="font-family: 'Montserrat' !important;">Переустановите приложение, чтобы избежать ошибок! </b>
-            <!--<a href="/college${betaRepos}/support/?q=reinstall" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">Как это сделать?</a>-->
-        </p>
+            <a href="/college${betaRepos}/support/?q=reinstall" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">Как это сделать?</a>
+        </p>-->
         <div style="display: flex; justify-content: center;">
             <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="deviceStorage.write('noDisplayUpdate${siteVersion}', 'true'); document.getElementById('modal').innerHTML = ''; theme.load()">Больше не показывать</button>
         </div>
