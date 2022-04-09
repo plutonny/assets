@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 14
+var timetableBuild = 15
 
 var ThisDay = new Date()
 
@@ -91,7 +91,8 @@ var TIMETABLE = {
                 }
                 /* 2 pair */
                 if (parseInt(TIMETABLE[ThisDay.getDay()][TIMETABLE[ThisDay.getDay()].length - 1][0]) >= 2) {
-                         if (TIMETABLE.alerts[2][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][0][1]) { return 'Сейчас 2-я пара' }
+                         if (TIMETABLE.alerts[1][1][1] <= timeNow && timeNow <= TIMETABLE.alerts[2][0][0]) { return 'Сейчас перерыв' }
+                    else if (TIMETABLE.alerts[2][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][0][1]) { return 'Сейчас 2-я пара' }
                     else if (TIMETABLE.alerts[2][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[2][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[2][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[2][1][1]) { return 'Сейчас 2-я пара' }
                 }
@@ -104,13 +105,15 @@ var TIMETABLE = {
                 }
                 /* 4 pair */
                 if (parseInt(TIMETABLE[ThisDay.getDay()][TIMETABLE[ThisDay.getDay()].length - 1][0]) >= 4) {
-                         if (TIMETABLE.alerts[4][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][0][1]) { return 'Сейчас 4-я пара' }
+                         if (TIMETABLE.alerts[3][1][1] <= timeNow && timeNow <= TIMETABLE.alerts[4][0][0]) { return 'Сейчас перерыв' }
+                    else if (TIMETABLE.alerts[4][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][0][1]) { return 'Сейчас 4-я пара' }
                     else if (TIMETABLE.alerts[4][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[4][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[4][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[4][1][1]) { return 'Сейчас 4-я пара' }
                 }
                 /* 5 pair */
                 if (parseInt(TIMETABLE[ThisDay.getDay()][TIMETABLE[ThisDay.getDay()].length - 1][0]) >= 5) {
-                         if (TIMETABLE.alerts[5][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][0][1]) { return 'Сейчас 5-я пара' }
+                         if (TIMETABLE.alerts[4][1][1] <= timeNow && timeNow <= TIMETABLE.alerts[5][0][0]) { return 'Сейчас перерыв' }
+                    else if (TIMETABLE.alerts[5][0][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][0][1]) { return 'Сейчас 5-я пара' }
                     else if (TIMETABLE.alerts[5][0][1] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][0]) { return 'Сейчас пятиминутка' }
                     else if (TIMETABLE.alerts[5][1][0] <= timeNow && timeNow <= TIMETABLE.alerts[5][1][1]) { return 'Сейчас 5-я пара' }
                 }
