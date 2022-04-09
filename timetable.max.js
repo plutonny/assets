@@ -3,9 +3,11 @@
 
 "use strict";
 
-var timetableBuild = 15
+var timetableBuild = 16
 
 var ThisDay = new Date()
+
+var NextDay = new Date()
 
 var timeNow = parseInt(String(ThisDay.getHours()) + (ThisDay.getMinutes() < 10 ? '0' + String(ThisDay.getMinutes()) : String(ThisDay.getMinutes())))
 
@@ -238,6 +240,16 @@ var TIMETABLE = {
             page.output('timetableCSS', result) 
         }
     }
+}
+
+     if (ThisDay.getDay() == 0)                             { NextDay.setDate(ThisDay.getDate() + 1) }
+else if (ThisDay.getDay() == 6) {
+    if (TIMETABLE.pair.get.current() == 'Пары закончились') { NextDay.setDate(ThisDay.getDate() + 2) }
+    else                                                    { NextDay.setDate(ThisDay.getDate()) }
+} 
+else {
+    if (TIMETABLE.pair.get.current() == 'Пары закончились') { NextDay.setDate(ThisDay.getDate() + 1) }
+    else                                                    { NextDay.setDate(ThisDay.getDate()) }
 }
 
 /* season code */

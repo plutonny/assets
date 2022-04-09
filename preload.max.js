@@ -20,12 +20,6 @@ if (BETA) {
 }
 
 var CURRDATE = new Date()
-var NextDay = new Date()
-if (CURRDATE.getDay() == 6) {
-    NextDay.setDate(CURRDATE.getDate() + 2)
-} else {
-    NextDay.setDate(CURRDATE.getDate() + 1)
-}
 
 var REQUEST = new Object()
 try {
