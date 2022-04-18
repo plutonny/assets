@@ -43,32 +43,33 @@ try {
  *          {
  *              type: str ('assets' or 'HTML')
  *              file: str (from root of repository, example: 'frames.js' or 'simple/')
+ *              noBeta: bool (ignore beta repository)
  *          }
  * 
  */
 function link(to) {
     if (window.location.href.includes('plutonny.ru')) {
         if (to.type == 'assets') {
-            return `https://bebrarium.plutonny.ru/college/${BETA ? 'beta/' : ''}${to.file}`
+            return `https://bebrarium.plutonny.ru/college/${(BETA && (!to.noBeta)) ? 'beta/' : ''}${to.file}`
         }
         if (to.type == 'HTML') {
-            return `https://${BETA ? 'beta.' : ''}college.plutonny.ru/${to.file}`
+            return `https://${(BETA && (!to.noBeta)) ? 'beta.' : ''}college.plutonny.ru/${to.file}`
         }
     }
     if (window.location.href.includes('plutonny.github.io')) {
         if (to.type == 'assets') {
-            return `https://plutonny.github.io/assets/${BETA ? 'beta/' : ''}${to.file}`
+            return `https://plutonny.github.io/assets/${(BETA && (!to.noBeta)) ? 'beta/' : ''}${to.file}`
         }
         if (to.type == 'HTML') {
-            return `https://plutonny.github.io/college${BETA ? '-beta' : ''}/${to.file}`
+            return `https://plutonny.github.io/college${(BETA && (!to.noBeta)) ? '-beta' : ''}/${to.file}`
         }
     }
     if (window.location.href.includes('127.0.0.1')) {
         if (to.type == 'assets') {
-            return `http://127.0.0.1:5500/assets/${BETA ? 'beta/' : ''}${to.file}`
+            return `http://127.0.0.1:5500/assets/${(BETA && (!to.noBeta)) ? 'beta/' : ''}${to.file}`
         }
         if (to.type == 'HTML') {
-            return `http://127.0.0.1:5500/college${BETA ? '-beta' : ''}/${to.file}`
+            return `http://127.0.0.1:5500/college${(BETA && (!to.noBeta)) ? '-beta' : ''}/${to.file}`
         }
     }
 }
