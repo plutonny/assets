@@ -7,7 +7,7 @@
     This file using for important scripts and variables 
 */
 
-var preloadBuild = 34
+var preloadBuild = 35
 var siteVersion = '3.0.1'
 var BETA = true
 
@@ -34,6 +34,43 @@ try {
 
     console.log(`preload.js: page URL doesn't have any parameters`)
 
+}
+
+/**
+ *  Creating links
+ * 
+ *      to example:
+ *          {
+ *              type: str ('assets' or 'HTML')
+ *              file: str (from root of repository, example: 'frames.js' or 'simple/')
+ *          }
+ * 
+ */
+function link(to) {
+    if (window.location.href.includes('plutonny.ru')) {
+        if (to.type == 'assets') {
+            return `https://bebrarium.plutonny.ru/college/${BETA ? 'beta/' : ''}${to.file}`
+        }
+        if (to.type == 'HTML') {
+            return `https://${BETA ? 'beta.' : ''}college.plutonny.ru/${to.file}`
+        }
+    }
+    if (window.location.href.includes('plutonny.github.io')) {
+        if (to.type == 'assets') {
+            return `https://plutonny.github.io/assets/${BETA ? 'beta/' : ''}${to.file}`
+        }
+        if (to.type == 'HTML') {
+            return `https://plutonny.github.io/college${BETA ? '-beta' : ''}/${to.file}`
+        }
+    }
+    if (window.location.href.includes('127.0.0.1')) {
+        if (to.type == 'assets') {
+            return `http://127.0.0.1:5500/assets/${BETA ? 'beta/' : ''}${to.file}`
+        }
+        if (to.type == 'HTML') {
+            return `http://127.0.0.1:5500/college${BETA ? '-beta' : ''}/${to.file}`
+        }
+    }
 }
 
 /* Week variable: num week and names (EN, RU, alternative) */
@@ -66,7 +103,7 @@ WEEK.name = {
 var page = {
     output:   function(id, data)   { try { document.getElementById(id).innerHTML = data; return true } catch (e) { page.critical(`Error: output function (maybe couldn't find tag id ${id}): (${e})`); return false } },
     error:    async function(data) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; width: 100vw; z-index: 99; } div.mini-modal { display: flex; align-items: center; z-index: 100; margin: 8px; padding: 6px 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 24px; }</style><p style="margin: 0; word-break: break-all;">${data}</p></div>`; await page.sleep(2000); page.output('modal', '') },
-    critical: async function(data) { console.error(data); sessionStorage.setItem('errorPageError', data); await page.sleep(100); location.assign(`/college${betaRepos}/error/`) },
+    critical: async function(data) { console.error(data); sessionStorage.setItem('errorPageError', data); await page.sleep(100); location.assign(link({type: 'HTML', file: 'error/'})) },
     sleep:    function(ms)         { return new Promise(resolve => setTimeout(resolve, ms)) }
 }
 

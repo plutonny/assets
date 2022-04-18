@@ -249,7 +249,7 @@ var frames = {
             
             <div class="buttonsNavbar" style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-around;">
                 <div style="width: 20%">
-                    <a style="text-decoration: none;" href="/college${betaRepos}/">
+                    <a style="text-decoration: none;" href="${link({type: 'HTML', file: ''})}">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                             <p class="homeNavbar homeIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.home}</p>
                             <p class="homeNavbar" style="color: #707070; margin: 0; font-size: 14px;">главная</p>
@@ -257,7 +257,7 @@ var frames = {
                     </a>
                 </div>
                 <div style="width: 20%">
-                    <a style="text-decoration: none;" href="/college${betaRepos}/gtable/?pres=grades">
+                    <a style="text-decoration: none;" href="${link({type: 'HTML', file: 'gtable/?pres=grades'})}">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                             <p class="gradesNavbar gradesIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done}</p>
                             <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
@@ -265,7 +265,7 @@ var frames = {
                     </a>
                 </div>
                 <div style="width: 20%">
-                    <a style="text-decoration: none;" href="/college${betaRepos}/gtable/?pres=attendance">
+                    <a style="text-decoration: none;" href="${link({type: 'HTML', file: 'gtable/?pres=attendance'})}">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                             <p class="attendanceNavbar attendanceIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar}</p>
                             <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
@@ -273,7 +273,7 @@ var frames = {
                     </a>
                 </div>
                 <div style="width: 20%">
-                    <a style="text-decoration: none;" href="/college${betaRepos}/other/">
+                    <a style="text-decoration: none;" href="${link({type: 'HTML', file: 'other/'})}">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                             <p class="otherNavbar otherIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.other}</p>
                             <p class="otherNavbar" style="color: #707070; margin: 0; font-size: 14px;">другое</p>
@@ -349,7 +349,7 @@ if (!(deviceStorage.get(`noDisplayUpdate${siteVersion}`) == 'true') && !(window.
         </ul>
         <!--<p style="margin-left: 22px; margin-right: 22px;">
             <b style="font-family: 'Montserrat' !important;">Переустановите приложение, чтобы избежать ошибок! </b>
-            <a href="/college${betaRepos}/support/?q=reinstall" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">Как это сделать?</a>
+            <a href="${link({type: 'HTML', file: 'support/?q=reinstall'})}" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">Как это сделать?</a>
         </p>-->
         <div style="display: flex; justify-content: center;">
             <button style="font-family: 'Montserrat' !important; cursor: pointer; border: none; border-radius: 24px; height: 36px; font-size: 17px; width: 256px; margin: 4px 16px 16px 16px;" onclick="deviceStorage.write('noDisplayUpdate${siteVersion}', 'true'); document.getElementById('modal').innerHTML = ''; theme.load()">Больше не показывать</button>

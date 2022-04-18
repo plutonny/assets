@@ -120,7 +120,7 @@ var theme = {
 function enableLogger() {
     if ('serviceWorker' in navigator) { 
         window.addEventListener('load', function() {
-            navigator.serviceWorker.register(`/college${betaRepos}/service-worker.js`).then(
+            navigator.serviceWorker.register(link({type: 'HTML', file: 'service-worker.js'})).then(
                 function(registration) {
                     if (BETA) { console.log(`ServiceWorker: registration with scope ${registration.scope}`)}
                 },
@@ -137,7 +137,7 @@ if (REQUEST.debug) { frames.debugModal() }
 
 /* code only for 3.0.x (PC version off) */
 if (deviceStorage.get('autoReturnToPCVersion') == 'true') {
-    window.location.assign(`/college${betaRepos}/PC/`)
+    window.location.assign(link({type: 'HTML', file: 'PC/'}))
 }
 function autoReturnToPCVersionF() { deviceStorage.write('autoReturnToPCVersion', deviceStorage.get('autoReturnToPCVersion') == 'true' ? false : true)}
 window.onload = function() {
@@ -148,7 +148,7 @@ window.onload = function() {
             <p style="text-align: center;">Понимаю, неожиданно, что вместо сайта на ПК Вы видите это окно. К сожалению, разработчик не успел сделать ПК версию в обновлении, но торопился выложить актуальную версию, которая намного лучше предыдущей.</p>
             <p style="text-align: center;">Но разработчик предусмотрел для пользователей ПК запасной вариант: пользоваться прошлой версией, у которой все еще актуальная ПК версия.</p>
             <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
-                <button style="height: 48px; width: 256px; margin: 8px; border: none; border-radius: 100px; cursor: pointer;" onclick="window.location.assign('/college${betaRepos}/PC/')">Перейти на старую версию</button>
+                <button style="height: 48px; width: 256px; margin: 8px; border: none; border-radius: 100px; cursor: pointer;" onclick="window.location.assign(${link({type: 'HTML', file: 'PC/'})})">Перейти на старую версию</button>
             </div>
             <div style="margin: 0; display: flex; align-items: center;">
                 <input type="checkbox" id="arpcv" name="arpcv" onchange="autoReturnToPCVersionF()" style="margin: 0px 12px 0px 6px;" value="arpcv">
