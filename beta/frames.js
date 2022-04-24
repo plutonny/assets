@@ -342,9 +342,9 @@ if (!(deviceStorage.get(`noDisplayUpdate${siteVersion}`) == 'true') && !(window.
     <div style=" margin-right: 7%; margin-left: 7%; max-height: 95%; overflow-y: auto; background-color: var(--secondary-bg-color); border: none; border-radius: 24px; box-shadow: 0px 0px 8px var(--navbar-box-color);">
         <h2 style="font-family: 'Montserrat' !important; text-align: center; margin: 16px;">Важное обновление!</h2>
         <!--<h1 style="font-family: 'Montserrat' !important; text-align: center; margin: 2px; font-size: 52px">${siteVersion}</h1>-->
-        <p style="font-family: 'Montserrat' !important; margin-left: 16px;">Что случилось? Площадка (github), на которой находился сайт, начала блокировать русских пользователей. Чтобы не оставить Вас без быстрого доступа к расписанию и другим функциям сайта, разработчик принял решение перенести сайт на свою платформу.</p>
-        <b style="font-family: 'Montserrat' !important; margin-left: 16px;">Новый адрес: <a href="https://college.plutonny.ru" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">college.plutonny.ru</a></b>
-        <p style="font-family: 'Montserrat' !important; margin-left: 16px;">Что изменится? Почти ничего. Со старого адреса вас будет перенаправлять автоматически на новый. Если у Вас сайт установлен как приложение, могут возникнуть ошибки.</p>
+        <p style="font-family: 'Montserrat' !important; margin: 12px 16px;">Что случилось? Площадка (github), на которой находился сайт, начала блокировать русских пользователей. Чтобы не оставить Вас без быстрого доступа к расписанию и другим функциям сайта, разработчик принял решение перенести сайт на свою платформу.</p>
+        <b style="font-family: 'Montserrat' !important; margin: 12px 16px;">Новый адрес: <a href="https://college.plutonny.ru" style="font-family: 'Montserrat' !important; text-decoration: underline 2px solid var(--root-text-color);">college.plutonny.ru</a></b>
+        <p style="font-family: 'Montserrat' !important; margin: 12px 16px;">Что изменится? Почти ничего. Со старого адреса вас будет перенаправлять автоматически на новый. Если у Вас сайт установлен как приложение, могут возникнуть ошибки.</p>
         <!--<b style="font-family: 'Montserrat' !important; margin-left: 16px;">Изменения:</b>
         <ul style="margin: 0px 20px 12px 12px;">
             <li style="font-family: 'Montserrat' !important;">Исправления с кнопкой изменения расписания</li>
