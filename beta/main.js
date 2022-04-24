@@ -137,7 +137,7 @@ if (REQUEST.debug) { frames.debugModal() }
 
 /* code only for 3.0.x (PC version off) */
 if (deviceStorage.get('autoReturnToPCVersion') == 'true') {
-    window.location.assign('https://plutonny.github.io/college-old/')
+    window.location.assign('https://old.college.plutonny.ru/')
 }
 function autoReturnToPCVersionF() { deviceStorage.write('autoReturnToPCVersion', deviceStorage.get('autoReturnToPCVersion') == 'true' ? false : true)}
 window.onload = function() {

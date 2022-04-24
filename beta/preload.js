@@ -8,7 +8,7 @@
 */
 
 var preloadBuild = 35
-var siteVersion = '3.0.1'
+var siteVersion = '3.0.2'
 var BETA = true
 
 var betaFolder = '', betaRepos = '';
