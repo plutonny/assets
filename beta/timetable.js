@@ -236,8 +236,8 @@ var TIMETABLE = {
                 else        { result += `.timetableWork${i} { display: none }` }
             }
 
-            page.output('timetableWeekName', `${ThisDay.getDay() == 0 ? `С пон-ка ${WEEK.name.alt.RU}` : capitalize(WEEK.name.RU)} неделя, ${weekNames[j]}:`) 
-            page.output('timetableCSS', result) 
+            plutonny.output('timetableWeekName', `${ThisDay.getDay() == 0 ? `С пон-ка ${WEEK.name.alt.RU}` : capitalize(WEEK.name.RU)} неделя, ${weekNames[j]}:`) 
+            plutonny.output('timetableCSS', result) 
         }
     }
 }

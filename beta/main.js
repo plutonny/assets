@@ -89,7 +89,7 @@ var theme = {
                 }
             }
             */
-        } catch (e) { page.critical(`Error: theme function prepare (${e})`) }
+        } catch (e) { critical('main.js: theme.prepare', e) }
         if (deviceStorage.get('theme') == 'light') { return false }
         if (deviceStorage.get('theme') == 'dark')  { return true }
     },
@@ -100,16 +100,16 @@ var theme = {
     }, 
 
     load: async function() {
-          if (theme.prepare()) { page.output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await page.sleep(65); document.getElementById('theme-color').content = '#181818' }
-        else                   { page.output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await page.sleep(65); document.getElementById('theme-color').content = '#e9e9e9' }
+          if (theme.prepare()) { plutonny.output('root-colors-theme', `${THEME.dark} #thMoon { display: none; }`); await plutonny.sleep(65); document.getElementById('theme-color').content = '#181818' }
+        else                   { plutonny.output('root-colors-theme', `${THEME.light} #thSun { display: none; }`); await plutonny.sleep(65); document.getElementById('theme-color').content = '#e9e9e9' }
     },
 
     gtable: async function() {
-        page.output('root-colors-theme', `${THEME.light} #thSun { display: none; }`)
-        await page.sleep(70)
+        plutonny.output('root-colors-theme', `${THEME.light} #thSun { display: none; }`)
+        await plutonny.sleep(70)
         document.getElementById('theme-color').content = '#ffffff'
-        await page.sleep(5000)
-        page.output('loadText', '')
+        await plutonny.sleep(5000)
+        plutonny.output('loadText', '')
     }
 
 }
@@ -125,9 +125,9 @@ function enableLogger() {
                     if (BETA) { console.log(`ServiceWorker: registration with scope ${registration.scope}`)}
                 },
                 function(e) { 
-                    page.error(`Error: ServiceWorker registration failed: ${e}`)
+                    plutonny.error('main.js: enableLogger', `ServiceWorker registration failed: ${e}`)
                 }
-            ).catch(function(e) { page.error(`Error: ServiceWorker function (${e})`) })
+            ).catch(function(e) { plutonny.error('main.js: enableLogger', `ServiceWorker function (${e})`) })
         })
     }
     else { console.warn('Warning: Service worker is not supported') }

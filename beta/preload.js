@@ -9,32 +9,12 @@
 
 var preloadBuild = 35
 var siteVersion = '3.0.2'
-var BETA = true
-
-var betaFolder = '', betaRepos = '';
-if (BETA) {
-    siteVersion += ' beta'
-    betaFolder += 'beta/'
-    betaRepos += '-beta'
-    eruda.init()
-}
+var BETA = window.location.href.includes('beta')
+if (BETA) { siteVersion += ' beta'; eruda.init() }
 
 var CURRDATE = new Date()
 
-var REQUEST = new Object()
-try {
-
-    var parameters = window.location.href.split('?')[1].split('&')
-
-    for (var i = 0; i < parameters.length; i++) {
-        var par = parameters[i].split('='); REQUEST[par[0]] = par[1] 
-    }
-
-} catch {
-
-    console.log(`preload.js: page URL doesn't have any parameters`)
-
-}
+var REQUEST = plutonny.get.URLAttributes(window.location.href)
 
 /**
  *  Creating links
@@ -92,20 +72,11 @@ WEEK.name = {
 
 }
 
-/**
- *  Work with page
- * 
- *      page.output(id, data)  write in HTML element with id (variable id) data (variable data)
- *      page.error(data)       outputted default error in console + mini modal in top of the page
- *      page.critical(data)    returned in error page with err info (variable data)
- *      page.sleep(ms)         create pause of work any js (in ms)
- * 
- */
-var page = {
-    output:   function(id, data)   { try { document.getElementById(id).innerHTML = data; return true } catch (e) { page.critical(`Error: output function (maybe couldn't find tag id ${id}): (${e})`); return false } },
-    error:    async function(data) { console.error(data); document.getElementById('modal').innerHTML += `<div class="mini-modal"><style>div.modal { position: fixed; width: 100vw; z-index: 99; } div.mini-modal { display: flex; align-items: center; z-index: 100; margin: 8px; padding: 6px 12px; background-color: var(--root-button-color); box-shadow: 0px 0px 8px var(--navbar-box-color); border-radius: 24px; }</style><p style="margin: 0; word-break: break-all;">${data}</p></div>`; await page.sleep(2000); page.output('modal', '') },
-    critical: async function(data) { console.error(data); sessionStorage.setItem('errorPageError', data); await page.sleep(100); location.assign(link({type: 'HTML', file: 'error/'})) },
-    sleep:    function(ms)         { return new Promise(resolve => setTimeout(resolve, ms)) }
+async function critical(func, comment) { 
+    plutonny.console.error(func, comment)
+    sessionStorage.setItem('errorPageError', comment)
+    await plutonny.sleep(100)
+    location.assign(link({type: 'HTML', file: 'error/'})) 
 }
 
 /**
@@ -134,10 +105,10 @@ var deviceStorage = {
  */
 async function modal(content) {
     try {
-        await page.sleep(200)
+        await plutonny.sleep(200)
         if (deviceStorage.get('theme') == 'dark') { document.getElementById('theme-color').content = '#2a2a2a' } 
         if (deviceStorage.get('theme') == 'light') { document.getElementById('theme-color').content = '#9b9b9b' } 
-        page.output('modal', `
+        plutonny.output('modal', `
             <div class="max-modal">
                 <style>
                     div.modal { position: fixed; height: 100%; width: 100%; background-color :#40404075; z-index: 99; }
@@ -148,7 +119,7 @@ async function modal(content) {
         `) 
         return true
     } catch (e) {
-        page.error(`Error: modal function (${e})`)
+        plutonny.error('preload.js: modal', e)
         return false
     }
 }

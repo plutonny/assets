@@ -14,31 +14,19 @@ plutonny.console = {
 
     warn: function(func, comment) {
         var result = 'plutonny.js: WARN'
-        if (func == undefined) {
-            result += ' in undefined function'
-        } else {
-            result += ` in ${func}`
-        }
-        if (comment == undefined) {
-            result += ' with no comments'
-        } else {
-            result += `: "${comment}"`
-        }
+          if    (func == undefined) { result += ` in undefined function` }
+        else                        { result += ` in ${func}` }
+          if (comment == undefined) { result += ` with no comments` }
+        else                        { result += `: "${comment}"` }
         console.warn(result)
     },
 
     error: async function(func, comment) { 
         var result = 'plutonny.js: ERROR'
-        if (func == undefined) {
-            result += ' in undefined function'
-        } else {
-            result += ` in ${func}`
-        }
-        if (comment == undefined) {
-            result += ' with no comments'
-        } else {
-            result += `: "${comment}"`
-        }
+          if    (func == undefined) { result += ` in undefined function` }
+        else                        { result += ` in ${func}` }
+          if (comment == undefined) { result += ` with no comments` }
+        else                        { result += `: "${comment}"` }
         console.error(result)
         if (document.getElementById('PLmodalER') == null) {
             document.body.innerHTML += '<div id="PLmodalER" class="PLmodalER"><div>'

@@ -169,8 +169,8 @@ var frames = {
                     <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px;" onclick="theme.change()">Сменить тему</button>
                     <h2 style="text-align: center;">Error</h2>
                     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
-                        <button style="margin: 4px; background-color: #ff000055;" onclick="page.error('Error: debug.js is calling')">default</button>
-                        <button style="margin: 4px; background-color: #00000055;" onclick="page.critical('Critical: debug.js is calling')">critical</button>
+                        <button style="margin: 4px; background-color: #ff000055;" onclick="plutonny.error('debug.js', 'is calling')">default</button>
+                        <button style="margin: 4px; background-color: #00000055;" onclick="critical('Critical: debug.js is calling')">critical</button>
                     </div>
                     <h1 style="text-align: center;">localStorage:</h1>
                     <div style="display: flex; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-evenly; align-items: center;">
@@ -244,7 +244,7 @@ var frames = {
             </style>
             `
         }
-        page.output('navbar', `
+        plutonny.output('navbar', `
             ${inj}
             
             <div class="buttonsNavbar" style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-around;">
@@ -257,7 +257,7 @@ var frames = {
                     </a>
                 </div>
                 <div style="width: 20%">
-                    <a style="text-decoration: none;" href="${link({type: 'HTML', file: 'gtable/?pres=grades'})}">
+                    <a style="text-decoration: none;" href="${link({type: 'HTML', file: 'table/?pres=grades'})}">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                             <p class="gradesNavbar gradesIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.done}</p>
                             <p class="gradesNavbar" style="color: #707070; margin: 0; font-size: 14px;">оценки</p>
@@ -265,7 +265,7 @@ var frames = {
                     </a>
                 </div>
                 <div style="width: 20%">
-                    <a style="text-decoration: none;" href="${link({type: 'HTML', file: 'gtable/?pres=attendance'})}">
+                    <a style="text-decoration: none;" href="${link({type: 'HTML', file: 'table/?pres=attendance'})}">
                         <div style="display: flex; flex-direction: column; flex-wrap: nowrap; align-items: center;">
                             <p class="attendanceNavbar attendanceIcon iconNavbar" style="color: #707070; fill: currentColor; margin: 0; height: 26px;">${SVG.calendar}</p>
                             <p class="attendanceNavbar" style="color: #707070; margin: 0; font-size: 14px;">явка</p>
@@ -315,7 +315,7 @@ var frames = {
                         </button>`
             }
 
-            page.output(`header`, `
+            plutonny.output(`header`, `
                 <div class="hdr">
                     <style>.hdr { padding-bottom: 12px; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; user-select: none; }</style>
                     <div style="margin-right: auto;"></div>
@@ -330,7 +330,7 @@ var frames = {
 
         } catch (e) { 
 
-            page.critical(`Error in frames.js: header function (${e})`) 
+            critical('frames.js: frames.header', e) 
             return false
 
         }
