@@ -125,9 +125,9 @@ function enableLogger() {
                     if (BETA) { console.log(`ServiceWorker: registration with scope ${registration.scope}`)}
                 },
                 function(e) { 
-                    plutonny.error('main.js: enableLogger', `ServiceWorker registration failed: ${e}`)
+                    plutonny.console.error('main.js: enableLogger', `ServiceWorker registration failed: ${e}`)
                 }
-            ).catch(function(e) { plutonny.error('main.js: enableLogger', `ServiceWorker function (${e})`) })
+            ).catch(function(e) { plutonny.console.error('main.js: enableLogger', `ServiceWorker function (${e})`) })
         })
     }
     else { console.warn('Warning: Service worker is not supported') }

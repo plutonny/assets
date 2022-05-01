@@ -119,7 +119,7 @@ async function modal(content) {
         `) 
         return true
     } catch (e) {
-        plutonny.error('preload.js: modal', e)
+        plutonny.console.error('preload.js: modal', e)
         return false
     }
 }

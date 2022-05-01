@@ -9,8 +9,6 @@
 
 var framesBuild = 8
 
-/* Theme variable: light and dark color palette for theme function */
-
 if (deviceStorage.check('acbgcolor'))
     { console.warn('Warning: accent second color is undefined, set to default'); deviceStorage.write('acbgcolor', 'default') }
 
@@ -22,6 +20,11 @@ if (deviceStorage.check('worknavbar'))
 
 if (!(deviceStorage.get('worknavbar') == 'default' || deviceStorage.get('worknavbar') == 'float'))
     { console.warn('Warning: navbar type is uncorrect, set to float'); deviceStorage.write('worknavbar', 'float') }
+
+if (deviceStorage.check('PATRIOTMODE'))
+    { console.warn('Warning: patriot mode type is undefined, set to false'); deviceStorage.write('PATRIOTMODE', 'false') }
+
+/* Theme variable: light and dark color palette for theme function */
 
 var THEME = {
     light: `:root {
@@ -169,7 +172,7 @@ var frames = {
                     <button style="width: 100%; height: 64px; font-size: 24px; border-radius: 16px;" onclick="theme.change()">Сменить тему</button>
                     <h2 style="text-align: center;">Error</h2>
                     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
-                        <button style="margin: 4px; background-color: #ff000055;" onclick="plutonny.error('debug.js', 'is calling')">default</button>
+                        <button style="margin: 4px; background-color: #ff000055;" onclick="plutonny.console.error('debug.js', 'is calling')">default</button>
                         <button style="margin: 4px; background-color: #00000055;" onclick="critical('Critical: debug.js is calling')">critical</button>
                     </div>
                     <h1 style="text-align: center;">localStorage:</h1>

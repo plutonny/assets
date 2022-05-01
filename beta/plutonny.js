@@ -39,7 +39,7 @@ plutonny.console = {
                 </style>
                 <p style="margin: 0; word-break: break-all;">${result}</p>
             </div>`
-        await plutonny.sleep(2000)
+        await plutonny.sleep(10000)
         document.getElementById('PLmodalER').innerHTML = ''
     }
 
@@ -47,7 +47,11 @@ plutonny.console = {
 
 plutonny.output = function(id, data) {
     try {
-        document.getElementById(id).innerHTML = data
+        if (localStorage.getItem('PATRIOTMODE') == 'true') {
+            document.getElementById(id).innerHTML = data.split('З').join('Z').split('з').join('Z').split('В').join('V').split('в').join('V')
+        } else {
+            document.getElementById(id).innerHTML = data
+        }
         return true
     } catch {
         plutonny.console.error('plutonny.output', `can't find tag with id ${id}`)
@@ -67,7 +71,7 @@ plutonny.get = {
             }
             return result
         } catch {
-            plutonny.console.warn(`plutonny.get.URLAttributes`, `given URL doen't have any parameter`)
+            plutonny.console.warn(`plutonny.get.URLAttributes`, `given URL doesn't have any parameter`)
             return false
         }
     }
