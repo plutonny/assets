@@ -3,7 +3,7 @@
 
 "use strict";
 
-var timetableBuild = 16
+var timetableBuild = 17
 
 var ThisDay = new Date()
 
@@ -158,66 +158,88 @@ var TIMETABLE = {
                     </style>
                     `
                     for (var i = 1; i <= 6; i++) {
-                        result += `<table class="timetableWork${i}" style="border: 1px solid #707070; border-radius: 18px; text-align: center; border-collapse: separate; border-spacing: 0px; margin: auto; background-color: var(--root-navbar-bg-color);">`
+                        result += `
+                            <table class="timetableWork${i}" style="border-radius: 18px; text-align: center; border-collapse: separate; border-spacing: 0px; margin: auto; background-color: var(--root-navbar-bg-color);">
+                        `
+
                         for (var j = 0; j < TIMETABLE[i].length; j++) {
-                            var inj = { 
-                                color: TIMETABLE[i][j][4] == 'default' ? `--root-navbar-bg-color` : `--week-${TIMETABLE[i][j][4]}`,
-                                border: {
-                                    left: {
-                                        top:    j == 0 ?                       'border-top-left-radius: 17px'     : '',
-                                        bottom: j == TIMETABLE[i].length - 1 ? 'border-bottom-left-radius: 17px'  : ''
-                                    },
-                                    right: {
-                                        top:    j == 0 ?                       'border-top-right-radius: 17px'    : '',
-                                        bottom: j == TIMETABLE[i].length - 1 ? 'border-bottom-right-radius: 17px' : ''
-                                    }
+
+                            var border = {
+                                top:        j == 0 ?                       'border-top: 2px solid #707070;'    : '',
+                                bottom:     j == TIMETABLE[i].length - 1 ? 'border-bottom: 2px solid #707070;' : '',
+                                left:                                      'border-left: 2px solid #707070;',
+                                right:                                     'border-right: 2px solid #707070;'
+                            }
+
+                            var borderRadius = {
+                                left: {
+                                    top:    j == 0 ?                       `border-top-left-radius: 17px; ${border.top} ${border.left}`        : '',
+                                    bottom: j == TIMETABLE[i].length - 1 ? `border-bottom-left-radius: 17px; ${border.bottom} ${border.left}`  : ''
+                                },
+                                right: {
+                                    top:    j == 0 ?                       `border-top-right-radius: 17px; ${border.top} ${border.right}`       : '',
+                                    bottom: j == TIMETABLE[i].length - 1 ? `border-bottom-right-radius: 17px; ${border.bottom} ${border.right}` : ''
                                 }
                             }
+
                             if (TIMETABLE[i][j][4] == 'default') {
+
                                 result += `
-                                <tr style="background-color: var(${inj.color});">
-                                    <td rowspan="2" style="width: 16px; border: 1px solid #707070; ${inj.border.left.top}${inj.border.left.bottom}"><b>${TIMETABLE[i][j][0]}</b></td>
-                                    <td style="width: 220px;" class="timetableTableWeek"><b style="font-family: 'Montserrat';">
-                                        ${TIMETABLE[i][j][1]}
-                                    </b></td>
-                                    <td class="timetableTableWeek" style="${inj.border.right.top}">
+                                <tr style="background-color: var(--root-navbar-bg-color);">
+                                    <td rowspan="2" style="width: 16px; border: 1px solid #707070; border-left: 2px solid #707070; ${borderRadius.left.top}${borderRadius.left.bottom}"><b>${TIMETABLE[i][j][0]}</b></td>
+                                    <td style="width: 220px; ${border.top}" class="timetableTableWeek">
+                                        <b style="font-family: 'Montserrat';">
+                                            ${TIMETABLE[i][j][1]}
+                                        </b>
+                                    </td>
+                                    <td style="border-right: 2px solid #707070; ${borderRadius.right.top}" class="timetableTableWeek">
                                         ${TIMETABLE[i][j][3]}
                                     </td>
                                 </tr>
-                                <tr style="background-color: var(${inj.color});">
+                                <tr style="background-color: var(--root-navbar-bg-color);">
                                     <!-- Here <td> of num of pair -->
-                                    <td style="width: 220px;" class="timetableTableWeek">
+                                    <td style="width: 220px; ${border.bottom}" class="timetableTableWeek">
                                         ${TIMETABLE[i][j][2]}
                                     </td>
-                                    <td class="timetableTableWeek" style="${inj.border.right.bottom}"></td>
+                                    <td style="border-right: 2px solid #707070; ${borderRadius.right.bottom}" class="timetableTableWeek"></td>
                                 </tr>
                                 `
+
                             } else {
-                                if (j + 1 == TIMETABLE[i].length - 1) { var injLeftBottom = 'border-bottom-left-radius: 17px', injRightBottom = 'border-bottom-right-radius: 17px' }
-                                else { var injLeftBottom = '', injRightBottom = '' }
+
+                                if (j + 1 == TIMETABLE[i].length - 1) { 
+                                    var injLeftBottom = `border-bottom-left-radius: 17px; border-bottom: 2px solid #707070; ${border.left}`
+                                    var injRightBottom = `border-bottom-right-radius: 17px; border-bottom: 2px solid #707070; ${border.right}` 
+                                    var injBottom = `border-bottom: 2px solid #707070;` 
+                                }
+                                else { var injLeftBottom = '', injRightBottom = '', injBottom = '' }
+
                                 result += `
                                 <tr style="background-color: var(--week-${TIMETABLE[i][j][4]});">
-                                    <td rowspan="2" style=" background-color: var(--root-navbar-bg-color); width: 16px; border: 1px solid #707070; ${inj.border.left.top}${injLeftBottom}"><b>${TIMETABLE[i][j][0]}</b></td>
-                                    <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">
+                                    <td rowspan="2" style=" background-color: var(--root-navbar-bg-color); width: 16px; border: 1px solid #707070; border-left: 2px solid #707070; ${borderRadius.left.top}${injLeftBottom}"><b>${TIMETABLE[i][j][0]}</b></td>
+                                    <td style="width: 220px; font-family: 'Montserrat'; ${border.top}" class="timetableTableWeek">
                                         ${TIMETABLE[i][j][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j][1]}${TIMETABLE[i][j][4] == WEEK.name.EN ? `</b>` : ''}
                                     </td>
-                                    <td class="timetableTableWeek" style="${inj.border.right.top}">
+                                    <td style="border-right: 2px solid #707070; ${borderRadius.right.top}" class="timetableTableWeek">
                                         ${TIMETABLE[i][j][3]}
                                     </td>
                                 </tr>
                                 <tr style="background-color: var(--week-${TIMETABLE[i][j + 1][4]});">
                                     <!-- Here <td> of num of pair -->
-                                    <td style="width: 220px; font-family: 'Montserrat';" class="timetableTableWeek">
+                                    <td style="width: 220px; font-family: 'Montserrat'; ${injBottom}" class="timetableTableWeek">
                                         ${TIMETABLE[i][j + 1][4] == WEEK.name.EN ? `<b style="font-family: 'Montserrat';">` : ''}${TIMETABLE[i][j + 1][1]}${TIMETABLE[i][j + 1][4] == WEEK.name.EN ? `</b>` : ''}
                                     </td>
-                                    <td class="timetableTableWeek" style="${injRightBottom}">
+                                    <td style="border-right: 2px solid #707070; ${injRightBottom}" class="timetableTableWeek">
                                         ${TIMETABLE[i][j + 1][3]}
                                     </td>
                                 </tr>
                                 `
                                 j++
+
                             }
+
                         }
+
                         result += `</table>`
                     }
 
