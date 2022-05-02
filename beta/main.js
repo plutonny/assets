@@ -32,7 +32,7 @@ console.log(`Current builds (version ${siteVersion}):
     Timeable JS: build ${deviceStorage.get('timetableJSBuild')}
     Home:        build ${deviceStorage.get('homeBuildPage')}
     Other:       build ${deviceStorage.get('otherBuildPage')}
-    Gtable:      build ${deviceStorage.get('gtableBuildPage')}
+    Table:      build ${deviceStorage.get('tableBuildPage')}
     Simple:      build ${deviceStorage.get('simpleBuildPage')}
     Settings:    build ${deviceStorage.get('settingsBuildPage')}
     Support:     build ${deviceStorage.get('supportBuildPage')}
